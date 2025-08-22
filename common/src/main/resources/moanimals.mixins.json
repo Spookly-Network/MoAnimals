@@ -6,6 +6,8 @@
   "client": [
   ],
   "mixins": [
+    "ComposterBlockMixin",
+    "SpawnPlacementsInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

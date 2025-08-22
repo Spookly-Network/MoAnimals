@@ -18,7 +18,7 @@ public class CrocodileRenderer extends MobRenderer<Crocodile, CrocodileModel<Cro
 
     @Override
     public ResourceLocation getTextureLocation(Crocodile entity) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/crocodile.png");
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/crocodile.png");
     }
 
     @Override

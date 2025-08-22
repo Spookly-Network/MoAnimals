@@ -1,0 +1,22 @@
+{
+  "golden": {
+    "wild_texture": "moanimals:entity/racoon/racoon_golden",
+    "sleep_texture": "moanimals:entity/racoon/racoon_golden_sleep",
+    "biomes": "minecraft:forest"
+  },
+  "gray": {
+    "wild_texture": "moanimals:entity/racoon/racoon_gray",
+    "sleep_texture": "moanimals:entity/racoon/racoon_gray_sleep",
+    "biomes": "minecraft:forest"
+  },
+  "rusty": {
+    "wild_texture": "moanimals:entity/racoon/racoon_rusty",
+    "sleep_texture": "moanimals:entity/racoon/racoon_rusty_sleep",
+    "biomes": "minecraft:forest"
+  },
+  "tanuki": {
+    "wild_texture": "moanimals:entity/racoon/racoon_tanuki",
+    "sleep_texture": "moanimals:entity/racoon/racoon_tanuki_sleep",
+    "biomes": "minecraft:forest"
+  }
+}

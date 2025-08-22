@@ -1,7 +1,13 @@
 package net.spookly.moanimals.entity;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -14,12 +20,16 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.WolfVariant;
+import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 import net.spookly.moanimals.item.MoAnimalItems;
@@ -40,11 +50,10 @@ public class Crocodile extends Animal implements NeutralMob {
 
     @Override
     protected void registerGoals() {
-        Boat
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREAD_CRUMB), true));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(Items.CHICKEN), true));
 
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
 
@@ -63,14 +72,19 @@ public class Crocodile extends Animal implements NeutralMob {
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 20d)
-                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.FOLLOW_RANGE, 24d);
 
     }
 
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_REMAINING_ANGER_TIME, 0);
+    }
+
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(MoAnimalItems.BREAD_CRUMB.get());
+        return itemStack.is(Items.CHICKEN);
     }
 
     //TODO: make
@@ -92,7 +106,7 @@ public class Crocodile extends Animal implements NeutralMob {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
+        if(this.level().isClientSide()) {
             this.setupAnimationStates();
         }
     }

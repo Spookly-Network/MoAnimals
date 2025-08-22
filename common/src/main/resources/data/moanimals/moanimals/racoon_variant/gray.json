@@ -1,0 +1,11 @@
+{
+  "wild_texture": "moanimals:entity/racoon/racoon_gray",
+  "sleep_texture": "moanimals:entity/racoon/racoon_gray_sleeping",
+  "biomes": [
+    "minecraft:taiga",
+    "minecraft:dark_forest",
+    "minecraft:snowy_taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga"
+  ]
+}

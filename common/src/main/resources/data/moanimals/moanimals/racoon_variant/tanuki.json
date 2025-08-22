@@ -1,0 +1,9 @@
+{
+  "wild_texture": "moanimals:entity/racoon/racoon_tanuki",
+  "sleep_texture": "moanimals:entity/racoon/racoon_tanuki_sleeping",
+  "biomes": [
+    "minecraft:windswept_forest",
+    "minecraft:cherry_grove",
+    "minecraft:grove"
+  ]
+}

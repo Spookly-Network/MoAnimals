@@ -20,32 +20,32 @@ public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Moanimals.MOD_ID, "crocodile"), "main");
     private final ModelPart body;
     private final ModelPart corspe;
-    private final ModelPart main;
+//    private final ModelPart main;
     private final ModelPart tail;
-    private final ModelPart front;
-    private final ModelPart end;
+//    private final ModelPart front;
+//    private final ModelPart end;
     private final ModelPart head;
-    private final ModelPart upper;
-    private final ModelPart bottom;
-    private final ModelPart leg_left_front;
-    private final ModelPart leg_back_front;
-    private final ModelPart leg_right_front;
-    private final ModelPart leg_left_back;
+//    private final ModelPart upper;
+//    private final ModelPart bottom;
+//    private final ModelPart leg_left_front;
+//    private final ModelPart leg_back_front;
+//    private final ModelPart leg_right_front;
+//    private final ModelPart leg_left_back;
 
     public CrocodileModel(ModelPart root) {
         this.body = root.getChild("body");
         this.corspe = this.body.getChild("corspe");
-        this.main = this.corspe.getChild("main");
+//        this.main = this.corspe.getChild("main");
         this.tail = this.corspe.getChild("tail");
-        this.front = this.tail.getChild("front");
-        this.end = this.tail.getChild("end");
+//        this.front = this.tail.getChild("front");
+//        this.end = this.tail.getChild("end");
         this.head = this.corspe.getChild("head");
-        this.upper = this.head.getChild("upper");
-        this.bottom = this.head.getChild("bottom");
-        this.leg_left_front = this.body.getChild("leg_left_front");
-        this.leg_back_front = this.body.getChild("leg_back_front");
-        this.leg_right_front = this.body.getChild("leg_right_front");
-        this.leg_left_back = this.body.getChild("leg_left_back");
+//        this.upper = this.head.getChild("upper");
+//        this.bottom = this.head.getChild("bottom");
+//        this.leg_left_front = this.body.getChild("leg_left_front");
+//        this.leg_back_front = this.body.getChild("leg_back_front");
+//        this.leg_right_front = this.body.getChild("leg_right_front");
+//        this.leg_left_back = this.body.getChild("leg_left_back");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -75,7 +75,6 @@ public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
         PartDefinition end = tail.addOrReplaceChild("end", CubeListBuilder.create().texOffs(0, 53).addBox(0.0F, -5.0F, 0.0F, 0.0F, 7.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.5F, 7.0F));
 
         PartDefinition head = corspe.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, -5.0F, -15.0F));
-
         PartDefinition upper = head.addOrReplaceChild("upper", CubeListBuilder.create().texOffs(46, 12).addBox(-3.0F, -4.0F, -4.0F, 6.0F, 3.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(18, 37).addBox(-2.5F, -3.0F, -11.0F, 5.0F, 2.0F, 7.0F, new CubeDeformation(0.0F))
                 .texOffs(40, 57).addBox(-2.5F, -1.0F, -11.01F, 5.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
@@ -108,6 +107,7 @@ public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
         this.animateWalk(CrocodileAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
+        this.animate(entity.idleAnimationState, CrocodileAnimations.idle, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

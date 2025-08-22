@@ -1,0 +1,8 @@
+{
+  "wild_texture": "moanimals:entity/racoon/racoon_golden",
+  "sleep_texture": "moanimals:entity/racoon/racoon_golden_sleeping",
+  "biomes": [
+    "minecraft:savanna",
+    "minecraft:wooded_badlands"
+  ]
+}

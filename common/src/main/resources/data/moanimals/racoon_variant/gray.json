@@ -1,0 +1,5 @@
+{
+  "wild_texture": "moanimals:entity/racoon/racoon_gray",
+  "sleep_texture": "moanimals:entity/racoon/racoon_gray_sleep",
+  "biomes": "minecraft:forest"
+}

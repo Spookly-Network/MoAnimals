@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Bee;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.spookly.moanimals.client.model.DuckModel;
@@ -13,7 +14,7 @@ import net.spookly.moanimals.entity.Duck;
 
 public class DuckRenderer extends MobRenderer<Duck, DuckModel<Duck>> {
     public DuckRenderer(EntityRendererProvider.Context context) {
-        super(context, new DuckModel<>(context.bakeLayer(DuckModel.LAYER_LOCATION)), 0.5f);
+        super(context, new DuckModel<>(context.bakeLayer(DuckModel.LAYER_LOCATION)), 0.25f);
     }
 
     @Override

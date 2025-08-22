@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "moanimals:block/duckweed"
+      },
+      {
+        "model": "moanimals:block/duckweed",
+        "y": 90
+      },
+      {
+        "model": "moanimals:block/duckweed",
+        "y": 180
+      },
+      {
+        "model": "moanimals:block/duckweed",
+        "y": 270
+      }
+    ]
+  }
+}

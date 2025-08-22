@@ -2,6 +2,7 @@ package net.spookly.moanimals.client.model;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import net.minecraft.client.model.BeeModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -74,7 +75,6 @@ public class DuckModel<T extends Duck> extends HierarchicalModel<T> {
 
         this.head.yRot = headYaw * ((float)Math.PI / 180F);
         this.head.xRot = headPitch * ((float)Math.PI / 180F);
-
     }
 
     @Override
