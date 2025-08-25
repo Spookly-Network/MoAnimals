@@ -42,7 +42,6 @@ public class Duck extends Animal {
 
     public Duck(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
-        OAK_LEAVES
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
         this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);

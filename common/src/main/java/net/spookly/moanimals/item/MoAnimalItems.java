@@ -12,7 +12,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PlaceOnWaterBlockItem;
 import net.minecraft.world.level.block.Block;
 
+import dev.architectury.injectables.targets.ArchitecturyTarget;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
+import dev.architectury.utils.ArchitecturyConstants;
 import net.spookly.moanimals.block.MoAnimalBlocks;
 import net.spookly.moanimals.mixin.ComposterBlockMixin;
 
@@ -35,9 +38,16 @@ public class MoAnimalItems {
         return ITEMS.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, path), item);
     }
 
+    public static void registerComposerItems() {
+        ComposterBlockMixin.invokeAdd(0.65F, DUCKWEED.get());
+    }
+
     public static void init() {
         LOGGER.info("Registering items");
         ITEMS.register();
-        ComposterBlockMixin.invokeAdd(0.65F, DUCKWEED.get());
+
+        if (Platform.isFabric()) {
+            registerComposerItems();
+        }
     }
 }

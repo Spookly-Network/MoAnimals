@@ -2,18 +2,16 @@ package net.spookly.moanimals.neoforge;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.spookly.moanimals.Moanimals;
-import net.neoforged.fml.common.Mod;
 import net.spookly.moanimals.client.model.CrocodileModel;
 import net.spookly.moanimals.client.model.DuckModel;
 import net.spookly.moanimals.client.model.RacoonModel;
 import net.spookly.moanimals.entity.*;
-import net.spookly.moanimals.entity.animal.RacoonVariants;
 import net.spookly.moanimals.neoforge.wordgen.MoAnimalsEntitySpawns;
-import net.spookly.moanimals.neoforge.wordgen.MoEntitySpawn;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import org.jetbrains.annotations.NotNull;
 

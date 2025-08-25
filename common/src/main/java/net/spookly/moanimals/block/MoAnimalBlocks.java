@@ -25,11 +25,13 @@ public class MoAnimalBlocks {
     public static void init() {
         LOGGER.info("Registering blocks");
         BLOCKS.register();
+
         BLOCKS.forEach(blockRegistrySupplier -> {
-            Block block = blockRegistrySupplier.get();
-            if (block == DUCKWEED.get()) {
+            if (blockRegistrySupplier.getId() == DUCKWEED.getId()) {
                 return;
             }
+
+            Block block = blockRegistrySupplier.get();
             MoAnimalItems.registerBlockItem(blockRegistrySupplier.getRegisteredName().split(":")[1], block);
         });
     }

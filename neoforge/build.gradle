@@ -2,6 +2,8 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
+def generatedResources = file("src/generated")
+
 architectury {
     platformSetupLoomIde()
     neoForge()
@@ -53,6 +55,23 @@ shadowJar {
     archiveClassifier = 'dev-shadow'
 }
 
+sourceSets {
+    main {
+        resources.srcDir generatedResources
+    }
+}
+
 remapJar {
     input.set shadowJar.archiveFile
 }
+
+loom {
+    runs {
+        clientData {
+            data()
+            programArgs "--all", "--mod", "moanimals"
+            programArgs "--output", generatedResources.absolutePath
+        }
+    }
+}
+
