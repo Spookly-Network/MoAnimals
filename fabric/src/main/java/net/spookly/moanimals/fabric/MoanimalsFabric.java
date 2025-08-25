@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.fabric.worldgen.MoAnimalsBiomeModifiers;
+import net.spookly.moanimals.fabric.worldgen.ModAnimalsEntitySpawns;
 import net.spookly.moanimals.fabric.worldgen.ModEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
@@ -45,7 +46,7 @@ public final class MoanimalsFabric implements ModInitializer {
         //Init Fabric
         registerEntityAttributes();
         registerSyncedRegistries();
-        ModEntitySpawns.init();
+        ModAnimalsEntitySpawns.init();
         MoAnimalsBiomeModifiers.modifyBiomes();
     }
 

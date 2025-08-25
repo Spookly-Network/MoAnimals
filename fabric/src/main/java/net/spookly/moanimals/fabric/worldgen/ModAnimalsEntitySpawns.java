@@ -14,7 +14,7 @@ import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 
-public class ModEntitySpawns {
+public class ModAnimalsEntitySpawns {
     public static void init() {
         registerSpawnPlacements();
     }

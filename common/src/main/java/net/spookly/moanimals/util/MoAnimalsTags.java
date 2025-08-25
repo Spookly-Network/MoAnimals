@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class MoAnimalsTags {
     public final class BiomeTags {
 
+        public static TagKey<Biome> DUCK_SPAWNABLE_IN = createTag("duck_spawnable_in");
         public static TagKey<Biome> RACCOON_SPAWNABLE_IN = createTag("raccoon_spawnable_in");
         public static TagKey<Biome> CROCODILE_SPAWNABLE_IN = createTag("crocodile_spawnable_in");
 
