@@ -17,6 +17,8 @@ public class MoAnimalsTags {
         public static TagKey<Biome> RACCOON_SPAWNABLE_IN = createTag("raccoon_spawnable_in");
         public static TagKey<Biome> CROCODILE_SPAWNABLE_IN = createTag("crocodile_spawnable_in");
 
+        public static TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
+
         private static TagKey<Biome> createTag(@NotNull String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
         }

@@ -32,6 +32,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
+import dev.architectury.platform.Platform;
 import net.spookly.moanimals.entity.animal.RacoonVariants;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;

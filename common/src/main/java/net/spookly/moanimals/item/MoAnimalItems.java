@@ -24,7 +24,7 @@ public class MoAnimalItems {
     public static final RegistrySupplier<Item> BREADCRUMBS = registerItem("breadcrumbs", () -> new Item(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
 
     // Block Items
-    public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB.get())));
+    public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
 
     public static void registerBlockItem(final String path, Block block) {
         registerItem(path, () -> new BlockItem(block, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB.get())));

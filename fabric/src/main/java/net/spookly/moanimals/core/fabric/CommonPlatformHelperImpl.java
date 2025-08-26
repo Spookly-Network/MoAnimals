@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -105,5 +107,10 @@ public class CommonPlatformHelperImpl {
 
     public static TagKey<Item> getShearsTag() {
         return ConventionalItemTags.SHEARS;
+    }
+
+    public static <T> Supplier<EntityDataSerializer<T>> registerEntityDataSerializers(String name, Supplier<EntityDataSerializer<T>> serializer) {
+        EntityDataSerializers.registerSerializer(serializer.get());
+        return serializer;
     }
 }

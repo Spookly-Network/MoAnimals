@@ -2,6 +2,7 @@ package net.spookly.moanimals.core;
 
 import java.util.function.Supplier;
 
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
@@ -116,6 +117,11 @@ public class CommonPlatformHelper {
 
     @ExpectPlatform
     public static TagKey<Item> getShearsTag() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <T> Supplier<EntityDataSerializer<T>> registerEntityDataSerializers(String name, Supplier<EntityDataSerializer<T>> serializer) {
         throw new AssertionError();
     }
 }

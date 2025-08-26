@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:river",
+    "minecraft:plains",
+    "minecraft:forest",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:birch_forest",
+    "minecraft:flower_forest",
+    "minecraft:swamp",
+    "minecraft:dark_forest"
+  ]
+}

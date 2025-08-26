@@ -15,6 +15,7 @@ import net.spookly.moanimals.entity.RacoonVariant;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.item.MoAnimalsItemGroups;
 import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.registry.MoAnimalsTags;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public final class Moanimals {
         MoAnimalBlocks.init();
         MoAnimalsItemGroups.init();
         MoAnimalItems.init();
+        MoAnimalsEntityDataSerializers.init();
     }
 
     public static void registerSpawnPlacements() {

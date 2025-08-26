@@ -4,7 +4,10 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
@@ -24,10 +27,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.spookly.moanimals.entity.Duck;
+import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+import net.spookly.moanimals.entity.Racoon;
+import net.spookly.moanimals.entity.RacoonVariant;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import org.jetbrains.annotations.NotNull;
 
 public class CommonPlatformHelperImpl {
@@ -35,6 +44,7 @@ public class CommonPlatformHelperImpl {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, MOD_ID);
+    public static final DeferredRegister<EntityDataSerializer<?>> ENTITY_DATA_SERIALIZER = DeferredRegister.create(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS, MOD_ID);
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Registries.SOUND_EVENT, MOD_ID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(Registries.POTION, MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, MOD_ID);
@@ -79,6 +89,11 @@ public class CommonPlatformHelperImpl {
         return POTIONS.register(name, potion);
     }
 
+    public static <T> Supplier<EntityDataSerializer<T>> registerEntityDataSerializers(String name, Supplier<EntityDataSerializer<T>> serializer) {
+//        NeoForgeRegistries.ENTITY_DATA_SERIALIZERS.regregister(name, serializer)
+        return ENTITY_DATA_SERIALIZER.register(name, serializer);
+    }
+
 //    public static void registerBrewingRecipe(Potion input, Item ingredient, Potion output) {
 //        BrewingRecipeRegistry.addRecipe(new NaturalistBrewingRecipe(input, ingredient, output));
 //    }
@@ -99,4 +114,5 @@ public class CommonPlatformHelperImpl {
     public static TagKey<Item> getShearsTag() {
         return Tags.Items.TOOLS_SHEAR;
     }
+
 }
