@@ -2,13 +2,13 @@ package net.spookly.moanimals.core;
 
 import java.util.function.Supplier;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
+
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
-
-import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class ClientPlatformHelper {
     @ExpectPlatform

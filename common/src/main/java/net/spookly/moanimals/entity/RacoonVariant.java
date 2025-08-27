@@ -2,6 +2,11 @@ package net.spookly.moanimals.entity;
 
 import java.util.Objects;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
@@ -11,13 +16,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.level.biome.Biome;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.spookly.moanimals.Moanimals;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 public class RacoonVariant {
     public static final Codec<RacoonVariant> DIRECT_CODEC = RecordCodecBuilder.create((instance) -> instance.group(

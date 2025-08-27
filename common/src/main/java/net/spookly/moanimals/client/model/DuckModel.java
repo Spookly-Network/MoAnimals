@@ -2,7 +2,12 @@ package net.spookly.moanimals.client.model;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import net.minecraft.client.model.BeeModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
+import net.spookly.moanimals.client.animations.DuckAnimations;
+import net.spookly.moanimals.entity.Duck;
+
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -10,11 +15,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.spookly.moanimals.client.animations.DuckAnimations;
-import net.spookly.moanimals.entity.Duck;
 
 public class DuckModel<T extends Duck> extends HierarchicalModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor

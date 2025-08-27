@@ -10,7 +10,7 @@ import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 public class MoAnimalsEntitySpawns {
 
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Duck::checkDuckSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);

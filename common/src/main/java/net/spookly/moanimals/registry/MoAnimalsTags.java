@@ -2,12 +2,12 @@ package net.spookly.moanimals.registry;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-
-import org.jetbrains.annotations.NotNull;
 
 public class MoAnimalsTags {
     public interface BlockTags {

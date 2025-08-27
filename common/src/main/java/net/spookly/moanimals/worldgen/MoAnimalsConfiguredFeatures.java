@@ -2,6 +2,8 @@ package net.spookly.moanimals.worldgen;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import net.spookly.moanimals.block.MoAnimalBlocks;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -13,8 +15,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import net.spookly.moanimals.block.MoAnimalBlocks;
 
 public class MoAnimalsConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> DUCKWEED_PATCH_KEY = registerKey("patch_duckweed");

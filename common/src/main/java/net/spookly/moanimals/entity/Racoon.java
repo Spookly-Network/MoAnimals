@@ -3,6 +3,14 @@ package net.spookly.moanimals.entity;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.spookly.moanimals.entity.animal.RacoonVariants;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
+import net.spookly.moanimals.registry.MoAnimalsTags;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -31,14 +39,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
-
-import dev.architectury.platform.Platform;
-import net.spookly.moanimals.entity.animal.RacoonVariants;
-import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
-import net.spookly.moanimals.registry.MoAnimalsTags;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant>> {
 
@@ -149,8 +149,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
         Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.RACOON_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.RACOON_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
         Holder<RacoonVariant> holder2;
 

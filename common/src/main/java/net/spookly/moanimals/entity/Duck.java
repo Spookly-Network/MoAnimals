@@ -1,14 +1,18 @@
 package net.spookly.moanimals.entity;
 
-import static net.minecraft.world.level.block.Blocks.OAK_LEAVES;
 
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.spookly.moanimals.item.MoAnimalItems;
+import net.spookly.moanimals.registry.MoAnimalsTags;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -24,11 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
-
-import net.spookly.moanimals.item.MoAnimalItems;
-import net.spookly.moanimals.registry.MoAnimalsTags;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Duck extends Animal {
 
@@ -144,7 +143,7 @@ public class Duck extends Animal {
     }
 
     public static boolean checkDuckSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.DUCKS_SPAWNABLE_ON) || pLevel.getBlockState(pPos.below()).getFluidState().is(FluidTags.WATER);
+        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.DUCKS_SPAWNABLE_ON);
     }
 
     @Override
@@ -254,8 +253,7 @@ public class Duck extends Animal {
             }
         }
 
-        @Nullable
-        private Duck findNearestLeader() {
+        @Nullable private Duck findNearestLeader() {
             AABB box = duck.getBoundingBox().inflate(areaSize);
             List<Duck> leaders = duck.level().getEntitiesOfClass(Duck.class, box,
                     d -> d != duck && d.isAlive() && d.isGroupLeader());

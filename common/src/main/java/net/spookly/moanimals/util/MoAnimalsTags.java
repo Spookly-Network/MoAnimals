@@ -2,18 +2,18 @@ package net.spookly.moanimals.util;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
-import org.jetbrains.annotations.NotNull;
-
 public class MoAnimalsTags {
     public final class BiomeTags {
 
-        public static TagKey<Biome> DUCK_SPAWNABLE_IN = createTag("duck_spawnable_in");
+        public static TagKey<Biome> DUCK_SPAWNABLE_IN = createTag("spawn_duck_in");
         public static TagKey<Biome> RACCOON_SPAWNABLE_IN = createTag("raccoon_spawnable_in");
         public static TagKey<Biome> CROCODILE_SPAWNABLE_IN = createTag("crocodile_spawnable_in");
 

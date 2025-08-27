@@ -2,10 +2,10 @@ package net.spookly.moanimals.entity;
 
 import static net.spookly.moanimals.registry.MoAnimalsRegistries.ENTITY_TYPES;
 
+import dev.architectury.registry.registries.RegistrySupplier;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-
-import dev.architectury.registry.registries.RegistrySupplier;
 
 public class MoAnimalEntityTypes {
 

@@ -1,7 +1,11 @@
 package net.spookly.moanimals.item;
 
-import static net.spookly.moanimals.Moanimals.MOD_ID;
 import static net.spookly.moanimals.Moanimals.LOGGER;
+import static net.spookly.moanimals.Moanimals.MOD_ID;
+
+import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.RegistrySupplier;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -9,10 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
-
-import dev.architectury.registry.CreativeTabRegistry;
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 
 public class MoAnimalsItemGroups {
 

@@ -19,7 +19,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        blockItem(MoAnimalBlocks.DUCKWEED);
+        blockWithItem(MoAnimalBlocks.DUCKWEED);
 
 //        blockWithItem(ModBlocks.BISMUTH_ORE);
 //        blockWithItem(ModBlocks.BISMUTH_DEEPSLATE_ORE);
@@ -63,7 +63,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 //                ResourceLocation.fromNamespaceAndPath(TutorialMod.MOD_ID, "block/" + "bismuth_lamp_on")));
 //    }
 
-    private void blockWithItem(DeferredBlock<?> deferredBlock) {
+    private void blockWithItem(RegistrySupplier<Block> deferredBlock) {
         simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
     }
 

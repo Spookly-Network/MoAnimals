@@ -1,13 +1,9 @@
 package net.spookly.moanimals.entity;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,20 +16,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.WolfVariant;
-import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-
-import net.spookly.moanimals.item.MoAnimalItems;
-import org.jetbrains.annotations.Nullable;
 
 public class Crocodile extends Animal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
@@ -41,8 +30,7 @@ public class Crocodile extends Animal implements NeutralMob {
 
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME;
     private static final UniformInt PERSISTENT_ANGER_TIME;
-    @Nullable
-    private UUID persistentAngerTarget;
+    @Nullable private UUID persistentAngerTarget;
 
     public Crocodile(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -147,8 +135,7 @@ public class Crocodile extends Animal implements NeutralMob {
         this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
-    @Nullable
-    public UUID getPersistentAngerTarget() {
+    @Nullable public UUID getPersistentAngerTarget() {
         return this.persistentAngerTarget;
     }
 

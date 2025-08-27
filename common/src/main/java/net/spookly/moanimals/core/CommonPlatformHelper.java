@@ -2,6 +2,8 @@ package net.spookly.moanimals.core;
 
 import java.util.function.Supplier;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
+
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -21,8 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Fluid;
-
-import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class CommonPlatformHelper {
     @ExpectPlatform

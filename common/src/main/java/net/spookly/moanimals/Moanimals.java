@@ -1,25 +1,20 @@
 package net.spookly.moanimals;
 
-import java.util.concurrent.CompletableFuture;
 
-import net.minecraft.resources.RegistryDataLoader;
-import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.level.levelgen.Heightmap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.spookly.moanimals.block.MoAnimalBlocks;
 import net.spookly.moanimals.entity.Duck;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
-import net.spookly.moanimals.entity.RacoonVariant;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.item.MoAnimalsItemGroups;
 import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
-import net.spookly.moanimals.registry.MoAnimalsTags;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public final class Moanimals {
     public static final String MOD_ID = "moanimals";

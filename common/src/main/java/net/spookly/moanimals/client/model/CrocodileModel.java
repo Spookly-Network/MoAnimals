@@ -1,5 +1,12 @@
 package net.spookly.moanimals.client.model;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
+import net.spookly.moanimals.Moanimals;
+import net.spookly.moanimals.client.animations.CrocodileAnimations;
+import net.spookly.moanimals.entity.Crocodile;
+
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -7,13 +14,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.spookly.moanimals.Moanimals;
-import net.spookly.moanimals.client.animations.CrocodileAnimations;
-import net.spookly.moanimals.entity.Crocodile;
 
 public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor

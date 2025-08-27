@@ -5,6 +5,9 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 import java.util.Objects;
 import java.util.Optional;
 
+import net.spookly.moanimals.entity.RacoonVariant;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -14,12 +17,8 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-
-import net.spookly.moanimals.entity.RacoonVariant;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 public class RacoonVariants {
     public static final ResourceKey<RacoonVariant> RUSTY = createKey("rusty");

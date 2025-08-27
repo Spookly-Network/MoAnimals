@@ -1,10 +1,10 @@
 package net.spookly.moanimals.mixin;
 
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.levelgen.Heightmap;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
+
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 @Mixin(SpawnPlacements.class)
 public interface SpawnPlacementsInvoker {
