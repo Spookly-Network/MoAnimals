@@ -1,29 +1,24 @@
 package net.spookly.moanimals.neoforge.wordgen;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
+import static net.spookly.moanimals.Moanimals.MOD_ID;
+
+import java.util.List;
+
+import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+import net.spookly.moanimals.util.MoAnimalsTags;
+import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
+
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
-import com.mojang.serialization.Lifecycle;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
-import net.spookly.moanimals.util.MoAnimalsTags;
-import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
-
-import java.util.List;
-
-import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_DUCK = registerKey("spawn_duck");
@@ -45,10 +40,11 @@ public class MoAnimalsBiomeModifiers {
 
         context.register(SPAWN_CROCODILE, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 5, 1, 2))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 6, 1, 2))));
+
         context.register(SPAWN_RACCOON, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.RACCOON_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 7, 1, 3))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
 
         context.register(PLACE_DUCKWEED, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.PLACE_DUCKWEED_IN),

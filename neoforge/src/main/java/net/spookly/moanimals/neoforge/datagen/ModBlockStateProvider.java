@@ -2,15 +2,16 @@ package net.spookly.moanimals.neoforge.datagen;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import dev.architectury.registry.registries.RegistrySupplier;
+
+import net.spookly.moanimals.block.MoAnimalBlocks;
+
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.spookly.moanimals.block.MoAnimalBlocks;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {

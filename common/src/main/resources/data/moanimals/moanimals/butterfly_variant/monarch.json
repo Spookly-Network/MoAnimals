@@ -1,0 +1,7 @@
+{
+  "texture": "moanimals:entity/butterfly/butterfly_monarch",
+  "biomes": [
+    "minecraft:savanna",
+    "minecraft:wooded_badlands"
+  ]
+}

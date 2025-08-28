@@ -1,11 +1,13 @@
 package net.spookly.moanimals.neoforge.wordgen;
 
+import net.spookly.moanimals.entity.Duck;
+import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
+
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.spookly.moanimals.entity.Duck;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
 public class MoAnimalsEntitySpawns {
 

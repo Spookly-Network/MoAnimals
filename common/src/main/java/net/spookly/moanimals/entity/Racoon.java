@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import net.spookly.moanimals.entity.animal.RacoonVariants;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
-import net.spookly.moanimals.registry.MoAnimalsTags;
+import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

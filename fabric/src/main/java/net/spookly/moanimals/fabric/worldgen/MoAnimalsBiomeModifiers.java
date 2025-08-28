@@ -1,14 +1,15 @@
 package net.spookly.moanimals.fabric.worldgen;
 
+import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+import net.spookly.moanimals.util.MoAnimalsTags;
+import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
+
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
-import net.spookly.moanimals.util.MoAnimalsTags;
-import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
 
 public class MoAnimalsBiomeModifiers {
     public static void modifyBiomes() {

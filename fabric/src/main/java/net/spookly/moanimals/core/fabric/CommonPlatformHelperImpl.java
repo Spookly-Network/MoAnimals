@@ -4,6 +4,10 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.NotNull;
+
+import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -33,8 +37,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
-import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
-import org.jetbrains.annotations.NotNull;
 
 public class CommonPlatformHelperImpl {
     public static <T extends Block> Supplier<T> registerBlock(@NotNull String name, Supplier<T> block) {

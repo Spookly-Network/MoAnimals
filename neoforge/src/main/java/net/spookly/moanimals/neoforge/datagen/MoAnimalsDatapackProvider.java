@@ -1,16 +1,18 @@
 package net.spookly.moanimals.neoforge.datagen;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.spookly.moanimals.neoforge.wordgen.MoAnimalsBiomeModifiers;
+import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import static net.spookly.moanimals.Moanimals.MOD_ID;
+import net.spookly.moanimals.neoforge.wordgen.MoAnimalsBiomeModifiers;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.data.PackOutput;
+
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 class MoAnimalsDatapackProvider  extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()

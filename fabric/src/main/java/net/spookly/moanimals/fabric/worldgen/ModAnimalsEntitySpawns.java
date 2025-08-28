@@ -1,17 +1,12 @@
 package net.spookly.moanimals.fabric.worldgen;
 
-import net.minecraft.world.entity.MobCategory;
+import net.spookly.moanimals.entity.Duck;
+import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
-
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.spookly.moanimals.entity.Duck;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
-import net.spookly.moanimals.util.MoAnimalsTags;
 
 
 public class ModAnimalsEntitySpawns {

@@ -1,18 +1,20 @@
 package net.spookly.moanimals.neoforge.datagen;
 
+import static net.spookly.moanimals.Moanimals.MOD_ID;
+
+import java.util.LinkedHashMap;
+
+import net.spookly.moanimals.item.MoAnimalItems;
+
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.armortrim.TrimMaterial;
+
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.spookly.moanimals.item.MoAnimalItems;
-
-import java.util.LinkedHashMap;
-
-import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 public class MoAnimalsItemModelProvider extends ItemModelProvider {
     private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();

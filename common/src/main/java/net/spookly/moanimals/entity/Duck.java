@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.item.MoAnimalItems;
-import net.spookly.moanimals.registry.MoAnimalsTags;
+import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +29,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 
+
+//https://www.ducks.org/hunting/waterfowl-id
+//https://info.pangovet.com/pet-breeds/birds/duck-breeds/
+//https://birdwatchinghq.com/ducks-of-germany/
 public class Duck extends Animal {
 
     public final AnimationState idleAnimationState = new AnimationState();

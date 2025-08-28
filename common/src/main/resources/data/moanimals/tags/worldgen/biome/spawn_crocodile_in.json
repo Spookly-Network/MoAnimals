@@ -1,9 +1,9 @@
 {
   "values": [
     "minecraft:swamp",
-    "#minecraft:is_river",
+    "minecraft:mangrove_swamp",
     {
-      "id": "#c:swamp",
+      "id": "natures_spirit:marsh",
       "required": false
     }
   ]

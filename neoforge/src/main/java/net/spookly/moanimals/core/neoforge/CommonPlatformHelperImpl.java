@@ -4,9 +4,9 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
-import net.minecraft.core.Holder;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -27,17 +27,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.spookly.moanimals.entity.Duck;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
-import net.spookly.moanimals.entity.Racoon;
-import net.spookly.moanimals.entity.RacoonVariant;
-import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
-import org.jetbrains.annotations.NotNull;
 
 public class CommonPlatformHelperImpl {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, MOD_ID);

@@ -2,13 +2,14 @@ package net.spookly.moanimals.fabric;
 
 import static net.spookly.moanimals.registry.MoAnimalsRegistries.RACOON_VARIANT;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.fabric.worldgen.MoAnimalsBiomeModifiers;
 import net.spookly.moanimals.fabric.worldgen.ModAnimalsEntitySpawns;
+
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
 public final class MoanimalsFabric implements ModInitializer {
     @Override
