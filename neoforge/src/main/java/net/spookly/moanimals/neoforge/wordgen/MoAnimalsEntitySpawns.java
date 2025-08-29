@@ -1,5 +1,6 @@
 package net.spookly.moanimals.neoforge.wordgen;
 
+import net.spookly.moanimals.entity.Butterfly;
 import net.spookly.moanimals.entity.Duck;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
@@ -18,6 +19,8 @@ public class MoAnimalsEntitySpawns {
                 Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
 }

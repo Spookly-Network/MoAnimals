@@ -2,6 +2,12 @@ package net.spookly.moanimals.client.model;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
+import net.spookly.moanimals.client.animations.ButterflyAnimations;
+import net.spookly.moanimals.entity.Butterfly;
+
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -9,15 +15,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.spookly.moanimals.client.animations.ButterflyAnimations;
-import net.spookly.moanimals.client.animations.CrocodileAnimations;
-import net.spookly.moanimals.entity.Butterfly;
-
 public class ButterflyModel<T extends Butterfly> extends HierarchicalModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "butterflymodel"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "butterfly"), "main");
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart wing_right;

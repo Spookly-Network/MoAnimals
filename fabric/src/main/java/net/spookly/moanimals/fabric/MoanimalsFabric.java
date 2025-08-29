@@ -4,8 +4,10 @@ import static net.spookly.moanimals.registry.MoAnimalsRegistries.RACOON_VARIANT;
 
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
+import net.spookly.moanimals.entity.variants.ButterflyVariant;
 import net.spookly.moanimals.fabric.worldgen.MoAnimalsBiomeModifiers;
 import net.spookly.moanimals.fabric.worldgen.ModAnimalsEntitySpawns;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
@@ -33,10 +35,12 @@ public final class MoanimalsFabric implements ModInitializer {
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.DUCK.get(), Duck.createAttributes());
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.CROCODILE.get(), Crocodile.createAttributes());
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.RACOON.get(), Racoon.createAttributes());
+        FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes());
     }
 
     // Register dynamic datapack variants
     private void registerSyncedRegistries() {
         DynamicRegistries.registerSynced(RACOON_VARIANT, RacoonVariant.DIRECT_CODEC, DynamicRegistries.SyncOption.SKIP_WHEN_EMPTY);
+        DynamicRegistries.registerSynced(MoAnimalsRegistries.BUTTERFLY_VARIANT, ButterflyVariant.DIRECT_CODEC, DynamicRegistries.SyncOption.SKIP_WHEN_EMPTY);
     }
 }

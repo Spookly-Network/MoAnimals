@@ -24,6 +24,7 @@ public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_DUCK = registerKey("spawn_duck");
     public static final ResourceKey<BiomeModifier> SPAWN_RACCOON = registerKey("spawn_raccoon");
     public static final ResourceKey<BiomeModifier> SPAWN_CROCODILE = registerKey("spawn_crocodile");
+    public static final ResourceKey<BiomeModifier> SPAWN_BUTTERFLY = registerKey("spawn_butterfly");
 
     public static final ResourceKey<BiomeModifier> PLACE_DUCKWEED = registerKey("place_duckweed");
 
@@ -34,18 +35,21 @@ public class MoAnimalsBiomeModifiers {
         //j = min
         //k = max
 
+        //Spawns
         context.register(SPAWN_DUCK, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.DUCK_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.DUCK.get(), 30, 2, 5))));
-
         context.register(SPAWN_CROCODILE, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 6, 1, 2))));
-
         context.register(SPAWN_RACCOON, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.RACCOON_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
+        context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
+                biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 12, 1, 3))));
 
+        //Features
         context.register(PLACE_DUCKWEED, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.PLACE_DUCKWEED_IN),
                 HolderSet.direct(placedFeatures.getOrThrow(MoAnimalsPlacedFeatures.DUCKWEED_PATCH_PLACED_KEY)),

@@ -1,5 +1,6 @@
 package net.spookly.moanimals.fabric.worldgen;
 
+import net.spookly.moanimals.entity.Butterfly;
 import net.spookly.moanimals.entity.Duck;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
@@ -21,5 +22,7 @@ public class ModAnimalsEntitySpawns {
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
         SpawnPlacements.register(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Butterfly::checkAnimalSpawnRules);
     }
 }

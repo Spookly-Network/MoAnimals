@@ -3,11 +3,13 @@ package net.spookly.moanimals.neoforge;
 import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.Moanimals;
+import net.spookly.moanimals.client.model.ButterflyModel;
 import net.spookly.moanimals.client.model.CrocodileModel;
 import net.spookly.moanimals.client.model.DuckModel;
 import net.spookly.moanimals.client.model.RacoonModel;
 import net.spookly.moanimals.core.neoforge.CommonPlatformHelperImpl;
 import net.spookly.moanimals.entity.*;
+import net.spookly.moanimals.entity.variants.ButterflyVariant;
 import net.spookly.moanimals.neoforge.wordgen.MoAnimalsEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
@@ -46,6 +48,11 @@ public final class MoAnimalsNeoForge {
                 RacoonVariant.DIRECT_CODEC,
                 RacoonVariant.DIRECT_CODEC
         );
+        event.dataPackRegistry(
+                MoAnimalsRegistries.BUTTERFLY_VARIANT,
+                ButterflyVariant.DIRECT_CODEC,
+                ButterflyVariant.DIRECT_CODEC
+        );
     }
 
     @SubscribeEvent
@@ -53,6 +60,7 @@ public final class MoAnimalsNeoForge {
         event.registerLayerDefinition(DuckModel.LAYER_LOCATION, DuckModel::createBodyLayer);
         event.registerLayerDefinition(CrocodileModel.LAYER_LOCATION, CrocodileModel::createBodyLayer);
         event.registerLayerDefinition(RacoonModel.LAYER_LOCATION, RacoonModel::createBodyLayer);
+        event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -60,6 +68,7 @@ public final class MoAnimalsNeoForge {
         event.put(MoAnimalEntityTypes.DUCK.get(), Duck.createAttributes().build());
         event.put(MoAnimalEntityTypes.CROCODILE.get(), Crocodile.createAttributes().build());
         event.put(MoAnimalEntityTypes.RACOON.get(), Racoon.createAttributes().build());
+        event.put(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes().build());
     }
 
     @SubscribeEvent

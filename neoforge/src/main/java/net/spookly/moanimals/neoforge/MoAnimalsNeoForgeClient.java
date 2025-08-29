@@ -2,6 +2,7 @@ package net.spookly.moanimals.neoforge;
 
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.block.MoAnimalBlocks;
+import net.spookly.moanimals.client.renderer.ButterflyRenderer;
 import net.spookly.moanimals.client.renderer.CrocodileRenderer;
 import net.spookly.moanimals.client.renderer.DuckRenderer;
 import net.spookly.moanimals.client.renderer.RacoonRenderer;
@@ -25,6 +26,7 @@ public class MoAnimalsNeoForgeClient {
         EntityRenderers.register(MoAnimalEntityTypes.DUCK.get(), DuckRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.CROCODILE.get(), CrocodileRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
+        EntityRenderers.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
     }
 
     @SubscribeEvent // on the mod event bus only on the physical client

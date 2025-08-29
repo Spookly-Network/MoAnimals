@@ -4,8 +4,8 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import dev.architectury.registry.registries.DeferredRegister;
 
-import net.spookly.moanimals.entity.BasicAnimalVariant;
 import net.spookly.moanimals.entity.RacoonVariant;
+import net.spookly.moanimals.entity.variants.ButterflyVariant;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 public class MoAnimalsRegistries {
 
     public static ResourceKey<Registry<RacoonVariant>> RACOON_VARIANT = createRegistryKey("racoon_variant");
-    public static ResourceKey<Registry<BasicAnimalVariant>> BASIC_ANIMAL_VARIANT = createRegistryKey("basic_animal_variant");
+    public static ResourceKey<Registry<ButterflyVariant>> BUTTERFLY_VARIANT = createRegistryKey("butterfly_variant");
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String string) {
         return ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
