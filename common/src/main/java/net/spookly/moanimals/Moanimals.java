@@ -29,9 +29,4 @@ public final class Moanimals {
         MoAnimalsEntityDataSerializers.init();
     }
 
-    public static void registerSpawnPlacements() {
-        SpawnPlacementsInvoker.invokeRegister(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
-        SpawnPlacementsInvoker.invokeRegister(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-    }
-
 }

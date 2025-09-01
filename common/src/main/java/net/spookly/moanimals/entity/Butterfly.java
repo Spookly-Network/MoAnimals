@@ -1,5 +1,15 @@
 package net.spookly.moanimals.entity;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.biome.Biome;
+import net.spookly.moanimals.entity.animal.RacoonVariants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,21 +36,27 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>> {
+import java.util.Optional;
+
+public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
     protected Butterfly(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+        this.moveControl = new FlyingMoveControl(this, 7, true);
+
+
     }
 
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
         RegistryAccess registryAccess = this.registryAccess();
         Registry<ButterflyVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
         builder.define(DATA_VARIANT_ID, (Holder<ButterflyVariant>) registry.getHolder(ButterflyVariants.DEFAULT).or(registry::getAny).orElseThrow());
@@ -48,9 +64,10 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0));
-        this.goalSelector.addGoal(9, new FloatGoal(this));
-
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
+        this.goalSelector
+                .addGoal(1, new AvoidEntityGoal(this, Player.class, 16.0F, 1.6, 1.4, livingEntity -> true));
         super.registerGoals();
     }
 
@@ -70,10 +87,10 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
+    protected @NotNull PathNavigation createNavigation(Level level) {
         FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
         nav.setCanOpenDoors(false);
-        nav.setCanFloat(false); // darf schweben
+        nav.setCanFloat(true); // darf schweben
         return nav;
     }
 
@@ -113,13 +130,49 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON);
+        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON) && !pLevel.getLevel().isRaining();
+    }
+
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        this.getVariant().unwrapKey().ifPresent((resourceKey) -> compoundTag.putString("variant", resourceKey.location().toString()));
+    }
+
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
+    }
+
+    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
+        Holder<ButterflyVariant> holder2;
+
+        holder2 = ButterflyVariants.getSpawnVariant(this.registryAccess(), holder);
+        spawnGroupData = new ButterflyGroupData(holder2);
+
+        this.setVariant(holder2);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2)
                 .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.FLYING_SPEED, 0.6F)
                 .add(Attributes.FOLLOW_RANGE, 24d);
+    }
+
+    @Override
+    public boolean isFlying() {
+        return !this.onGround();
+    }
+
+    public static class ButterflyGroupData extends AgeableMob.AgeableMobGroupData {
+        public final Holder<ButterflyVariant> type;
+
+        public ButterflyGroupData(Holder<ButterflyVariant> holder) {
+            super(false);
+            this.type = holder;
+        }
     }
 }

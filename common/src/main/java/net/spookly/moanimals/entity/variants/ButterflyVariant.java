@@ -18,6 +18,7 @@ import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 
+//todo: add size modifier
 public class ButterflyVariant {
     public static final Codec<ButterflyVariant> DIRECT_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             ResourceLocation.CODEC.fieldOf("texture").forGetter((arg) -> arg.texture),

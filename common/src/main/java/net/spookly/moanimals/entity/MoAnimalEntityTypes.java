@@ -20,7 +20,7 @@ public class MoAnimalEntityTypes {
             .build("racoon")
     );
     public static final RegistrySupplier<EntityType<Butterfly>> BUTTERFLY = ENTITY_TYPES.register("butterfly", () -> EntityType.Builder.of(Butterfly::new, MobCategory.AMBIENT)
-            .sized(0.1f, 0.5f)
+            .sized(0.70f, 0.1f)
             .build("butterfly")
     );
 

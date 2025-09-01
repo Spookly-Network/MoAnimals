@@ -1,7 +1,11 @@
 {
   "texture": "moanimals:entity/butterfly/butterfly_emperor",
   "biomes": [
-    "minecraft:savanna",
-    "minecraft:wooded_badlands"
+    "minecraft:bamboo_jungle",
+    "minecraft:jungle",
+    "minecraft:sparse_jungle",
+    "minecraft:bamboo_jungle",
+    "minecraft:jungle",
+    "minecraft:sparse_jungle"
   ]
 }

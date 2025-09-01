@@ -20,7 +20,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        blockWithItem(MoAnimalBlocks.DUCKWEED);
+        blockItem(MoAnimalBlocks.DUCKWEED);
 
 //        blockWithItem(ModBlocks.BISMUTH_ORE);
 //        blockWithItem(ModBlocks.BISMUTH_DEEPSLATE_ORE);
