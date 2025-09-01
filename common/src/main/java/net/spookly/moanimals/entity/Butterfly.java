@@ -1,51 +1,51 @@
 package net.spookly.moanimals.entity;
 
+import java.util.Optional;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ambient.Bat;
-import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.spookly.moanimals.entity.animal.RacoonVariants;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.entity.animal.ButterflyVariants;
 import net.spookly.moanimals.entity.variants.ButterflyVariant;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.util.MoAnimalsTags;
-
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
     public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState flapsAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
+    private int flapAnimationTimeout = 0;
 
     protected Butterfly(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -121,16 +121,30 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = 80; //Animation leanght
-            this.idleAnimationState.start(this.tickCount);
+//        this.idleAnimationState.animateWhen(this.);
+        if (this.flapAnimationTimeout <= 0) {
+            this.flapAnimationTimeout=60;
+            this.flapsAnimationState.start(this.tickCount);
         } else {
-            --this.idleAnimationTimeout;
+            --this.flapAnimationTimeout;
         }
+
+//        if (this.flapsAnimationState.animateWhen(); <= 0) {
+//            this.idleAnimationTimeout = 80; //Animation leanght
+//            this.idleAnimationState.start(this.tickCount);
+//        } else {
+//            --this.idleAnimationTimeout;
+//        }
     }
 
+    //FIXME: Check always fails
     public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON) && !pLevel.getLevel().isRaining();
+        var check1 = !pLevel.getLevel().isRaining();
+        var biomes = MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON;
+        var blockBelow = pLevel.getBlockState(pPos.below());
+        var check = blockBelow.is(biomes);
+        var checkFinal = check && check1;
+        return checkFinal;
     }
 
     public void addAdditionalSaveData(CompoundTag compoundTag) {
@@ -143,7 +157,8 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
     }
 
-    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
         Holder<ButterflyVariant> holder2;
 

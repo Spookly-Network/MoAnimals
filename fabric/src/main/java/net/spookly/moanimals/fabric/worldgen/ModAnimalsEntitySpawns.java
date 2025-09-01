@@ -1,8 +1,6 @@
 package net.spookly.moanimals.fabric.worldgen;
 
-import net.spookly.moanimals.entity.Butterfly;
-import net.spookly.moanimals.entity.Duck;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+import net.spookly.moanimals.entity.*;
 
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -19,9 +17,9 @@ public class ModAnimalsEntitySpawns {
         SpawnPlacements.register(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
         SpawnPlacements.register(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);
         SpawnPlacements.register(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
         SpawnPlacements.register(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Butterfly::checkSpawnRules);
     }

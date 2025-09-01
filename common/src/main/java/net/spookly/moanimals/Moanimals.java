@@ -1,6 +1,7 @@
 package net.spookly.moanimals;
 
 
+import net.spookly.moanimals.util.MoAnimalsTags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,7 @@ public final class Moanimals {
         MoAnimalsItemGroups.init();
         MoAnimalItems.init();
         MoAnimalsEntityDataSerializers.init();
+        MoAnimalsTags.init();
     }
 
 }

@@ -2,23 +2,23 @@ package net.spookly.moanimals.util;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MoAnimalsTags {
-    public final class BiomeTags {
+    public interface BiomeTags {
 
-        public static TagKey<Biome> DUCK_SPAWNABLE_IN = createTag("spawn_duck_in");
-        public static TagKey<Biome> RACCOON_SPAWNABLE_IN = createTag("spawn_raccoon_in");
-        public static TagKey<Biome> CROCODILE_SPAWNABLE_IN = createTag("spawn_crocodile_in");
-        public static TagKey<Biome> BUTTERFLY_SPAWNABLE_IN = createTag("spawn_butterfly_in");
+        TagKey<Biome> DUCK_SPAWNABLE_IN = createTag("spawn_duck_in");
+        TagKey<Biome> RACCOON_SPAWNABLE_IN = createTag("spawn_raccoon_in");
+        TagKey<Biome> CROCODILE_SPAWNABLE_IN = createTag("spawn_crocodile_in");
+        TagKey<Biome> BUTTERFLY_SPAWNABLE_IN = createTag("spawn_butterfly_in");
 
-        public static TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
+        TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
 
         private static TagKey<Biome> createTag(@NotNull String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
@@ -26,12 +26,15 @@ public class MoAnimalsTags {
     }
 
     public interface BlockTags {
-        public static final TagKey<Block> DUCKS_SPAWNABLE_ON = tag("ducks_spawnable_on");
-        public static final TagKey<Block> CROCODILE_SPAWNABLE_ON = tag("crocodile_spawnable_on");
-        public static final TagKey<Block> BUTTERFLY_SPAWNABLE_ON = tag("butterfly_spawnable_on");
+        TagKey<Block> DUCKS_SPAWNABLE_ON = tag("ducks_spawnable_on");
+        TagKey<Block> CROCODILE_SPAWNABLE_ON = tag("crocodile_spawnable_on");
+        TagKey<Block> BUTTERFLY_SPAWNABLE_ON = tag("butterfly_spawnable_on");
+        TagKey<Block> RACCOON_SPAWNABLE_ON = tag("raccoon_spawnable_on");
 
         private static TagKey<Block> tag(@NotNull String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
         }
     }
+
+    public static void init() {}
 }

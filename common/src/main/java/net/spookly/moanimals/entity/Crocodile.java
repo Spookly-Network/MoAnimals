@@ -96,7 +96,7 @@ public class Crocodile extends Animal implements NeutralMob {
         }
     }
 
-    public static boolean checkDuckSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Crocodile> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
         return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON);
     }
 

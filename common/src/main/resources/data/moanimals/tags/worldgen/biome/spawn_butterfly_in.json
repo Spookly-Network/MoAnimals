@@ -15,9 +15,8 @@
     "minecraft:bamboo_jungle",
     "minecraft:jungle",
     "minecraft:sparse_jungle",
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:beach"
+    "minecraft:beach",
+    "minecraft:savanna",
+    "minecraft:mangrove_swamp"
   ]
 }

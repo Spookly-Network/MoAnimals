@@ -1,8 +1,6 @@
 package net.spookly.moanimals.neoforge.wordgen;
 
-import net.spookly.moanimals.entity.Butterfly;
-import net.spookly.moanimals.entity.Duck;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
+import net.spookly.moanimals.entity.*;
 
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
@@ -16,9 +14,9 @@ public class MoAnimalsEntitySpawns {
         event.register(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Duck::checkDuckSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                Crocodile::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                Racoon::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }

@@ -198,8 +198,8 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
         }
     }
 
-    public static boolean checkRaccoonSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.DUCKS_SPAWNABLE_ON) || pLevel.getBlockState(pPos.below()).getFluidState().is(FluidTags.WATER);
+    public static boolean checkSpawnRules(EntityType<? extends Racoon> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.RACCOON_SPAWNABLE_ON) || pLevel.getBlockState(pPos.below()).getFluidState().is(FluidTags.WATER);
     }
 
     @Override
