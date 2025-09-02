@@ -2,6 +2,15 @@ package net.spookly.moanimals.entity;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.spookly.moanimals.entity.animal.ButterflyVariants;
+import net.spookly.moanimals.entity.variant.ButterflyVariant;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
+import net.spookly.moanimals.util.MoAnimalsTags;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -31,14 +40,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-
-import net.spookly.moanimals.entity.animal.ButterflyVariants;
-import net.spookly.moanimals.entity.variants.ButterflyVariant;
-import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
-import net.spookly.moanimals.util.MoAnimalsTags;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
@@ -157,8 +158,7 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
         Holder<ButterflyVariant> holder2;
 

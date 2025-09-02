@@ -2,6 +2,8 @@ package net.spookly.moanimals.entity.animal;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
@@ -14,8 +16,6 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ButterflyVariants {
 

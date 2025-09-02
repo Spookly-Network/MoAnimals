@@ -1,8 +1,8 @@
 package net.spookly.moanimals.network.syncher;
 
 import net.spookly.moanimals.core.CommonPlatformHelper;
-import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.RacoonVariant;
 
 import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataSerializer;
