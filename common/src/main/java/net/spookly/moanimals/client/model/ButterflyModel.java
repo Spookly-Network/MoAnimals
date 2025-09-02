@@ -56,9 +56,11 @@ public class ButterflyModel<T extends Butterfly> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(Butterfly entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animateWalk(ButterflyAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
+        this.animateWalk(ButterflyAnimations.walk, limbSwing, limbSwingAmount, 2f, 1f);
+
         this.animate(entity.idleAnimationState, ButterflyAnimations.idle, ageInTicks, 1f);
-        this.animate(entity.flapsAnimationState, ButterflyAnimations.flap, ageInTicks, 1f);
+        this.animate(entity.sitAnimationState, ButterflyAnimations.sit, ageInTicks, 1f);
+        this.animate(entity.flyAnimationState, ButterflyAnimations.walk, ageInTicks, 1f);
     }
 
     @Override

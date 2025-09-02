@@ -6,10 +6,6 @@
     "minecraft:forest",
     "minecraft:grove",
     "minecraft:old_growth_birch_forest",
-    {
-      "id": "minecraft:pale_garden",
-      "required": false
-    },
     "minecraft:plains",
     "minecraft:sunflower_plains",
     "minecraft:bamboo_jungle",
@@ -17,6 +13,10 @@
     "minecraft:sparse_jungle",
     "minecraft:beach",
     "minecraft:savanna",
-    "minecraft:mangrove_swamp"
+    "minecraft:mangrove_swamp",
+    {
+      "id": "minecraft:pale_garden",
+      "required": false
+    }
   ]
 }

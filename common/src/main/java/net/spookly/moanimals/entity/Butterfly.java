@@ -21,6 +21,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -28,9 +29,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -43,8 +42,12 @@ import net.minecraft.world.level.biome.Biome;
 
 public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
+    public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState flapsAnimationState = new AnimationState();
+    public final AnimationState flapAnimationState = new AnimationState();
+    public final AnimationState sitAnimationState = new AnimationState();
+    public final AnimationState flyAnimationState = new AnimationState();
+
     private int idleAnimationTimeout = 0;
     private int flapAnimationTimeout = 0;
 
@@ -66,9 +69,10 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
+        this.goalSelector.addGoal(1, new SeekShelterIfRainingGoal(1.2));
         this.goalSelector
-                .addGoal(1, new AvoidEntityGoal(this, Player.class, 16.0F, 1.6, 1.4, livingEntity -> true));
+                .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 6.0F, 1.4, 1.4));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
         super.registerGoals();
     }
 
@@ -123,11 +127,13 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     private void setupAnimationStates() {
 //        this.idleAnimationState.animateWhen(this.);
-        if (this.flapAnimationTimeout <= 0) {
-            this.flapAnimationTimeout=60;
-            this.flapsAnimationState.start(this.tickCount);
+        if (this.onGround()) {
+            this.sitAnimationState.startIfStopped(this.tickCount);
+            this.flyAnimationState.stop();
+            this.flapAnimationState.stop();
         } else {
-            --this.flapAnimationTimeout;
+            this.flyAnimationState.startIfStopped(this.tickCount);
+            this.sitAnimationState.stop();
         }
 
 //        if (this.flapsAnimationState.animateWhen(); <= 0) {
@@ -182,6 +188,11 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         return !this.onGround();
     }
 
+    @Override
+    public boolean isFlapping() {
+        return this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
+    }
+
     public static class ButterflyGroupData extends AgeableMob.AgeableMobGroupData {
         public final Holder<ButterflyVariant> type;
 
@@ -189,5 +200,53 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
             super(false);
             this.type = holder;
         }
+    }
+
+    class SeekShelterIfRainingGoal extends FleeSunGoal {
+        private int interval = reducedTickDelay(100);
+
+        public SeekShelterIfRainingGoal(final double d) {
+            super(Butterfly.this, d);
+        }
+
+        @Override
+        public boolean canUse() {
+            if (Butterfly.this.level().isRaining()) return this.setWantedPos();
+            return false;
+
+//            if (!Butterfly.this.isSleeping() && this.mob.getTarget() == null) {
+//                if (Butterfly.this.level().isThundering() && Butterfly.this.level().canSeeSky(this.mob.blockPosition())) {
+//                    return this.setWantedPos();
+//                } else if (this.interval > 0) {
+//                    this.interval--;
+//                    return false;
+//                } else {
+//                    this.interval = 100;
+//                    BlockPos blockPos = this.mob.blockPosition();
+//                    return Butterfly.this.level().isDay() && Butterfly.this.level().canSeeSky(blockPos) && !((ServerLevel)Butterfly.this.level()).isVillage(blockPos) && this.setWantedPos();
+//                }
+//            } else {
+//                return false;
+//            }
+        }
+
+        @Override
+        public void start() {
+//            Butterfly.this.clearStates();
+            super.start();
+        }
+    }
+
+    abstract class ButterflyBehaviorGoal extends Goal {
+//        private final TargetingConditions alertableTargeting = TargetingConditions.forCombat().range((double)12.0F).ignoreLineOfSight().selector(Racoon.this.new FoxAlertableEntitiesSelector());
+
+        protected boolean hasShelter() {
+            BlockPos blockPos = BlockPos.containing(Butterfly.this.getX(), Butterfly.this.getBoundingBox().maxY, Butterfly.this.getZ());
+            return !Butterfly.this.level().canSeeSky(blockPos) && Butterfly.this.getWalkTargetValue(blockPos) >= 0.0F;
+        }
+
+//        protected boolean alertable() {
+//            return !Racoon.this.level().getNearbyEntities(LivingEntity.class, this.alertableTargeting, Fox.this, Fox.this.getBoundingBox().inflate((double)12.0F, (double)6.0F, (double)12.0F)).isEmpty();
+//        }
     }
 }

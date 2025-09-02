@@ -47,7 +47,7 @@ public class MoAnimalsBiomeModifiers {
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
         context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 13, 1, 3))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7))));
 
         //Features
         context.register(PLACE_DUCKWEED, new BiomeModifiers.AddFeaturesBiomeModifier(
