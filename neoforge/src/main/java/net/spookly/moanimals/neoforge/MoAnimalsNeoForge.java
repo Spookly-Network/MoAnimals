@@ -1,5 +1,6 @@
 package net.spookly.moanimals.neoforge;
 
+import net.spookly.moanimals.entity.variant.RacoonVariant;
 import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.Moanimals;
@@ -9,7 +10,7 @@ import net.spookly.moanimals.client.model.DuckModel;
 import net.spookly.moanimals.client.model.RacoonModel;
 import net.spookly.moanimals.core.neoforge.CommonPlatformHelperImpl;
 import net.spookly.moanimals.entity.*;
-import net.spookly.moanimals.entity.variants.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.neoforge.wordgen.MoAnimalsEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 

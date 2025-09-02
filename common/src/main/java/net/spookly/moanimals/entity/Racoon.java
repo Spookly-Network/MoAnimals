@@ -3,6 +3,7 @@ package net.spookly.moanimals.entity;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import net.spookly.moanimals.entity.variant.RacoonVariant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -5,16 +5,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
-import net.spookly.moanimals.entity.animal.RacoonVariants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.entity.animal.ButterflyVariants;
-import net.spookly.moanimals.entity.variants.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.util.MoAnimalsTags;
