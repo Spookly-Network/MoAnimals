@@ -5,7 +5,7 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 import java.util.Objects;
 import java.util.Optional;
 
-import net.spookly.moanimals.entity.RacoonVariant;
+import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 import net.minecraft.core.Holder;

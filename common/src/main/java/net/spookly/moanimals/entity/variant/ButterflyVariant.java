@@ -1,4 +1,4 @@
-package net.spookly.moanimals.entity.variants;
+package net.spookly.moanimals.entity.variant;
 
 import java.util.Objects;
 

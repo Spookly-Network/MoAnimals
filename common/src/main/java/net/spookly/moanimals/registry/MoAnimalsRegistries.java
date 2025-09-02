@@ -4,8 +4,8 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import dev.architectury.registry.registries.DeferredRegister;
 
-import net.spookly.moanimals.entity.RacoonVariant;
-import net.spookly.moanimals.entity.variants.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.RacoonVariant;
+import net.spookly.moanimals.entity.variant.ButterflyVariant;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;

@@ -4,7 +4,8 @@ import static net.spookly.moanimals.registry.MoAnimalsRegistries.RACOON_VARIANT;
 
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
-import net.spookly.moanimals.entity.variants.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.fabric.worldgen.MoAnimalsBiomeModifiers;
 import net.spookly.moanimals.fabric.worldgen.ModAnimalsEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
