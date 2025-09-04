@@ -101,7 +101,7 @@ public class CommonPlatformHelper {
     }
 
     @ExpectPlatform
-    public static <T extends Mob> void registerSpawnPlacement(EntityType<T> entityType, SpawnPlacementTypes decoratorType, Heightmap.Types heightMapType, SpawnPlacements.SpawnPredicate<T> decoratorPredicate) {
+    public static <T extends Mob> void registerSpawnPlacement(EntityType<T> entityType, SpawnPlacementType decoratorType, Heightmap.Types heightMapType, SpawnPlacements.SpawnPredicate<T> decoratorPredicate) {
         throw new AssertionError();
     }
 

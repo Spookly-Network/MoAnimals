@@ -4,6 +4,7 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
+import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.registries.Registries;
@@ -12,10 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -26,6 +24,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -90,9 +89,10 @@ public class CommonPlatformHelperImpl {
 //        BrewingRecipeRegistry.addRecipe(new NaturalistBrewingRecipe(input, ingredient, output));
 //    }
 //
-//    public static <T extends Mob> void registerSpawnPlacement(EntityType<T> entityType, SpawnPlacements.Type decoratorType, Heightmap.Types heightMapType, SpawnPlacements.@NotNull SpawnPredicate<T> decoratorPredicate) {
-//        SpawnPlacements.register(entityType, decoratorType, heightMapType, decoratorPredicate);
-//    }
+    public static <T extends Mob> void registerSpawnPlacement(EntityType<T> entityType, SpawnPlacementType spawnPlacementType, Heightmap.Types heightMapType, SpawnPlacements.@NotNull SpawnPredicate<T> decoratorPredicate) {
+        SpawnPlacementsInvoker.invokeRegister(entityType, spawnPlacementType, heightMapType, decoratorPredicate);
+//        SpawnPlacements.register(entityType, spawnPlacementType, heightMapType, decoratorPredicate);
+    }
 //
 //    public static void registerCompostable(float chance, ItemLike item) {
 //        ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);

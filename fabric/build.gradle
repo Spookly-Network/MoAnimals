@@ -2,6 +2,8 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
+def generatedResources = file("src/generated")
+
 architectury {
     platformSetupLoomIde()
     fabric()
@@ -22,6 +24,9 @@ configurations {
         canBeResolved = true
         canBeConsumed = false
     }
+}
+fabricApi {
+    configureDataGeneration()
 }
 
 dependencies {
@@ -46,6 +51,12 @@ processResources {
 shadowJar {
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
+}
+
+sourceSets {
+    main {
+        resources.srcDir generatedResources
+    }
 }
 
 remapJar {

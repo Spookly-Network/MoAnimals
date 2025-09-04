@@ -7,7 +7,8 @@ license = "MIT"
 modId = "moanimals"
 version = "${version}"
 displayName = "MoAnimals"
-authors = ""
+authors = "Nikvyrn"
+logoFile = "assets/moanimals/icon.png"
 description = '''
 
 '''

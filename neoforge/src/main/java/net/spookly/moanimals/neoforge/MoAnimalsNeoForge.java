@@ -1,7 +1,13 @@
 package net.spookly.moanimals.neoforge;
 
-import org.jetbrains.annotations.NotNull;
-
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.client.model.ButterflyModel;
 import net.spookly.moanimals.client.model.CrocodileModel;
@@ -11,19 +17,11 @@ import net.spookly.moanimals.core.neoforge.CommonPlatformHelperImpl;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
-import net.spookly.moanimals.neoforge.wordgen.MoAnimalsEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
+import org.jetbrains.annotations.NotNull;
 
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
-
-@Mod(Moanimals.MOD_ID) @EventBusSubscriber(modid = Moanimals.MOD_ID)
+@Mod(Moanimals.MOD_ID)
+@EventBusSubscriber(modid = Moanimals.MOD_ID)
 public final class MoAnimalsNeoForge {
     public MoAnimalsNeoForge(IEventBus modBus) {
         // Run our common setup.
@@ -74,6 +72,6 @@ public final class MoAnimalsNeoForge {
 
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        MoAnimalsEntitySpawns.registerSpawnPlacements(event);
+        Moanimals.registerSpawnPlacements();
     }
 }

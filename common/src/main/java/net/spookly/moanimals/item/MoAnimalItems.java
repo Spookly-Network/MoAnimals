@@ -27,6 +27,7 @@ public class MoAnimalItems {
     public static final Supplier<SpawnEggItem> RACCOON_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("raccoon_spawn_egg", MoAnimalEntityTypes.RACOON, 1, 2);
     public static final Supplier<SpawnEggItem> DUCK_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("duck_spawn_egg", MoAnimalEntityTypes.DUCK, 1, 2);
     public static final Supplier<SpawnEggItem> CROCODILE_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("crocodile_spawn_egg", MoAnimalEntityTypes.CROCODILE, 1, 2);
+    public static final Supplier<SpawnEggItem> BUTTERFLY_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("butterfly_spawn_egg", MoAnimalEntityTypes.BUTTERFLY, 1, 2);
 
     // Block Items
     public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));

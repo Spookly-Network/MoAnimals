@@ -7,7 +7,6 @@ import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.fabric.worldgen.MoAnimalsBiomeModifiers;
-import net.spookly.moanimals.fabric.worldgen.ModAnimalsEntitySpawns;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 import net.fabricmc.api.ModInitializer;
@@ -23,11 +22,11 @@ public final class MoanimalsFabric implements ModInitializer {
 
         //Init Common
         Moanimals.init();
+        Moanimals.registerSpawnPlacements();
 
         //Init Fabric
         registerEntityAttributes();
         registerSyncedRegistries();
-        ModAnimalsEntitySpawns.init();
         MoAnimalsBiomeModifiers.modifyBiomes();
     }
 

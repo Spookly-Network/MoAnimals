@@ -5,7 +5,7 @@
   "name": "MoAnimals",
   "description": "",
   "authors": [
-    ""
+    "Nikvyrn"
   ],
   "contact": {
     "homepage": ""
@@ -19,6 +19,9 @@
     ],
     "client": [
       "net.spookly.moanimals.fabric.MoanimalsFabricClient"
+    ],
+    "fabric-datagen": [
+      "net.spookly.moanimals.fabric.datagen.MoAnimalsDatagenerators"
     ]
   },
   "mixins": [
