@@ -1,5 +1,6 @@
 package net.spookly.moanimals.entity;
 
+import java.util.EnumSet;
 import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +33,8 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +42,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 
 public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
@@ -54,8 +59,11 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     protected Butterfly(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 7, true);
-
-
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
+        this.setPathfindingMalus(PathType.COCOA, -1.0F);
+//        this.setPathfindingMalus(PathType.LEAVES, 0F);
     }
 
     @Override
@@ -68,11 +76,12 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SeekShelterIfRainingGoal(1.2));
         this.goalSelector
                 .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 6.0F, 1.4, 1.4));
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new ButterflyWanderGoal());
         super.registerGoals();
     }
 
@@ -248,5 +257,39 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 //        protected boolean alertable() {
 //            return !Racoon.this.level().getNearbyEntities(LivingEntity.class, this.alertableTargeting, Fox.this, Fox.this.getBoundingBox().inflate((double)12.0F, (double)6.0F, (double)12.0F)).isEmpty();
 //        }
+    }
+
+    class ButterflyWanderGoal extends ButterflyBehaviorGoal {
+        private static final int WANDER_THRESHOLD = 22;
+
+        ButterflyWanderGoal() {
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return Butterfly.this.navigation.isDone() && Butterfly.this.random.nextInt(10) == 0;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return Butterfly.this.navigation.isInProgress();
+        }
+
+        @Override
+        public void start() {
+            Vec3 vec3 = this.findPos();
+            if (vec3 != null) {
+                Butterfly.this.navigation.moveTo(Butterfly.this.navigation.createPath(BlockPos.containing(vec3), 1), 1.0);
+            }
+        }
+
+        @Nullable private Vec3 findPos() {
+            Vec3 vec32;
+            vec32 = Butterfly.this.getViewVector(0.0F);
+            int i = 8;
+            Vec3 vec33 = HoverRandomPos.getPos(Butterfly.this, 8, 7, vec32.x, vec32.z, (float) (Math.PI / 2), 3, 1);
+            return vec33 != null ? vec33 : AirAndWaterRandomPos.getPos(Butterfly.this, 8, 4, -2, vec32.x, vec32.z, (float) (Math.PI / 2));
+        }
     }
 }
