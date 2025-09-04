@@ -13,8 +13,8 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ModBlockStateProvider extends BlockStateProvider {
-    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+public class MoAnimalsBlockStateProvider extends BlockStateProvider {
+    public MoAnimalsBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, MOD_ID, exFileHelper);
     }
 
