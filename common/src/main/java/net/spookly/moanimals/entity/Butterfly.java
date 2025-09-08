@@ -76,11 +76,11 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25));
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.4));
+//        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SeekShelterIfRainingGoal(1.2));
         this.goalSelector
-                .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 6.0F, 1.4, 1.4));
+                .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 12.0F, 1.4, 1.4));
         this.goalSelector.addGoal(2, new ButterflyWanderGoal());
         super.registerGoals();
     }

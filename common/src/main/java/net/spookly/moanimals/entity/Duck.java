@@ -13,6 +13,8 @@ import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -27,7 +29,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 
 //https://www.ducks.org/hunting/waterfowl-id
@@ -42,12 +46,19 @@ public class Duck extends Animal {
     private boolean groupLeader = false;
     private int leaderReevalCooldown = 0;
 
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    public float flapping = 1.0F;
+    private float nextFlap = 1.0F;
+
 
     public Duck(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
-        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
+//        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -60,10 +71,12 @@ public class Duck extends Animal {
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
-        nav.setCanOpenDoors(false);
-        nav.setCanFloat(false); // darf schweben
-        return nav;
+        return super.createNavigation(level);
+
+//        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
+//        nav.setCanOpenDoors(false);
+//        nav.setCanFloat(false); // darf schweben
+//        return nav;
     }
 
 
@@ -79,7 +92,10 @@ public class Duck extends Animal {
         this.goalSelector.addGoal(5, new FollowLeaderGoal(this, 1.15, 3.0F, 10.0F));
 
         // Bodenbewegung (nur wenn am Boden)
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0) {
+        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
+        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
+
+        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0) {
             @Override
             public boolean canUse() {
                 return super.canUse() && Duck.this.onGround();
@@ -105,15 +121,63 @@ public class Duck extends Animal {
         });
 
 
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
+//        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         super.registerGoals();
     }
 
+    // AI
+    // AI
+
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    protected void onFlap() {
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        return false;
+    }
+
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        return false; // Enten gleiten, kein Fallschaden
+    public void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.getMoveControl().hasWanted()) {
+            this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.2D);;
+        } else {
+            this.setSprinting(false);
+            this.flapping = 0.9F;
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+
+        this.flapping *= 0.9F;
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround() && vec3.y < 0.0) {
+            this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
+        }
+
+        this.flap += this.flapping * 2.0F;
+//        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
+//            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+//            this.spawnAtLocation(NaturalistRegistry.DUCK_EGG.get());
+//            this.gameEvent(GameEvent.ENTITY_PLACE);
+//            this.eggTime = this.random.nextInt(6000) + 6000;
+//        }
+
     }
 
 
@@ -164,6 +228,10 @@ public class Duck extends Animal {
                 leaderReevalCooldown = 200 + this.getRandom().nextInt(200); // 10–20 Sekunden
                 reassignLeaderIfNeeded();
             }
+
+            if (this.isInWater()) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            }
         }
 
     }
@@ -175,7 +243,8 @@ public class Duck extends Animal {
         boolean hasLeaderNearby = nearby.stream().anyMatch(Duck::isGroupLeader);
 
         if (!hasLeaderNearby && this.getRandom().nextFloat() < 0.25f) {
-            this.groupLeader = true;
+            if (!this.isBaby())
+                this.groupLeader = true;
         } else if (hasLeaderNearby) {
             // Bei zu vielen Leadern in Nähe: nur der mit kleinster UUID bleibt Leader
             nearby.add(this);

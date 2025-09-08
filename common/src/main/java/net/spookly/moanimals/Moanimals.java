@@ -31,10 +31,15 @@ public final class Moanimals {
     }
 
     public static void registerSpawnPlacements() {
-        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);
-        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
-        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
+//        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
+
+//        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
+
+
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Butterfly::checkSpawnRules);
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);
     }
 
 }

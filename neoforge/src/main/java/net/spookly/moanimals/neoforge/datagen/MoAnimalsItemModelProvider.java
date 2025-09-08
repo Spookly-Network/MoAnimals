@@ -27,6 +27,7 @@ public class MoAnimalsItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(MoAnimalItems.BREADCRUMBS.get());
         basicItem(MoAnimalItems.DUCKWEED.get());
+        basicItem(MoAnimalItems.DUCK_EGG.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {

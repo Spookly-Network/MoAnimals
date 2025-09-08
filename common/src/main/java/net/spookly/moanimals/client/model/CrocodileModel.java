@@ -106,8 +106,11 @@ public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
     public void setupAnim(Crocodile entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
-        this.animateWalk(CrocodileAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
+//        this.animateWalk(CrocodileAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
         this.animate(entity.idleAnimationState, CrocodileAnimations.idle, ageInTicks, 1f);
+        this.animate(entity.swimAnimation, CrocodileAnimations.swim, ageInTicks, 1f);
+        this.animate(entity.walkAnimation, CrocodileAnimations.walk, ageInTicks, 1f);
+        this.animate(entity.attackAnimation, CrocodileAnimations.attack, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
