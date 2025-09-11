@@ -4,7 +4,6 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
-import net.spookly.moanimals.item.MoAnimalsItemGroups;
 import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;

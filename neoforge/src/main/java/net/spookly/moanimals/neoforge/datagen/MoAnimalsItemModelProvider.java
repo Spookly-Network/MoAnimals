@@ -3,12 +3,10 @@ package net.spookly.moanimals.neoforge.datagen;
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.LinkedHashMap;
-import java.util.Optional;
 
 import net.spookly.moanimals.item.MoAnimalItems;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.armortrim.TrimMaterial;

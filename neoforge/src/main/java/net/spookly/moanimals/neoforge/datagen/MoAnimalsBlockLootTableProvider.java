@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import dev.architectury.registry.registries.RegistrySupplier;
+
 import net.spookly.moanimals.block.MoAnimalBlocks;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;

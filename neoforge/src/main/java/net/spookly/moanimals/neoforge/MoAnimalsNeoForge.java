@@ -1,9 +1,9 @@
 package net.spookly.moanimals.neoforge;
 
-import net.spookly.moanimals.client.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.Moanimals;
+import net.spookly.moanimals.client.model.*;
 import net.spookly.moanimals.core.neoforge.CommonPlatformHelperImpl;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
