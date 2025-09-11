@@ -32,5 +32,7 @@ public class MoAnimalsBiomeModifiers {
                 MobCategory.CREATURE, MoAnimalEntityTypes.CROCODILE.get(), 3, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
                 MobCategory.AMBIENT, MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7);
+        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
+                MobCategory.MONSTER, MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3);
     }
 }

@@ -3,6 +3,7 @@ plugins {
 }
 
 def generatedResources = file("src/generated")
+def assets = rootProject.file('common/src/main/resources')
 
 architectury {
     platformSetupLoomIde()
@@ -67,10 +68,16 @@ remapJar {
 
 loom {
     runs {
-        clientData {
+        data {
             data()
-            programArgs "--all", "--mod", "moanimals"
-            programArgs "--output", generatedResources.absolutePath
+            programArgs(
+                    '--mod', 'moanimals',
+                    '--all',
+                    '--output', generatedResources.absolutePath,
+                    '--existing', assets.getAbsolutePath(),
+                    '--existing-mod', 'moanimals'
+            )
+
         }
     }
 }

@@ -13,23 +13,19 @@ import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -37,6 +33,7 @@ import net.minecraft.world.phys.Vec3;
 //https://www.ducks.org/hunting/waterfowl-id
 //https://info.pangovet.com/pet-breeds/birds/duck-breeds/
 //https://birdwatchinghq.com/ducks-of-germany/
+//FIXME: Duck baby speed
 public class Duck extends Animal {
 
     public final AnimationState idleAnimationState = new AnimationState();
@@ -63,7 +60,7 @@ public class Duck extends Animal {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 5d)
+                .add(Attributes.MAX_HEALTH, 8d)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.FLYING_SPEED, 0.35)
                 .add(Attributes.FOLLOW_RANGE, 24d);
@@ -85,7 +82,7 @@ public class Duck extends Animal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREADCRUMBS), true));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREADCRUMBS.get()), true));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
 
         // Nicht-Anführer folgen dem nächsten Anführer in der Nähe
@@ -146,7 +143,8 @@ public class Duck extends Animal {
     public void customServerAiStep() {
         super.customServerAiStep();
         if (this.getMoveControl().hasWanted()) {
-            this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.2D);;
+            this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.2D);
+            ;
         } else {
             this.setSprinting(false);
             this.flapping = 0.9F;

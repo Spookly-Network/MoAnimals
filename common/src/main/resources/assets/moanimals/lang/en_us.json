@@ -1,7 +1,15 @@
 {
   "block.moanimals.duckweed": "Duckweed",
 
-  "item.moanimals.breadcrumbs": "Breadcrumbs",
+  "item.moanimals.breadcrumb": "Breadcrumbs",
+  "item.moanimals.duck_egg": "Duck Egg",
+  "item.moanimals.snail_bucket": "Bucket of Snail",
+  "item.moanimals.snail_spawn_egg": "Snail Spawn Egg",
+  "item.moanimals.duck_spawn_egg": "Duck Spawn Egg",
+  "item.moanimals.butterfly_spawn_egg": "Butterfly Spawn Egg",
+  "item.moanimals.crocodile_spawn_egg": "Crocodile Spawn Egg",
+  "item.moanimals.raccoon_spawn_egg": "Raccoon Spawn Egg",
+
 
   "itemGroup.moanimals": "MoAnimals"
 }

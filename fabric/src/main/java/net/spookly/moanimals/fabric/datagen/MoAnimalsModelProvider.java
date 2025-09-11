@@ -2,6 +2,8 @@ package net.spookly.moanimals.fabric.datagen;
 
 import java.util.Optional;
 
+import net.spookly.moanimals.item.MoAnimalItems;
+
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelTemplate;
@@ -10,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.spookly.moanimals.item.MoAnimalItems;
 
 public class MoAnimalsModelProvider extends FabricModelProvider {
 
@@ -31,10 +32,12 @@ public class MoAnimalsModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(MoAnimalItems.DUCKWEED.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(MoAnimalItems.BREADCRUMBS.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(MoAnimalItems.DUCK_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(MoAnimalItems.SNAIL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
 
         itemModelGenerators.generateFlatItem(MoAnimalItems.CROCODILE_SPAWNEGG.get(), SPAWN_EGG);
         itemModelGenerators.generateFlatItem(MoAnimalItems.RACCOON_SPAWNEGG.get(), SPAWN_EGG);
         itemModelGenerators.generateFlatItem(MoAnimalItems.DUCK_SPAWNEGG.get(), SPAWN_EGG);
         itemModelGenerators.generateFlatItem(MoAnimalItems.BUTTERFLY_SPAWNEGG.get(), SPAWN_EGG);
+        itemModelGenerators.generateFlatItem(MoAnimalItems.SNAIL_SPAWN_EGG.get(), SPAWN_EGG);
     }
 }

@@ -2,10 +2,7 @@ package net.spookly.moanimals.neoforge;
 
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.block.MoAnimalBlocks;
-import net.spookly.moanimals.client.renderer.ButterflyRenderer;
-import net.spookly.moanimals.client.renderer.CrocodileRenderer;
-import net.spookly.moanimals.client.renderer.DuckRenderer;
-import net.spookly.moanimals.client.renderer.RacoonRenderer;
+import net.spookly.moanimals.client.renderer.*;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
 import net.minecraft.client.renderer.BiomeColors;
@@ -27,6 +24,7 @@ public class MoAnimalsNeoForgeClient {
         EntityRenderers.register(MoAnimalEntityTypes.CROCODILE.get(), CrocodileRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
+        EntityRenderers.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
     }
 
     @SubscribeEvent // on the mod event bus only on the physical client

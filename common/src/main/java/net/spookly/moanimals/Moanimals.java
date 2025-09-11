@@ -38,6 +38,7 @@ public final class Moanimals {
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
 
 
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.SNAIL.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Snail::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Butterfly::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);
     }

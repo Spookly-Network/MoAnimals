@@ -153,7 +153,6 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 //        }
     }
 
-    //FIXME: Check always fails
     public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
         var check1 = !pLevel.getLevel().isRaining();
         var biomes = MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON;

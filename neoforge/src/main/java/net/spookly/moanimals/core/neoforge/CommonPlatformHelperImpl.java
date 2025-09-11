@@ -4,8 +4,10 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.function.Supplier;
 
-import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
+import net.spookly.moanimals.item.MoAnimalsItemGroups;
 import org.jetbrains.annotations.NotNull;
+
+import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -57,7 +59,11 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggItem(@NotNull String name, Supplier<EntityType<T>> entityType, int backgroundColor, int highlightColor) {
-        return registerItem(name, () -> new SpawnEggItem(entityType.get(), backgroundColor, highlightColor, new Item.Properties()));
+        return registerSpawnEggItem(name, entityType, backgroundColor, highlightColor, new Item.Properties());
+    }
+
+    public static <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggItem(@NotNull String name, Supplier<EntityType<T>> entityType, int backgroundColor, int highlightColor, Item.Properties properties) {
+        return registerItem(name, () -> new SpawnEggItem(entityType.get(), backgroundColor, highlightColor, properties));
     }
 
     public static <T extends SoundEvent> Supplier<T> registerSoundEvent(String name, Supplier<T> soundEvent) {

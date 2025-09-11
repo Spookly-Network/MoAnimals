@@ -46,6 +46,11 @@ public class CommonPlatformHelper {
     }
 
     @ExpectPlatform
+    public static <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggItem(String name, Supplier<EntityType<T>> entityType, int backgroundColor, int highlightColor, Item.Properties properties) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static Supplier<Item> registerNoFluidMobBucketItem(String name, Supplier<? extends EntityType<?>> entitySupplier, Supplier<? extends Fluid> fluidSupplier, Supplier<? extends SoundEvent> soundSupplier, int color) {
         throw new AssertionError();
     }

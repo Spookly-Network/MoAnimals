@@ -2,14 +2,8 @@ package net.spookly.moanimals.fabric;
 
 import net.spookly.moanimals.MoAnimalsClient;
 import net.spookly.moanimals.block.MoAnimalBlocks;
-import net.spookly.moanimals.client.model.ButterflyModel;
-import net.spookly.moanimals.client.model.CrocodileModel;
-import net.spookly.moanimals.client.model.DuckModel;
-import net.spookly.moanimals.client.model.RacoonModel;
-import net.spookly.moanimals.client.renderer.ButterflyRenderer;
-import net.spookly.moanimals.client.renderer.CrocodileRenderer;
-import net.spookly.moanimals.client.renderer.DuckRenderer;
-import net.spookly.moanimals.client.renderer.RacoonRenderer;
+import net.spookly.moanimals.client.model.*;
+import net.spookly.moanimals.client.renderer.*;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
 import net.minecraft.client.renderer.BiomeColors;
@@ -39,6 +33,7 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(CrocodileModel.LAYER_LOCATION, CrocodileModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(RacoonModel.LAYER_LOCATION, RacoonModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(SnailModel.LAYER_LOCATION, SnailModel::createBodyLayer);
     }
 
     void registerEntityRenderers() {
@@ -46,6 +41,7 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(MoAnimalEntityTypes.CROCODILE.get(), CrocodileRenderer::new);
         EntityRendererRegistry.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
         EntityRendererRegistry.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
+        EntityRendererRegistry.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
     }
 
     void registerColorProviders() {

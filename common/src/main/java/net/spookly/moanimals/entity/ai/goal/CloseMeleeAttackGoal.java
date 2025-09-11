@@ -1,9 +1,5 @@
 package net.spookly.moanimals.entity.ai.goal;
 
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 //public class CloseMeleeAttackGoal extends Melee AttackGoal {
 //    public CloseMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {

@@ -23,6 +23,10 @@ public class MoAnimalEntityTypes {
             .sized(0.70f, 0.1f)
             .build("butterfly")
     );
+    public static final RegistrySupplier<EntityType<Snail>> SNAIL = ENTITY_TYPES.register("snail", () -> EntityType.Builder.of(Snail::new, MobCategory.CREATURE)
+            .sized(0.35f, 0.4f)
+            .build("snail")
+    );
 
     public static void init() {
         ENTITY_TYPES.register();

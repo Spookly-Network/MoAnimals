@@ -29,6 +29,7 @@ public class DatapackGenerator {
 
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(MoAnimalsBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+
 //        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
 //
 //        BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
@@ -37,8 +38,8 @@ public class DatapackGenerator {
 //
 //        generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
 //
+        generator.addProvider(event.includeServer(), new MoAnimalsDatapackProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new MoAnimalsItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new MoAnimalsBlockStateProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeServer(), new MoAnimalsDatapackProvider(packOutput, lookupProvider));
     }
 }

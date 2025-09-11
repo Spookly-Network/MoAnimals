@@ -13,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
@@ -25,6 +26,7 @@ public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_RACCOON = registerKey("spawn_raccoon");
     public static final ResourceKey<BiomeModifier> SPAWN_CROCODILE = registerKey("spawn_crocodile");
     public static final ResourceKey<BiomeModifier> SPAWN_BUTTERFLY = registerKey("spawn_butterfly");
+    public static final ResourceKey<BiomeModifier> SPAWN_SNAIL = registerKey("spawn_snail");
 
     public static final ResourceKey<BiomeModifier> PLACE_DUCKWEED = registerKey("place_duckweed");
 
@@ -48,6 +50,10 @@ public class MoAnimalsBiomeModifiers {
         context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7))));
+        context.register(SPAWN_SNAIL, new BiomeModifiers.AddSpawnsBiomeModifier(
+                biomes.getOrThrow(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3))));
+
 
         //Features
         context.register(PLACE_DUCKWEED, new BiomeModifiers.AddFeaturesBiomeModifier(

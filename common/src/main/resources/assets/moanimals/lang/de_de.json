@@ -1,7 +1,14 @@
 {
   "block.moanimals.duckweed": "Entengrütze",
 
-  "item.moanimals.breadcrumbs": "Brotkrümel",
+  "item.moanimals.breadcrumb": "Brotkrümel",
+  "item.moanimals.duck_egg": "Entenei",
+  "item.moanimals.snail_bucket": "Schneckeneimer",
+  "item.moanimals.snail_spawn_egg": "Schnecken-Spawn-Ei",
+  "item.moanimals.duck_spawn_egg": "Enten-Spawn-Ei",
+  "item.moanimals.butterfly_spawn_egg": "Schmetterling-Spawn-Ei",
+  "item.moanimals.crocodile_spawn_egg": "Krokodil-Spawn-Ei",
+  "item.moanimals.raccoon_spawn_egg": "Waschbär-Spawn-Ei",
 
   "itemGroup.moanimals": "MoAnimals"
 }

@@ -3,10 +3,12 @@ package net.spookly.moanimals.neoforge.datagen;
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.LinkedHashMap;
+import java.util.Optional;
 
 import net.spookly.moanimals.item.MoAnimalItems;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.armortrim.TrimMaterial;
@@ -28,6 +30,13 @@ public class MoAnimalsItemModelProvider extends ItemModelProvider {
         basicItem(MoAnimalItems.BREADCRUMBS.get());
         basicItem(MoAnimalItems.DUCKWEED.get());
         basicItem(MoAnimalItems.DUCK_EGG.get());
+        basicItem(MoAnimalItems.SNAIL_BUCKET.get());
+
+        spawnEggItem(MoAnimalItems.CROCODILE_SPAWNEGG.get());
+        spawnEggItem(MoAnimalItems.RACCOON_SPAWNEGG.get());
+        spawnEggItem(MoAnimalItems.DUCK_SPAWNEGG.get());
+        spawnEggItem(MoAnimalItems.BUTTERFLY_SPAWNEGG.get());
+        spawnEggItem(MoAnimalItems.SNAIL_SPAWN_EGG.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {

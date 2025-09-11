@@ -2,6 +2,11 @@ package net.spookly.moanimals.entity;
 
 import java.util.UUID;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.spookly.moanimals.util.MoAnimalsTags;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,15 +26,10 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
-
-import net.spookly.moanimals.util.MoAnimalsTags;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Crocodile extends WaterAnimal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
@@ -202,8 +202,7 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
         this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
-    @Nullable
-    public UUID getPersistentAngerTarget() {
+    @Nullable public UUID getPersistentAngerTarget() {
         return this.persistentAngerTarget;
     }
 
