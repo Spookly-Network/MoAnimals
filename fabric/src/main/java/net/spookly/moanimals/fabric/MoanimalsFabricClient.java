@@ -1,5 +1,7 @@
 package net.spookly.moanimals.fabric;
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.minecraft.client.renderer.RenderType;
 import net.spookly.moanimals.MoAnimalsClient;
 import net.spookly.moanimals.block.MoAnimalBlocks;
 import net.spookly.moanimals.client.model.ButterflyModel;
@@ -52,5 +54,10 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((blockState, blockAndTintGetter, blockPos, i) -> blockAndTintGetter != null && blockPos != null
                 ? BiomeColors.getAverageFoliageColor(blockAndTintGetter, blockPos)
                 : FoliageColor.getDefaultColor(), MoAnimalBlocks.DUCKWEED.get());
+    }
+
+    void registerBlockCutoutLayer() {
+        // 1.21.6+ BlockRenderLayerMap.putBlock(MoAnimalBlocks.DUCKWEED.get(), ChunkSectionLayer.CUTOUT);
+        BlockRenderLayerMap.INSTANCE.putBlock(MoAnimalBlocks.DUCKWEED.get(), RenderType.cutout());
     }
 }
