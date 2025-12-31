@@ -1,4 +1,6 @@
 # MoAnimals
+[![Discord](https://img.shields.io/discord/900708000900194314?label=Discord)](https://discord.gg/E9pytvEhuB)
+
 
 A **multiloader Minecraft mod project** that brings new animals and related content into the game.  
 The codebase is structured to support both **Fabric** and **NeoForge** through a shared common layer.
