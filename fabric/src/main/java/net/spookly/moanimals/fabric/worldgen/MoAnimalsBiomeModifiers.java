@@ -26,8 +26,8 @@ public class MoAnimalsBiomeModifiers {
     private static void modifySpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.PLAINS, Biomes.RIVER),
                 MobCategory.CREATURE, MoAnimalEntityTypes.DUCK.get(), 30, 3, 5);
-        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.RACCOON_SPAWNABLE_IN),
-                MobCategory.CREATURE, MoAnimalEntityTypes.RACOON.get(), 5, 1, 3);
+//        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.RACCOON_SPAWNABLE_IN),
+//                MobCategory.CREATURE, MoAnimalEntityTypes.RACOON.get(), 5, 1, 3);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
                 MobCategory.CREATURE, MoAnimalEntityTypes.CROCODILE.get(), 2, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
