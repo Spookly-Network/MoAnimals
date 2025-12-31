@@ -1,18 +1,17 @@
 package net.spookly.moanimals.neoforge;
 
+import net.spookly.moanimals.MoAnimalsClient;
 import net.spookly.moanimals.Moanimals;
-import net.spookly.moanimals.block.MoAnimalBlocks;
-import net.spookly.moanimals.client.renderer.*;
-import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
-import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.level.FoliageColor;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @EventBusSubscriber(modid = Moanimals.MOD_ID, value = Dist.CLIENT)
@@ -20,22 +19,20 @@ public class MoAnimalsNeoForgeClient {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        EntityRenderers.register(MoAnimalEntityTypes.DUCK.get(), DuckRenderer::new);
-        EntityRenderers.register(MoAnimalEntityTypes.CROCODILE.get(), CrocodileRenderer::new);
-        EntityRenderers.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
-        EntityRenderers.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
-        EntityRenderers.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
-        EntityRenderers.register(MoAnimalEntityTypes.PENGUIN.get(), PenguinRenderer::new);
+        MoAnimalsClient.init();
+        event.enqueueWork(() -> {
+            MoAnimalsClient.registerEntityRenderers(EntityRenderers::register);
+            MoAnimalsClient.registerCutoutBlocks(block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
+        });
     }
 
     @SubscribeEvent // on the mod event bus only on the physical client
     public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
-        // Parameters are the block's state, the level the block is in, the block's position, and the tint index.
-        // The level and position may be null.
-        event.register((state, level, pos, tintIndex) -> level != null && pos != null
-                        ? BiomeColors.getAverageFoliageColor(level, pos)
-                        : FoliageColor.getDefaultColor(),
-                // A varargs of blocks to apply the tinting to
-                MoAnimalBlocks.DUCKWEED.get());
+        MoAnimalsClient.registerBlockColorHandlers((color, blocks) -> event.register(color, blocks));
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        MoAnimalsClient.registerLayerDefinitions(event::registerLayerDefinition);
     }
 }

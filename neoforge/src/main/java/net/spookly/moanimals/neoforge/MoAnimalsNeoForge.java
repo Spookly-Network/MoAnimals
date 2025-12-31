@@ -1,20 +1,13 @@
 package net.spookly.moanimals.neoforge;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.spookly.moanimals.Moanimals;
-import net.spookly.moanimals.client.model.*;
 import net.spookly.moanimals.core.neoforge.CommonPlatformHelperImpl;
-import net.spookly.moanimals.entity.*;
-import net.spookly.moanimals.entity.variant.ButterflyVariant;
-import net.spookly.moanimals.entity.variant.RacoonVariant;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
+import net.spookly.moanimals.registry.MoAnimalsRegistrations;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
@@ -41,36 +34,17 @@ public final class MoAnimalsNeoForge {
 
     @SubscribeEvent
     public static void onNewDataPackRegistry(final DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(
-                MoAnimalsRegistries.RACOON_VARIANT,
-                RacoonVariant.DIRECT_CODEC,
-                RacoonVariant.DIRECT_CODEC
-        );
-        event.dataPackRegistry(
-                MoAnimalsRegistries.BUTTERFLY_VARIANT,
-                ButterflyVariant.DIRECT_CODEC,
-                ButterflyVariant.DIRECT_CODEC
-        );
-    }
-
-    @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.@NotNull RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(DuckModel.LAYER_LOCATION, DuckModel::createBodyLayer);
-        event.registerLayerDefinition(CrocodileModel.LAYER_LOCATION, CrocodileModel::createBodyLayer);
-        event.registerLayerDefinition(RacoonModel.LAYER_LOCATION, RacoonModel::createBodyLayer);
-        event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
-        event.registerLayerDefinition(SnailModel.LAYER_LOCATION, SnailModel::createBodyLayer);
-        event.registerLayerDefinition(PenguinModel.LAYER_LOCATION, PenguinModel::createBodyLayer);
+        MoAnimalsRegistrations.registerDataPackRegistries(new MoAnimalsRegistrations.DataPackRegistryRegisterer() {
+            @Override
+            public <T> void register(net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<T>> key, com.mojang.serialization.Codec<T> codec) {
+                event.dataPackRegistry(key, codec, codec);
+            }
+        });
     }
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(MoAnimalEntityTypes.DUCK.get(), Duck.createAttributes().build());
-        event.put(MoAnimalEntityTypes.CROCODILE.get(), Crocodile.createAttributes().build());
-        event.put(MoAnimalEntityTypes.RACOON.get(), Racoon.createAttributes().build());
-        event.put(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes().build());
-        event.put(MoAnimalEntityTypes.SNAIL.get(), Snail.createAttributes().build());
-        event.put(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes().build());
+        MoAnimalsRegistrations.registerEntityAttributes((type, builder) -> event.put(type, builder.build()));
     }
 
     @SubscribeEvent
