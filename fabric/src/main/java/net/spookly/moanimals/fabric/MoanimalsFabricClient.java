@@ -34,6 +34,7 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
         registerLayerDefinitions();
         registerEntityRenderers();
         registerColorProviders();
+        registerBlockCutoutLayer();
     }
 
     void registerLayerDefinitions() {
