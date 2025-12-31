@@ -6,6 +6,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.monster.Skeleton;
 
 public class MoAnimalEntityTypes {
 
@@ -26,6 +27,11 @@ public class MoAnimalEntityTypes {
     public static final RegistrySupplier<EntityType<Snail>> SNAIL = ENTITY_TYPES.register("snail", () -> EntityType.Builder.of(Snail::new, MobCategory.CREATURE)
             .sized(0.35f, 0.4f)
             .build("snail")
+    );
+    public static final RegistrySupplier<EntityType<Penguin>> PENGUIN = ENTITY_TYPES.register("penguin", () -> EntityType.Builder.of(Penguin::new, MobCategory.CREATURE)
+            .sized(0.5f, 1.15f)
+            .eyeHeight(0.85F)
+            .build("penguin")
     );
 
     public static void init() {

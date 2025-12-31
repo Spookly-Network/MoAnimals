@@ -37,6 +37,7 @@ public final class MoanimalsFabric implements ModInitializer {
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.RACOON.get(), Racoon.createAttributes());
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes());
         FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.SNAIL.get(), Snail.createAttributes());
+        FabricDefaultAttributeRegistry.register(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes());
     }
 
     // Register dynamic datapack variants

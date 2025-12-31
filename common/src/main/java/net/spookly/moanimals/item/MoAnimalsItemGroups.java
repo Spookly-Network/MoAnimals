@@ -23,7 +23,7 @@ public class MoAnimalsItemGroups {
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "items"), // Tab ID
             () -> CreativeTabRegistry.create(
                     Component.translatable("itemGroup.moanimals"), // Tab Name
-                    () -> new ItemStack(Blocks.IRON_ORE) // Icon
+                    () -> new ItemStack(Blocks.LILY_PAD) // Icon
             )
     );
 

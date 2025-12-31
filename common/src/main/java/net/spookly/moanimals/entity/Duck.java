@@ -1,6 +1,5 @@
 package net.spookly.moanimals.entity;
 
-
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
@@ -28,7 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
 
 //https://www.ducks.org/hunting/waterfowl-id
 //https://info.pangovet.com/pet-breeds/birds/duck-breeds/
@@ -144,7 +142,6 @@ public class Duck extends Animal {
         super.customServerAiStep();
         if (this.getMoveControl().hasWanted()) {
             this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.2D);
-            ;
         } else {
             this.setSprinting(false);
             this.flapping = 0.9F;

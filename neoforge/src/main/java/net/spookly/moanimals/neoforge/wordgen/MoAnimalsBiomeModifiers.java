@@ -4,6 +4,9 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.List;
 
+import net.minecraft.client.animation.definitions.CamelAnimation;
+import net.minecraft.client.model.CamelModel;
+import net.minecraft.client.model.SnifferModel;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.util.MoAnimalsTags;
 import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
@@ -26,6 +29,7 @@ public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_CROCODILE = registerKey("spawn_crocodile");
     public static final ResourceKey<BiomeModifier> SPAWN_BUTTERFLY = registerKey("spawn_butterfly");
     public static final ResourceKey<BiomeModifier> SPAWN_SNAIL = registerKey("spawn_snail");
+    public static final ResourceKey<BiomeModifier> SPAWN_PENGUIN = registerKey("spawn_penguin");
 
     public static final ResourceKey<BiomeModifier> PLACE_DUCKWEED = registerKey("place_duckweed");
 
@@ -52,6 +56,9 @@ public class MoAnimalsBiomeModifiers {
         context.register(SPAWN_SNAIL, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3))));
+        context.register(SPAWN_PENGUIN, new BiomeModifiers.AddSpawnsBiomeModifier(
+                biomes.getOrThrow(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 15, 2, 5))));
 
 
         //Features

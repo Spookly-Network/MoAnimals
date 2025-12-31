@@ -2,10 +2,7 @@ package net.spookly.moanimals;
 
 import static net.spookly.moanimals.Moanimals.LOGGER;
 
-import net.spookly.moanimals.client.renderer.ButterflyRenderer;
-import net.spookly.moanimals.client.renderer.CrocodileRenderer;
-import net.spookly.moanimals.client.renderer.DuckRenderer;
-import net.spookly.moanimals.client.renderer.RacoonRenderer;
+import net.spookly.moanimals.client.renderer.*;
 import net.spookly.moanimals.core.ClientPlatformHelper;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 
@@ -19,5 +16,6 @@ public class MoAnimalsClient {
         ClientPlatformHelper.registerEntityRenderers(MoAnimalEntityTypes.CROCODILE, CrocodileRenderer::new);
         ClientPlatformHelper.registerEntityRenderers(MoAnimalEntityTypes.RACOON, RacoonRenderer::new);
         ClientPlatformHelper.registerEntityRenderers(MoAnimalEntityTypes.BUTTERFLY, ButterflyRenderer::new);
+        ClientPlatformHelper.registerEntityRenderers(MoAnimalEntityTypes.PENGUIN, PenguinRenderer::new);
     }
 }

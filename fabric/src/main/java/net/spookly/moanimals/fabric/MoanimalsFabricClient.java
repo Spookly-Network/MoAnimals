@@ -45,6 +45,7 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
         EntityRendererRegistry.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
         EntityRendererRegistry.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
+        EntityRendererRegistry.register(MoAnimalEntityTypes.PENGUIN.get(), PenguinRenderer::new);
     }
 
     void registerColorProviders() {

@@ -25,6 +25,7 @@ public class MoAnimalsNeoForgeClient {
         EntityRenderers.register(MoAnimalEntityTypes.RACOON.get(), RacoonRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
         EntityRenderers.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
+        EntityRenderers.register(MoAnimalEntityTypes.PENGUIN.get(), PenguinRenderer::new);
     }
 
     @SubscribeEvent // on the mod event bus only on the physical client

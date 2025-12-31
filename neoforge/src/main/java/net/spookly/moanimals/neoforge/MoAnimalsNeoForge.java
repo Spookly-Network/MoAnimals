@@ -60,6 +60,7 @@ public final class MoAnimalsNeoForge {
         event.registerLayerDefinition(RacoonModel.LAYER_LOCATION, RacoonModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
         event.registerLayerDefinition(SnailModel.LAYER_LOCATION, SnailModel::createBodyLayer);
+        event.registerLayerDefinition(PenguinModel.LAYER_LOCATION, PenguinModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -69,6 +70,7 @@ public final class MoAnimalsNeoForge {
         event.put(MoAnimalEntityTypes.RACOON.get(), Racoon.createAttributes().build());
         event.put(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes().build());
         event.put(MoAnimalEntityTypes.SNAIL.get(), Snail.createAttributes().build());
+        event.put(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes().build());
     }
 
     @SubscribeEvent
