@@ -2,12 +2,12 @@ package net.spookly.moanimals.util;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 

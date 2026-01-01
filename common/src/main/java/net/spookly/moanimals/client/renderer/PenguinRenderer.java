@@ -1,15 +1,17 @@
 package net.spookly.moanimals.client.renderer;
 
+import static net.spookly.moanimals.Moanimals.MOD_ID;
+
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.jetbrains.annotations.NotNull;
+
+import net.spookly.moanimals.client.model.PenguinModel;
+import net.spookly.moanimals.entity.Penguin;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.spookly.moanimals.client.model.PenguinModel;
-import net.spookly.moanimals.entity.Penguin;
-import org.jetbrains.annotations.NotNull;
-
-import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 public class PenguinRenderer extends MobRenderer<Penguin, PenguinModel<Penguin>> {
     public PenguinRenderer(EntityRendererProvider.Context context) {
