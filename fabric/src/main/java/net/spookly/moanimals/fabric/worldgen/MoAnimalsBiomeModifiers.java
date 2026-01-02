@@ -33,9 +33,8 @@ public class MoAnimalsBiomeModifiers {
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
                 MobCategory.AMBIENT, MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
-                MobCategory.MONSTER, MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3);
-
-        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.DUCK_SPAWNABLE_IN),
+                MobCategory.AMBIENT, MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
                 MobCategory.CREATURE, MoAnimalEntityTypes.PENGUIN.get(), 15, 3, 5);
     }
 }

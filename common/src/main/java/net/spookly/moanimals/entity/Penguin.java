@@ -1,5 +1,16 @@
 package net.spookly.moanimals.entity;
 
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,21 +24,38 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.PolarBear;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+//https://mcmobs.fandom.com/wiki/Penguin
 public class Penguin extends Animal {
 
-    public static final int TOTAL_AIR_SUPPLY = 4800;
+    public static final int TOTAL_AIR_SUPPLY = 200; //1200;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flapAnimationState = new AnimationState();
 
+    public float zBodyRot;
+    public float xBodyRot;
+
     protected Penguin(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new AmphibiousPathNavigation(this, level);
+//        if (this.isInWaterOrBubble()) {
+//            return new WaterBoundPathNavigation(this, level) {
+//               @Override
+//                protected PathFinder createPathFinder(int i) {
+//                    this.nodeEvaluator = new SwimNodeEvaluator(true);
+//                    return new PathFinder(this.nodeEvaluator, i);
+//                }
+//            };
+//        }
+//        return super.createNavigation(level);
     }
 
     @Override
@@ -51,48 +79,87 @@ public class Penguin extends Animal {
         super.registerGoals();
 
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 2));
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, PolarBear.class, 10.0f, 0.8f, 1.3f));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalsTags.ItemTags.RAW_FISHES), true));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.5));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, PolarBear.class, 10.0f, 0.8f, 1.3f));
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalsTags.ItemTags.RAW_FISHES), true));
+        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25));
 
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
+        //this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
+        //this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0));
 
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0) {
             @Override
             public boolean canUse() {
-                return super.canUse() && Penguin.this.onGround();
+                return super.canUse() && !mob.isInWaterOrBubble();
             }
 
             @Override
             public boolean canContinueToUse() {
-                return super.canContinueToUse() && Penguin.this.onGround();
+                return super.canContinueToUse() && !mob.isInWaterOrBubble();
+            }
+
+            @Override
+            public void tick() {
+                super.tick();
+                if (mob.isInWaterOrBubble()) return;
+                ((Penguin)mob).addParticlesAroundSelf(ParticleTypes.HEART);
             }
         });
 
         // Schwimmen (nur wenn im Wasser)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 40) {
+        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1) {
             @Override
             public boolean canUse() {
-                return Penguin.this.isInWaterOrBubble();
+                return super.canUse() && mob.isInWaterOrBubble();
             }
 
             @Override
             public boolean canContinueToUse() {
-                return Penguin.this.isInWaterOrBubble();
+                return mob.isInWaterOrBubble();
             }
         });
 
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(9, new FlapHappyGoal(this));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new FlapHappyGoal(this));
+        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(
+                this, AbstractFish.class, 20, false, false, livingEntity -> livingEntity instanceof AbstractSchoolingFish
+        ));
     }
 
     @Override
     public int getMaxAirSupply() {
         return TOTAL_AIR_SUPPLY;
+    }
+
+    public void travel(Vec3 vec3) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.01F, vec3);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add((double)0.0F, -0.005, (double)0.0F));
+            }
+        } else {
+            super.travel(vec3);
+        }
+
+    }
+
+    public void aiStep() {
+        float rotateSpeed = 1.0F;
+
+        if (this.isInWaterOrBubble()) {
+            Vec3 vec3 = this.getDeltaMovement();
+            double d = vec3.horizontalDistance();
+            this.yBodyRot += (-((float) Mth.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
+            this.setYRot(this.yBodyRot);
+            this.zBodyRot += (float) Math.PI * rotateSpeed * 1.5F;
+            this.xBodyRot += (-((float) Mth.atan2(d, vec3.y)) * (180F / (float) Math.PI) - this.xBodyRot) * 0.1F;
+        }
+        super.aiStep();
     }
 
     protected void handleAirSupply(int i) {
@@ -124,8 +191,9 @@ public class Penguin extends Animal {
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 10d)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.FOLLOW_RANGE, 24d);
+                .add(Attributes.MOVEMENT_SPEED, 0.15)
+                .add(Attributes.FOLLOW_RANGE, 24d)
+                .add(Attributes.ATTACK_DAMAGE, 1.5);
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Penguin> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
@@ -134,13 +202,23 @@ public class Penguin extends Animal {
 
     private void setupAnimationStates() {
             this.idleAnimationState.startIfStopped(this.tickCount);
-
         if (this.isInWaterOrBubble()) {
             // spiele Schwimm-Animation
         } else if (!this.onGround()) {
             // spiele Flatter-Animation
         } else {
             // spiele Geh-/Idle-Animation abhängig von Bewegung
+        }
+
+    }
+
+    //TODO remove after Debug
+    public void addParticlesAroundSelf(ParticleOptions particleOptions) {
+        for(int i = 0; i < 7; ++i) {
+            double d = this.random.nextGaussian() * 0.01;
+            double e = this.random.nextGaussian() * 0.01;
+            double f = this.random.nextGaussian() * 0.01;
+            this.level().addParticle(particleOptions, this.getRandomX((double)1.0F), this.getRandomY() + 0.2, this.getRandomZ((double)1.0F), d, e, f);
         }
 
     }
@@ -154,13 +232,13 @@ public class Penguin extends Animal {
 
         @Override
         public boolean canUse() {
-            return false;
+            return true;
         }
 
         @Override
         public void start() {
             penguin.flapAnimationState.start(penguin.tickCount);
-            penguin.doWaterSplashEffect();
+            penguin.addParticlesAroundSelf(ParticleTypes.EXPLOSION);
         }
     }
 }

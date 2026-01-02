@@ -22,34 +22,40 @@ public class PenguinModel<T extends Penguin> extends HierarchicalModel<T> {
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart head;
+    private final ModelPart hip;
+    private final ModelPart leg_left;
+    private final ModelPart leg_right;
     private final ModelPart wing_right;
     private final ModelPart wing_left;
-    private final ModelPart foot_left;
-    private final ModelPart foot_right;
 
     public PenguinModel(ModelPart root) {
         this.root = root.getChild("root");
         this.body = this.root.getChild("body");
         this.head = this.body.getChild("head");
+        this.hip = this.body.getChild("hip");
+        this.leg_left = this.hip.getChild("leg_left");
+        this.leg_right = this.hip.getChild("leg_right");
         this.wing_right = this.body.getChild("wing_right");
         this.wing_left = this.body.getChild("wing_left");
-        this.foot_left = this.body.getChild("foot_left");
-        this.foot_right = this.body.getChild("foot_right");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
+
         PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -11.0F, -4.0F, 7.0F, 11.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 18).addBox(-3.5F, -6.0F, -3.0F, 7.0F, 6.0F, 7.0F, new CubeDeformation(0.0F))
-        .texOffs(28, 26).addBox(-1.5F, -1.0F, -6.0F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -11.0F, -1.0F));
+                .texOffs(29, 27).addBox(-1.5F, -1.0F, -5.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -11.0F, -1.0F));
 
+        PartDefinition hip = root.addOrReplaceChild("hip", CubeListBuilder.create(), PartPose.offset(1.5F, 1.0F, -1.0F));
+        PartDefinition leg_left = hip.addOrReplaceChild("leg_left", CubeListBuilder.create().texOffs(28, 30).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        PartDefinition leg_left_r1 = leg_left.addOrReplaceChild("leg_left_r1", CubeListBuilder.create().texOffs(6, 31).addBox(0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
+        PartDefinition leg_right = hip.addOrReplaceChild("leg_right", CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        PartDefinition leg_right_r1 = leg_right.addOrReplaceChild("leg_right_r1", CubeListBuilder.create().texOffs(6, 31).addBox(0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
         PartDefinition wing_right = body.addOrReplaceChild("wing_right", CubeListBuilder.create().texOffs(28, 13).addBox(-1.0F, 0.0F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, -10.0F, -0.5F));
         PartDefinition wing_left = body.addOrReplaceChild("wing_left", CubeListBuilder.create().texOffs(28, 0).addBox(0.0F, 0.0F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -10.0F, -0.5F));
-        PartDefinition foot_left = body.addOrReplaceChild("foot_left", CubeListBuilder.create().texOffs(28, 30).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5F, 0.0F, -2.0F, 0.2182F, 0.0F, 0.0F));
-        PartDefinition foot_right = body.addOrReplaceChild("foot_right", CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.5F, 0.0F, -2.0F, 0.2182F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -67,6 +73,7 @@ public class PenguinModel<T extends Penguin> extends HierarchicalModel<T> {
     public void setupAnim(Penguin entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
+        this.animateWalk(PenguinAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
         this.animate(entity.idleAnimationState, PenguinAnimations.idle, ageInTicks);
         this.animate(entity.flapAnimationState, PenguinAnimations.flap, ageInTicks);
     }

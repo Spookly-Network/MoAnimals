@@ -90,7 +90,7 @@ public class Snail extends PathfinderMob implements Bucketable {
     }
 
     @Override
-    protected void customServerAiStep() {
+    public void tick() {
         if (this.isAlive() && --this.slimeTime <= 0) {
             this.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.SLIME_BALL);
@@ -98,7 +98,7 @@ public class Snail extends PathfinderMob implements Bucketable {
             this.slimeTime = this.pickNextSlimeDropTime();
         }
 
-        super.customServerAiStep();
+        super.tick();
     }
 
     @Override

@@ -21,7 +21,12 @@ public class MoAnimalsNeoForgeClient {
     public static void init(FMLClientSetupEvent event) {
         MoAnimalsClient.init();
         event.enqueueWork(() -> {
-            MoAnimalsClient.registerEntityRenderers(EntityRenderers::register);
+            MoAnimalsClient.registerEntityRenderers(new MoAnimalsClient.EntityRendererRegistrar() {
+                @Override
+                public <T extends net.minecraft.world.entity.Entity> void register(net.minecraft.world.entity.EntityType<T> type, net.minecraft.client.renderer.entity.EntityRendererProvider<T> provider) {
+                    EntityRenderers.register(type, provider);
+                }
+            });
             MoAnimalsClient.registerCutoutBlocks(block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
         });
     }

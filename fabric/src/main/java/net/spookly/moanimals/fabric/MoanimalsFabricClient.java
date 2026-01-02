@@ -19,9 +19,14 @@ public final class MoanimalsFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         MoAnimalsClient.init();
 
-        MoAnimalsClient.registerLayerDefinitions(EntityModelLayerRegistry::registerModelLayer);
-        MoAnimalsClient.registerEntityRenderers((type, provider) ->
-                EntityRendererRegistry.register(type, context -> provider.create((EntityRendererProvider.Context) context)));
+        MoAnimalsClient.registerLayerDefinitions((location, layerSupplier) ->
+                EntityModelLayerRegistry.registerModelLayer(location, layerSupplier::get));
+        MoAnimalsClient.registerEntityRenderers(new MoAnimalsClient.EntityRendererRegistrar() {
+            @Override
+            public <T extends net.minecraft.world.entity.Entity> void register(net.minecraft.world.entity.EntityType<T> type, EntityRendererProvider<T> provider) {
+                EntityRendererRegistry.register(type, context -> provider.create((EntityRendererProvider.Context) context));
+            }
+        });
         MoAnimalsClient.registerBlockColorHandlers((color, blocks) -> ColorProviderRegistry.BLOCK.register(color, blocks));
         MoAnimalsClient.registerCutoutBlocks(block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderType.cutout()));
     }
