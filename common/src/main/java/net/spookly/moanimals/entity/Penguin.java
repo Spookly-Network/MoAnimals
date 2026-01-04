@@ -1,5 +1,7 @@
 package net.spookly.moanimals.entity;
 
+import net.minecraft.client.model.CamelModel;
+import net.minecraft.client.model.FoxModel;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
