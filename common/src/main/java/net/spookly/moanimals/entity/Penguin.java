@@ -184,16 +184,18 @@ public class Penguin extends Animal {
             this.setAirSupply(this.getMaxAirSupply());
         } else {
             this.handleAirSupply(i);
-            this.setupAnimationStates();
         }
 
         super.tick();
+        if (this.level().isClientSide()) {
+            this.setupAnimationStates();
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 10d)
-                .add(Attributes.MOVEMENT_SPEED, 0.15)
+                .add(Attributes.MOVEMENT_SPEED, 0.12)
                 .add(Attributes.FOLLOW_RANGE, 24d)
                 .add(Attributes.ATTACK_DAMAGE, 1.5);
     }
@@ -203,13 +205,12 @@ public class Penguin extends Animal {
     }
 
     private void setupAnimationStates() {
-            this.idleAnimationState.startIfStopped(this.tickCount);
         if (this.isInWaterOrBubble()) {
             // spiele Schwimm-Animation
         } else if (!this.onGround()) {
             // spiele Flatter-Animation
         } else {
-            // spiele Geh-/Idle-Animation abhängig von Bewegung
+            this.idleAnimationState.animateWhen(!this.walkAnimation.isMoving(), this.tickCount);
         }
 
     }

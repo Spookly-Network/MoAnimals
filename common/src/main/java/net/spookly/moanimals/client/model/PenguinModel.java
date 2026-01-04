@@ -80,9 +80,10 @@ public class PenguinModel<T extends Penguin> extends HierarchicalModel<T> {
     public void setupAnim(Penguin entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
-        this.animateWalk(PenguinAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
         this.animate(entity.idleAnimationState, PenguinAnimations.idle, ageInTicks);
         this.animate(entity.flapAnimationState, PenguinAnimations.flap, ageInTicks);
+
+        this.animateWalk(PenguinAnimations.walk, limbSwing, limbSwingAmount, 2f, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
