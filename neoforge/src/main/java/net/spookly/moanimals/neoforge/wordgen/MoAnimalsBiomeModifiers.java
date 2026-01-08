@@ -30,6 +30,7 @@ public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_BUTTERFLY = registerKey("spawn_butterfly");
     public static final ResourceKey<BiomeModifier> SPAWN_SNAIL = registerKey("spawn_snail");
     public static final ResourceKey<BiomeModifier> SPAWN_PENGUIN = registerKey("spawn_penguin");
+    public static final ResourceKey<BiomeModifier> SPAWN_OSTRICH = registerKey("spawn_ostrich");
 
     public static final ResourceKey<BiomeModifier> PLACE_DUCKWEED = registerKey("place_duckweed");
 
@@ -59,6 +60,9 @@ public class MoAnimalsBiomeModifiers {
         context.register(SPAWN_PENGUIN, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 15, 2, 5))));
+        context.register(SPAWN_OSTRICH, new BiomeModifiers.AddSpawnsBiomeModifier(
+                biomes.getOrThrow(MoAnimalsTags.BiomeTags.OSTRICH_SPAWNABLE_IN),
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.OSTRICH.get(), 5, 2, 10))));
 
 
         //Features

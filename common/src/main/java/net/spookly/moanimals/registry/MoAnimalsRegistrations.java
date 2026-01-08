@@ -25,6 +25,7 @@ public final class MoAnimalsRegistrations {
         registerer.accept(MoAnimalEntityTypes.BUTTERFLY.get(), Butterfly.createAttributes());
         registerer.accept(MoAnimalEntityTypes.SNAIL.get(), Snail.createAttributes());
         registerer.accept(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes());
+        registerer.accept(MoAnimalEntityTypes.OSTRICH.get(), Ostrich.createAttributes());
     }
 
     public static void registerDataPackRegistries(DataPackRegistryRegisterer registerer) {

@@ -32,6 +32,7 @@ public class MoAnimalItems {
     public static final Supplier<SpawnEggItem> BUTTERFLY_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("butterfly_spawn_egg", MoAnimalEntityTypes.BUTTERFLY, 13673122, 16758783, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> SNAIL_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("snail_spawn_egg", MoAnimalEntityTypes.SNAIL, 7301692, 7027994, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> PENGUIN_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("penguin_spawn_egg", MoAnimalEntityTypes.PENGUIN, 874364, 128543, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
+    public static final Supplier<SpawnEggItem> OSTRICH_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("ostrich_spawn_egg", MoAnimalEntityTypes.OSTRICH, 16777215, 16222215, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
 
     public static final Supplier<Item> SNAIL_BUCKET = CommonPlatformHelper.registerItem("snail_bucket",
             () -> new SnailMobBucketItem(

@@ -36,5 +36,7 @@ public class MoAnimalsBiomeModifiers {
                 MobCategory.AMBIENT, MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
                 MobCategory.CREATURE, MoAnimalEntityTypes.PENGUIN.get(), 15, 3, 5);
+        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.OSTRICH_SPAWNABLE_IN),
+                MobCategory.CREATURE, MoAnimalEntityTypes.OSTRICH.get(), 5, 2, 10);
     }
 }

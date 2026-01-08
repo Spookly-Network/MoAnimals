@@ -20,6 +20,7 @@ public class MoAnimalsTags {
         TagKey<Biome> BUTTERFLY_SPAWNABLE_IN = createTag("spawn_butterfly_in");
         TagKey<Biome> SNAIL_SPAWNABLE_IN = createTag("spawn_snail_in");
         TagKey<Biome> PENGUIN_SPAWNABLE_IN = createTag("spawn_penguin_in");
+        TagKey<Biome> OSTRICH_SPAWNABLE_IN = createTag("spawn_ostrich_in");
 
         TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
 
@@ -35,6 +36,9 @@ public class MoAnimalsTags {
         TagKey<Block> RACCOON_SPAWNABLE_ON = tag("raccoon_spawnable_on");
         TagKey<Block> SNAIL_SPAWNABLE_ON = tag("snail_spawnable_on");
         TagKey<Block> PENGUIN_SPAWNABLE_ON = tag("penguin_spawnable_on");
+        TagKey<Block> OSTRICH_SPAWNABLE_ON = tag("ostrich_spawnable_on");
+
+        TagKey<Block> IS_WARM = tag("is_warm");
 
         private static TagKey<Block> tag(@NotNull String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));

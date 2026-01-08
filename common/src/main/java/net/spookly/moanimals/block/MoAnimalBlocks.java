@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public class MoAnimalBlocks {
 
     public static final RegistrySupplier<Block> DUCKWEED = registerBlock("duckweed", () -> new WaterlilyBlock(copyPropertiesOf(Blocks.LILY_PAD).noCollission()));
+    public static final RegistrySupplier<Block> OSTRICH_EGG = registerBlock("ostrich_egg", () -> new OstrichEggBlock(BlockBehaviour.Properties.of()));
 
     public static void init() {
         LOGGER.info("Registering blocks");

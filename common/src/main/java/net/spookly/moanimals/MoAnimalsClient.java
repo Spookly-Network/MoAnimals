@@ -36,6 +36,7 @@ public final class MoAnimalsClient {
         registerer.register(MoAnimalEntityTypes.BUTTERFLY.get(), ButterflyRenderer::new);
         registerer.register(MoAnimalEntityTypes.SNAIL.get(), SnailRenderer::new);
         registerer.register(MoAnimalEntityTypes.PENGUIN.get(), PenguinRenderer::new);
+        registerer.register(MoAnimalEntityTypes.OSTRICH.get(), OstrichRenderer::new);
     }
 
     public static void registerLayerDefinitions(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> registerer) {
@@ -45,6 +46,7 @@ public final class MoAnimalsClient {
         registerer.accept(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
         registerer.accept(SnailModel.LAYER_LOCATION, SnailModel::createBodyLayer);
         registerer.accept(PenguinModel.LAYER_LOCATION, PenguinModel::createBodyLayer);
+        registerer.accept(OstrichModel.LAYER_LOCATION, OstrichModel::createBodyLayer);
     }
 
     public static void registerBlockColorHandlers(BiConsumer<BlockColor, Block[]> registerer) {

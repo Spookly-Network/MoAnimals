@@ -36,6 +36,7 @@ public class MoAnimalsItemModelProvider extends ItemModelProvider {
         spawnEggItem(MoAnimalItems.BUTTERFLY_SPAWNEGG.get());
         spawnEggItem(MoAnimalItems.SNAIL_SPAWN_EGG.get());
         spawnEggItem(MoAnimalItems.PENGUIN_SPAWN_EGG.get());
+        spawnEggItem(MoAnimalItems.OSTRICH_SPAWN_EGG.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {
