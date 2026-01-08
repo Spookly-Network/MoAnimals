@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import dev.architectury.registry.registries.RegistrySupplier;
 
+import net.minecraft.world.level.material.MapColor;
 import net.spookly.moanimals.item.MoAnimalItems;
 
 import net.minecraft.resources.ResourceLocation;
@@ -17,18 +18,21 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class MoAnimalBlocks {
 
-    public static final RegistrySupplier<Block> DUCKWEED = registerBlock("duckweed", () -> new WaterlilyBlock(copyPropertiesOf(Blocks.LILY_PAD).noCollission()));
-    public static final RegistrySupplier<Block> OSTRICH_EGG = registerBlock("ostrich_egg", () -> new OstrichEggBlock(BlockBehaviour.Properties.of()));
+    public static final RegistrySupplier<Block> DUCKWEED = registerBlock("duckweed",
+            () -> new WaterlilyBlock(copyPropertiesOf(Blocks.LILY_PAD)
+                    .noCollission()));
+
+    public static final RegistrySupplier<Block> OSTRICH_EGG = registerBlock("ostrich_egg",
+            () -> new OstrichEggBlock(copyPropertiesOf(Blocks.TURTLE_EGG)
+                    .mapColor(MapColor.TERRACOTTA_GRAY)));
 
     public static void init() {
-        LOGGER.info("Registering blocks");
         BLOCKS.register();
-
+        LOGGER.info("Registering blocks");
         BLOCKS.forEach(blockRegistrySupplier -> {
-            if (blockRegistrySupplier.getId() == DUCKWEED.getId()) {
+            if (blockRegistrySupplier.getId() == DUCKWEED.getId() || blockRegistrySupplier.getId() == OSTRICH_EGG.getId()) {
                 return;
             }
-
             Block block = blockRegistrySupplier.get();
             MoAnimalItems.registerBlockItem(blockRegistrySupplier.getRegisteredName().split(":")[1], block);
         });

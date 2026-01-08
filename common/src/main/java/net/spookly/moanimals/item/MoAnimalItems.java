@@ -45,6 +45,8 @@ public class MoAnimalItems {
 
     // Block Items
     public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
+    public static final RegistrySupplier<Item> OSTRICH_EGG = registerItem("ostrich_egg", () -> new Item(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
+
 
     public static void registerBlockItem(final String path, Block block) {
         registerItem(path, () -> new BlockItem(block, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB.get())));
