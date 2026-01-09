@@ -1,13 +1,10 @@
 package net.spookly.moanimals.entity;
 
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.item.Items;
-import net.spookly.moanimals.block.MoAnimalBlocks;
-import net.spookly.moanimals.entity.ai.goal.EggLayingBreedGoal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.spookly.moanimals.block.MoAnimalBlocks;
+import net.spookly.moanimals.entity.ai.goal.EggLayingBreedGoal;
 import net.spookly.moanimals.entity.ai.goal.LayEggGoal;
 import net.spookly.moanimals.entity.struc.AbstractEggLayingAnimal;
 import net.spookly.moanimals.util.MoAnimalsTags;
@@ -15,20 +12,23 @@ import net.spookly.moanimals.util.MoAnimalsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 
-//OwnableEntity, PlayerRideableJumping, Saddleable
+//OwnableEntity, PlayerRideableJumping, Saddleable, Pig
 public class Ostrich extends AbstractEggLayingAnimal {
 
     protected Ostrich(EntityType<? extends Animal> entityType, Level level) {

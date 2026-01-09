@@ -10,10 +10,10 @@ import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.item.MoAnimalsItemGroups;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 
@@ -31,6 +31,7 @@ public final class Moanimals {
         MoAnimalsItemGroups.init();
         MoAnimalsEntityDataSerializers.init();
         MoAnimalsTags.init();
+        MoAnimalsSoundEvents.init();
     }
 
     public static void registerSpawnPlacements() {

@@ -8,10 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.item.MoAnimalItems;
+import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -32,6 +35,8 @@ import net.minecraft.world.phys.Vec3;
 //https://info.pangovet.com/pet-breeds/birds/duck-breeds/
 //https://birdwatchinghq.com/ducks-of-germany/
 //FIXME: Duck baby speed
+
+//AbstractSchoolingFish
 public class Duck extends Animal {
 
     public final AnimationState idleAnimationState = new AnimationState();
@@ -53,13 +58,15 @@ public class Duck extends Animal {
         super(entityType, level);
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
+        this.setPathfindingMalus(PathType.WATER, 5.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 1.0F);
 //        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 8d)
-                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.MOVEMENT_SPEED, 0.20)
                 .add(Attributes.FLYING_SPEED, 0.35)
                 .add(Attributes.FOLLOW_RANGE, 24d);
     }
@@ -78,13 +85,13 @@ public class Duck extends Animal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 2));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREADCRUMBS.get()), true));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.15));
 
         // Nicht-Anführer folgen dem nächsten Anführer in der Nähe
-        this.goalSelector.addGoal(5, new FollowLeaderGoal(this, 1.15, 3.0F, 10.0F));
+        this.goalSelector.addGoal(5, new FollowLeaderGoal(this, 1.15, 5.0F, 15.0F));
 
         // Bodenbewegung (nur wenn am Boden)
         this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
@@ -101,6 +108,7 @@ public class Duck extends Animal {
                 return super.canContinueToUse() && Duck.this.onGround();
             }
         });
+
 
         // Schwimmen (nur wenn im Wasser)
         this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 40) {
@@ -122,7 +130,12 @@ public class Duck extends Animal {
         super.registerGoals();
     }
 
-    // AI
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return MoAnimalsSoundEvents.DUCK_QUACK.get();
+    }
+
+    //#region AI
     // AI
 
     protected boolean isFlapping() {
