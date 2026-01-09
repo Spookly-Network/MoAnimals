@@ -1,5 +1,7 @@
 package net.spookly.moanimals.item;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -7,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +29,7 @@ public class SnailMobBucketItem extends MobBucketItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public @NotNull InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
@@ -40,7 +42,7 @@ public class SnailMobBucketItem extends MobBucketItem {
             BlockPos blockPos2 = blockPos.relative(direction);
 
             if (!level.mayInteract(player, blockPos) || !player.mayUseItemAt(blockPos2, direction, itemStack)) {
-                return InteractionResultHolder.fail(itemStack);
+                return InteractionResult.FAIL;
             } else {
                 BlockState blockState = level.getBlockState(blockPos);
                 this.checkExtraContent(player, level, itemStack, blockPos2);
@@ -50,7 +52,7 @@ public class SnailMobBucketItem extends MobBucketItem {
 
                 player.awardStat(Stats.ITEM_USED.get(this));
                 ItemStack itemStack2 = ItemUtils.createFilledResult(itemStack, player, getEmptySuccessItem(itemStack, player));
-                return InteractionResultHolder.sidedSuccess(itemStack2, level.isClientSide());
+                return InteractionResult.SUCCESS.heldItemTransformedTo(itemStack2);
             }
         }
     }

@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -73,7 +74,7 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 20d)
                 .add(Attributes.MOVEMENT_SPEED, 1)
                 .add(Attributes.WATER_MOVEMENT_EFFICIENCY, 2)
@@ -125,10 +126,10 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
     }
 
     @Override
-    public boolean doHurtTarget(Entity entity) {
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
         this.resetAnimations();
         this.attackAnimation.start(this.tickCount);
-        return super.doHurtTarget(entity);
+        return super.doHurtTarget(serverLevel, entity);
     }
 
     private void resetAnimations() {
@@ -138,7 +139,7 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
         this.walkAnimation.stop();
     }
 
-    public static boolean checkSpawnRules(EntityType<? extends Crocodile> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Crocodile> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
         var check1 = !pLevel.getLevel().isRaining();
         var biomes = MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON;
         var blockBelow = pLevel.getBlockState(pPos.below());

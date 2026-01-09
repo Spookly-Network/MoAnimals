@@ -14,8 +14,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -37,8 +37,7 @@ public class Ostrich extends AbstractEggLayingAnimal {
 
     @Override
     public Block getEggBlock() {
-        // Override this to return a different block (e.g., a custom ostrich egg block)
-        return MoAnimalBlocks.OSTRICH_EGG.get(); // Default to turtle eggs
+        return MoAnimalBlocks.OSTRICH_EGG.get();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class Ostrich extends AbstractEggLayingAnimal {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return MoAnimalEntityTypes.OSTRICH.get().create(serverLevel);
+        return MoAnimalEntityTypes.OSTRICH.get().create(serverLevel, EntitySpawnReason.BREEDING);
     }
 
     @Override
@@ -57,25 +56,22 @@ public class Ostrich extends AbstractEggLayingAnimal {
 
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.5));
-
         this.goalSelector.addGoal(2, new EggLayingBreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new LayEggGoal(this, 32));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.25, this::isFood, true));
-
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
-
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     @Override
-    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
         this.setHomePos(this.blockPosition());
-        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 20d)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.FOLLOW_RANGE, 24d)
@@ -83,7 +79,7 @@ public class Ostrich extends AbstractEggLayingAnimal {
     }
 
 
-    public static boolean checkSpawnRules(EntityType<? extends Ostrich> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Ostrich> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason entitySpawnReason, BlockPos pPos, RandomSource pRandom) {
         return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.OSTRICH_SPAWNABLE_ON);
     }
 }

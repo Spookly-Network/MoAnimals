@@ -1,13 +1,10 @@
 package net.spookly.moanimals.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.client.animations.CrocodileAnimations;
-import net.spookly.moanimals.entity.Crocodile;
+import net.spookly.moanimals.client.renderer.entity.state.CrocodileRenderState;
 
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,37 +12,18 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
+public class CrocodileModel extends EntityModel<CrocodileRenderState> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Moanimals.MOD_ID, "crocodile"), "main");
     private final ModelPart body;
     private final ModelPart corspe;
-//    private final ModelPart main;
-    private final ModelPart tail;
-//    private final ModelPart front;
-//    private final ModelPart end;
     private final ModelPart head;
-//    private final ModelPart upper;
-//    private final ModelPart bottom;
-//    private final ModelPart leg_left_front;
-//    private final ModelPart leg_back_front;
-//    private final ModelPart leg_right_front;
-//    private final ModelPart leg_left_back;
 
     public CrocodileModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
         this.corspe = this.body.getChild("corspe");
-//        this.main = this.corspe.getChild("main");
-        this.tail = this.corspe.getChild("tail");
-//        this.front = this.tail.getChild("front");
-//        this.end = this.tail.getChild("end");
         this.head = this.corspe.getChild("head");
-//        this.upper = this.head.getChild("upper");
-//        this.bottom = this.head.getChild("bottom");
-//        this.leg_left_front = this.body.getChild("leg_left_front");
-//        this.leg_back_front = this.body.getChild("leg_back_front");
-//        this.leg_right_front = this.body.getChild("leg_right_front");
-//        this.leg_left_back = this.body.getChild("leg_left_back");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -103,32 +81,21 @@ public class CrocodileModel<T extends Crocodile> extends HierarchicalModel<T> {
     }
 
     @Override
-    public void setupAnim(Crocodile entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.applyHeadRotation(netHeadYaw, headPitch);
-//        this.animateWalk(CrocodileAnimations.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
-        this.animate(entity.idleAnimationState, CrocodileAnimations.idle, ageInTicks, 1f);
-        this.animate(entity.swimAnimation, CrocodileAnimations.swim, ageInTicks, 1f);
-        this.animate(entity.walkAnimation, CrocodileAnimations.walk, ageInTicks, 1f);
-        this.animate(entity.attackAnimation, CrocodileAnimations.attack, ageInTicks, 1f);
+    public void setupAnim(CrocodileRenderState entityRenderState) {
+        super.setupAnim(entityRenderState);
+        this.applyHeadRotation(entityRenderState.xRot, entityRenderState.yRot);
+
+        this.animate(entityRenderState.idleAnimationState, CrocodileAnimations.idle, entityRenderState.ageInTicks, 1f);
+        this.animate(entityRenderState.swimAnimation, CrocodileAnimations.swim, entityRenderState.ageInTicks, 1f);
+        this.animate(entityRenderState.walkAnimation, CrocodileAnimations.walk, entityRenderState.ageInTicks, 1f);
+        this.animate(entityRenderState.attackAnimation, CrocodileAnimations.attack, entityRenderState.ageInTicks, 1f);
     }
 
-    private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -30f, 30f);
-        headPitch = Mth.clamp(headPitch, -25f, 45f);
+    private void applyHeadRotation(float xRot, float yRot) {
+        xRot = Mth.clamp(xRot, -30f, 30f);
+        yRot = Mth.clamp(yRot, -25f, 45f);
 
-        this.head.yRot = headYaw * ((float)Math.PI / 180F);
-        this.head.xRot = headPitch * ((float)Math.PI / 180F);
-
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-    }
-
-    @Override
-    public ModelPart root() {
-        return body;
+        this.head.yRot = xRot * ((float)Math.PI / 180F);
+        this.head.xRot = yRot * ((float)Math.PI / 180F);
     }
 }

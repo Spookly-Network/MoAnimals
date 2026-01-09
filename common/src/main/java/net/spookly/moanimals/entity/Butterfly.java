@@ -63,24 +63,21 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         this.setPathfindingMalus(PathType.WATER, -1.0F);
         this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(PathType.COCOA, -1.0F);
-//        this.setPathfindingMalus(PathType.LEAVES, 0F);
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         RegistryAccess registryAccess = this.registryAccess();
-        Registry<ButterflyVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
-        builder.define(DATA_VARIANT_ID, (Holder<ButterflyVariant>) registry.getHolder(ButterflyVariants.DEFAULT).or(registry::getAny).orElseThrow());
+        Registry<ButterflyVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
+        builder.define(DATA_VARIANT_ID, (Holder<ButterflyVariant>)registry.get(ButterflyVariants.DEFAULT).or(registry::getAny).orElseThrow());
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.4));
-//        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SeekShelterIfRainingGoal(1.2));
-        this.goalSelector
-                .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 12.0F, 1.4, 1.4));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Player.class, 12.0F, 1.4, 1.4));
         this.goalSelector.addGoal(2, new ButterflyWanderGoal());
         super.registerGoals();
     }
@@ -111,11 +108,8 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     @Override
     public void tick() {
         super.tick();
-
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
-
-
         }
     }
 
@@ -135,7 +129,6 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     private void setupAnimationStates() {
-//        this.idleAnimationState.animateWhen(this.);
         if (this.onGround()) {
             this.sitAnimationState.startIfStopped(this.tickCount);
             this.flyAnimationState.stop();
@@ -144,16 +137,9 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
             this.flyAnimationState.startIfStopped(this.tickCount);
             this.sitAnimationState.stop();
         }
-
-//        if (this.flapsAnimationState.animateWhen(); <= 0) {
-//            this.idleAnimationTimeout = 80; //Animation leanght
-//            this.idleAnimationState.start(this.tickCount);
-//        } else {
-//            --this.idleAnimationTimeout;
-//        }
     }
 
-    public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
         var check1 = !pLevel.getLevel().isRaining();
         var biomes = MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON;
         var blockBelow = pLevel.getBlockState(pPos.below());
@@ -169,10 +155,11 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
+        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().lookupOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).get(resourceKey)).ifPresent(this::setVariant);
     }
 
-    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    @Override
+    @NotNull public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
         Holder<ButterflyVariant> holder2;
 
@@ -180,7 +167,7 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         spawnGroupData = new ButterflyGroupData(holder2);
 
         this.setVariant(holder2);
-        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -240,22 +227,15 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
         @Override
         public void start() {
-//            Butterfly.this.clearStates();
             super.start();
         }
     }
 
     abstract class ButterflyBehaviorGoal extends Goal {
-//        private final TargetingConditions alertableTargeting = TargetingConditions.forCombat().range((double)12.0F).ignoreLineOfSight().selector(Racoon.this.new FoxAlertableEntitiesSelector());
-
         protected boolean hasShelter() {
             BlockPos blockPos = BlockPos.containing(Butterfly.this.getX(), Butterfly.this.getBoundingBox().maxY, Butterfly.this.getZ());
             return !Butterfly.this.level().canSeeSky(blockPos) && Butterfly.this.getWalkTargetValue(blockPos) >= 0.0F;
         }
-
-//        protected boolean alertable() {
-//            return !Racoon.this.level().getNearbyEntities(LivingEntity.class, this.alertableTargeting, Fox.this, Fox.this.getBoundingBox().inflate((double)12.0F, (double)6.0F, (double)12.0F)).isEmpty();
-//        }
     }
 
     class ButterflyWanderGoal extends ButterflyBehaviorGoal {

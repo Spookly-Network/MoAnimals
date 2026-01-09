@@ -59,8 +59,8 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         RegistryAccess registryAccess = this.registryAccess();
-        Registry<RacoonVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.RACOON_VARIANT);
-        builder.define(DATA_VARIANT_ID, (Holder<RacoonVariant>) registry.getHolder(RacoonVariants.DEFAULT).or(registry::getAny).orElseThrow());
+        Registry<RacoonVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.RACOON_VARIANT);
+        builder.define(DATA_VARIANT_ID, (Holder<RacoonVariant>) registry.get(RacoonVariants.DEFAULT).or(registry::getAny).orElseThrow());
         builder.define(DATA_FLAGS_ID, (byte) 0);
     }
 
@@ -84,7 +84,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(
-                this, AbstractFish.class, 20, false, false, livingEntity -> livingEntity instanceof AbstractSchoolingFish
+                this, AbstractFish.class, 20, false, false, (livingEntity, serverLevel) -> livingEntity instanceof AbstractSchoolingFish
         ));
         super.registerGoals();
     }
@@ -104,8 +104,8 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
     }
 
     @Override
-    public Holder<RacoonVariant> getVariant() {
-        return (Holder) this.entityData.get(DATA_VARIANT_ID);
+    public @NotNull Holder<RacoonVariant> getVariant() {
+        return this.entityData.get(DATA_VARIANT_ID);
     }
 
     @Override
@@ -145,10 +145,10 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.RACOON_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.RACOON_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
+        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.RACOON_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().lookupOrThrow(MoAnimalsRegistries.RACOON_VARIANT).get(resourceKey)).ifPresent(this::setVariant);
     }
 
-    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
         Holder<RacoonVariant> holder2;
 
@@ -156,12 +156,12 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
         spawnGroupData = new RaccoonGroupData(holder2);
 
         this.setVariant(holder2);
-        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 12)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.FOLLOW_RANGE, 24d)
@@ -175,7 +175,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return MoAnimalEntityTypes.RACOON.get().create(serverLevel);
+        return MoAnimalEntityTypes.RACOON.get().create(serverLevel, EntitySpawnReason.BREEDING);
     }
 
     private void setupAnimationStates() {
@@ -197,7 +197,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
         }
     }
 
-    public static boolean checkSpawnRules(EntityType<? extends Racoon> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Racoon> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason entitySpawnReason, BlockPos pPos, RandomSource pRandom) {
         return false;
 //        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.RACCOON_SPAWNABLE_ON) || pLevel.getBlockState(pPos.below()).getFluidState().is(FluidTags.WATER);
     }

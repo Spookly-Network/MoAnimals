@@ -32,7 +32,6 @@ public class Penguin extends Animal {
     public static final int TOTAL_AIR_SUPPLY = 200; //1200;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flapAnimationState = new AnimationState();
-
     public float zBodyRot;
     public float xBodyRot;
 
@@ -61,14 +60,14 @@ public class Penguin extends Animal {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
         this.setAirSupply(this.getMaxAirSupply());
-        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return MoAnimalEntityTypes.PENGUIN.get().create(serverLevel);
+        return MoAnimalEntityTypes.PENGUIN.get().create(serverLevel, EntitySpawnReason.BREEDING);
     }
 
     @Override
@@ -122,7 +121,7 @@ public class Penguin extends Animal {
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(
-                this, AbstractFish.class, 20, false, false, livingEntity -> livingEntity instanceof AbstractSchoolingFish
+                this, AbstractFish.class, 20, false, false, (livingEntity, serverLevel) -> livingEntity instanceof AbstractSchoolingFish
         ));
     }
 
@@ -188,14 +187,14 @@ public class Penguin extends Animal {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 10d)
                 .add(Attributes.MOVEMENT_SPEED, 0.12)
                 .add(Attributes.FOLLOW_RANGE, 24d)
                 .add(Attributes.ATTACK_DAMAGE, 1.5);
     }
 
-    public static boolean checkSpawnRules(EntityType<? extends Penguin> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Penguin> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
         return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.PENGUIN_SPAWNABLE_ON);
     }
 

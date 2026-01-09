@@ -64,7 +64,7 @@ public class Duck extends Animal {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 8d)
                 .add(Attributes.MOVEMENT_SPEED, 0.20)
                 .add(Attributes.FLYING_SPEED, 0.35)
@@ -151,8 +151,8 @@ public class Duck extends Animal {
     }
 
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void customServerAiStep(ServerLevel serverLevel) {
+        super.customServerAiStep(serverLevel);
         if (this.getMoveControl().hasWanted()) {
             this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.2D);
         } else {
@@ -197,7 +197,7 @@ public class Duck extends Animal {
     //TODO: make
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return MoAnimalEntityTypes.DUCK.get().create(serverLevel);
+        return MoAnimalEntityTypes.DUCK.get().create(serverLevel, EntitySpawnReason.BREEDING);
     }
 
     private void setupAnimationStates() {
@@ -218,7 +218,7 @@ public class Duck extends Animal {
 
     }
 
-    public static boolean checkDuckSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkDuckSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
         return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.DUCKS_SPAWNABLE_ON);
     }
 

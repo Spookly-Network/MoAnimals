@@ -10,6 +10,8 @@ import dev.architectury.registry.registries.RegistrySupplier;
 
 import net.spookly.moanimals.item.MoAnimalItems;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.WaterlilyBlock;
@@ -20,11 +22,15 @@ public class MoAnimalBlocks {
 
     public static final RegistrySupplier<Block> DUCKWEED = registerBlock("duckweed",
             () -> new WaterlilyBlock(copyPropertiesOf(Blocks.LILY_PAD)
-                    .noCollission()));
+                    .noCollission()
+                    .setId(moanimalsBlockId("duckweed"))
+            ));
 
     public static final RegistrySupplier<Block> OSTRICH_EGG = registerBlock("ostrich_egg",
             () -> new OstrichEggBlock(copyPropertiesOf(Blocks.TURTLE_EGG)
-                    .mapColor(MapColor.TERRACOTTA_GRAY)));
+                    .mapColor(MapColor.TERRACOTTA_GRAY)
+                    .setId(moanimalsBlockId("ostrich_egg"))
+            ));
 
     public static void init() {
         LOGGER.info("Registering blocks");
@@ -49,5 +55,9 @@ public class MoAnimalBlocks {
 
     public static BlockBehaviour.Properties copyPropertiesOf(Block block) {
         return BlockBehaviour.Properties.ofFullCopy(block);
+    }
+
+    public static ResourceKey<Block> moanimalsBlockId(String string) {
+        return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
     }
 }

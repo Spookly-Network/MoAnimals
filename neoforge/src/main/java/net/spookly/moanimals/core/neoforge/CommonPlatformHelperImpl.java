@@ -1,6 +1,7 @@
 package net.spookly.moanimals.core.neoforge;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
+import static net.spookly.moanimals.entity.MoAnimalEntityTypes.moanimalsEntityId;
 
 import java.util.function.Supplier;
 
@@ -70,7 +71,7 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T extends Entity> Supplier<EntityType<T>> registerEntityType(String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height, int clientTrackingRange) {
-        return ENTITY_TYPES.register(name, () -> EntityType.Builder.of(factory, category).sized(width, height).clientTrackingRange(clientTrackingRange).build(name));
+        return ENTITY_TYPES.register(name, () -> EntityType.Builder.of(factory, category).sized(width, height).clientTrackingRange(clientTrackingRange).build(moanimalsEntityId(name)));
     }
 
     public static <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenuType(String name, Supplier<MenuType<T>> supplier) {

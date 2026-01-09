@@ -1,6 +1,7 @@
 package net.spookly.moanimals.core.fabric;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
+import static net.spookly.moanimals.entity.MoAnimalEntityTypes.moanimalsEntityId;
 
 import java.util.function.Supplier;
 
@@ -68,7 +69,11 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T extends Entity> @NotNull Supplier<EntityType<T>> registerEntityType(@NotNull String name, EntityType.EntityFactory<T> factory, MobCategory category, float width, float height, int clientTrackingRange) {
-        EntityType<T> registry = Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, name), FabricEntityTypeBuilder.create(category, factory).dimensions(EntityDimensions.scalable(width, height)).trackRangeChunks(clientTrackingRange).build());
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+        EntityType<T> registry = Registry.register(BuiltInRegistries.ENTITY_TYPE, id, FabricEntityTypeBuilder.create(category, factory)
+                .dimensions(EntityDimensions.scalable(width, height))
+                .trackRangeChunks(clientTrackingRange)
+                .build(moanimalsEntityId(name)));
         return () -> registry;
     }
 

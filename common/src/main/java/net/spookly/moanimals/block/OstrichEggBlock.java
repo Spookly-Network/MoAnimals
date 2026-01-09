@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -62,7 +63,7 @@ public class OstrichEggBlock extends Block {
 
     private void spawnHatchedEntity(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos) {
         serverLevel.levelEvent(2001, blockPos, Block.getId(blockState));
-        Ostrich ostrich = MoAnimalEntityTypes.OSTRICH.get().create(serverLevel);
+        Ostrich ostrich = MoAnimalEntityTypes.OSTRICH.get().create(serverLevel, EntitySpawnReason.BREEDING);
         if (ostrich != null) {
             ostrich.setAge(-24000);
             ostrich.setHomePos(blockPos);

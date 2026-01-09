@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,9 +21,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -90,19 +91,19 @@ public class Snail extends PathfinderMob implements Bucketable {
     }
 
     @Override
-    public void tick() {
+    public void customServerAiStep(ServerLevel serverLevel) {
         if (this.isAlive() && --this.slimeTime <= 0) {
             this.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Items.SLIME_BALL);
+            this.spawnAtLocation(serverLevel, Items.SLIME_BALL);
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.slimeTime = this.pickNextSlimeDropTime();
         }
 
-        super.tick();
+        super.customServerAiStep(serverLevel);
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         return (InteractionResult) bucketMobPickup(player, interactionHand, this).orElse(super.mobInteract(player, interactionHand));
     }
 
@@ -138,7 +139,7 @@ public class Snail extends PathfinderMob implements Bucketable {
     }
 
     @Override
-    public SoundEvent getPickupSound() {
+    public @NotNull SoundEvent getPickupSound() {
         return SoundEvents.BUCKET_FILL;
     }
 
@@ -156,7 +157,7 @@ public class Snail extends PathfinderMob implements Bucketable {
             }
 
             livingEntity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
+            return Optional.of(InteractionResult.SUCCESS);
         } else {
             return Optional.empty();
         }
@@ -166,10 +167,9 @@ public class Snail extends PathfinderMob implements Bucketable {
         return this.random.nextInt(20 * TimeUtil.SECONDS_PER_MINUTE * 5) + 20 * TimeUtil.SECONDS_PER_MINUTE * 5;
     }
 
-    public static boolean checkSpawnRules(EntityType<? extends Snail> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
+    public static boolean checkSpawnRules(EntityType<? extends Snail> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
         var biomes = MoAnimalsTags.BlockTags.SNAIL_SPAWNABLE_ON;
         var blockBelow = pLevel.getBlockState(pPos.below());
-        var check = blockBelow.is(biomes);
-        return check;
+        return blockBelow.is(biomes);
     }
 }

@@ -2,9 +2,6 @@ package net.spookly.moanimals.entity.animal;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
@@ -47,10 +44,13 @@ public class RacoonVariants {
     }
 
     public static Holder<RacoonVariant> getSpawnVariant(RegistryAccess registryAccess, Holder<Biome> holder) {
-        Registry<RacoonVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.RACOON_VARIANT);
-        Optional var10000 = registry.holders().filter((reference) -> ((RacoonVariant)reference.value()).biomes().contains(holder)).findFirst().or(() -> registry.getHolder(DEFAULT));
-        Objects.requireNonNull(registry);
-        return (Holder)var10000.or(registry::getAny).orElseThrow();
+        Registry<RacoonVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.RACOON_VARIANT);
+        return (Holder<RacoonVariant>)registry.listElements()
+                .filter(reference -> ((RacoonVariant)reference.value()).biomes().contains(holder))
+                .findFirst()
+                .or(() -> registry.get(DEFAULT))
+                .or(registry::getAny)
+                .orElseThrow();
     }
 
     public static void bootstrap(BootstrapContext<RacoonVariant> bootstrapContext) {

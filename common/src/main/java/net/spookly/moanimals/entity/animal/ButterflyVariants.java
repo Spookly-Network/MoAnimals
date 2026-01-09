@@ -2,8 +2,6 @@ package net.spookly.moanimals.entity.animal;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
@@ -43,24 +41,13 @@ public class ButterflyVariants {
      * @return ButterflyVariant, which is valid for biome.
      */
     public static Holder<ButterflyVariant> getSpawnVariant(RegistryAccess registryAccess, Holder<Biome> holder) {
-        Registry<ButterflyVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
-
-        var matches = new java.util.ArrayList<Holder<ButterflyVariant>>();
-        registry.holders().forEach(ref -> {
-            if (ref.value().biomes().contains(holder)) {
-                matches.add(ref);
-            }
-        });
-
-        if (matches.isEmpty()) {
-            return registry.getHolder(DEFAULT).or(registry::getAny).orElseThrow();
-        }
-        if (matches.size() == 1) {
-            return matches.getFirst();
-        }
-
-        int i = ThreadLocalRandom.current().nextInt(matches.size());
-        return matches.get(i);
+        Registry<ButterflyVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
+        return (Holder<ButterflyVariant>)registry.listElements()
+                .filter(reference -> ((ButterflyVariant)reference.value()).biomes().contains(holder))
+                .findFirst()
+                .or(() -> registry.get(DEFAULT))
+                .or(registry::getAny)
+                .orElseThrow();
     }
 
     static {

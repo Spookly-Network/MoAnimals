@@ -10,6 +10,7 @@ import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.item.MoAnimalItems;
 
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.entity.projectile.ThrownEgg;
@@ -38,7 +39,7 @@ public abstract class ThrownEggMixin extends ThrowableItemProjectile {
             
             if (!this.level().isClientSide) {
                 // Spawn a duck instead
-                Duck duck = MoAnimalEntityTypes.DUCK.get().create(this.level());
+                Duck duck = MoAnimalEntityTypes.DUCK.get().create(this.level(), EntitySpawnReason.TRIGGERED);
                 if (duck != null) {
                     duck.setAge(-24000);
                     duck.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
