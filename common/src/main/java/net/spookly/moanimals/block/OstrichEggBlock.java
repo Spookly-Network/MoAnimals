@@ -31,7 +31,6 @@ public class OstrichEggBlock extends Block {
     private static final VoxelShape ONE_EGG_AABB = Block.box(5.0, 0.0, 5.0, 11.0, 8.0, 11.0);
 
     public OstrichEggBlock(Properties properties) {
-        Camel
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HATCH, 0));
     }
