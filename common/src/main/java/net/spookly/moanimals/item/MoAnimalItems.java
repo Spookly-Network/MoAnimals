@@ -45,15 +45,15 @@ public class MoAnimalItems {
 
     // Block Items
     public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
-    public static final RegistrySupplier<Item> OSTRICH_EGG = registerItem("ostrich_egg", () -> new Item(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
+    public static final RegistrySupplier<Item> OSTRICH_EGG = registerBlockItem("ostrich_egg", MoAnimalBlocks.OSTRICH_EGG.get());
 
 
-    public static void registerBlockItem(final String path, Block block) {
-        registerItem(path, () -> new BlockItem(block, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB.get())));
+    public static RegistrySupplier<Item> registerBlockItem(final String path, Block block) {
+        return registerItem(path, () -> new BlockItem(block, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
     }
 
-    public static void registerBlockItem(final String path, BlockItem blockItem) {
-        registerItem(path, blockItem::asItem);
+    public static RegistrySupplier<Item> registerBlockItem(final String path, BlockItem blockItem) {
+        return registerItem(path, blockItem::asItem);
     }
 
     public static RegistrySupplier<Item> registerItem(final String path, Supplier<Item> item) {

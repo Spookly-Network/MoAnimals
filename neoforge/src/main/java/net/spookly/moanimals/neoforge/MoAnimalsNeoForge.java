@@ -27,7 +27,6 @@ public final class MoAnimalsNeoForge {
         CommonPlatformHelperImpl.SOUND_EVENTS.register(modBus);
         CommonPlatformHelperImpl.POTIONS.register(modBus);
         CommonPlatformHelperImpl.MENU_TYPES.register(modBus);
-
         CommonPlatformHelperImpl.RECIPE_TYPES.register(modBus);
         CommonPlatformHelperImpl.RECIPE_SERIALIZERS.register(modBus);
     }

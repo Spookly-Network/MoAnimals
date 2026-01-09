@@ -21,6 +21,7 @@ public class MoAnimalsBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockItem(MoAnimalBlocks.DUCKWEED);
+        blockItem(MoAnimalBlocks.OSTRICH_EGG);
 
 //        blockWithItem(ModBlocks.BISMUTH_ORE);
 //        blockWithItem(ModBlocks.BISMUTH_DEEPSLATE_ORE);

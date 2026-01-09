@@ -13,6 +13,7 @@ import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 
@@ -23,20 +24,18 @@ public final class Moanimals {
     public static void init() {
         // Write common init code here.
         MoAnimalEntityTypes.init();
-        MoAnimalsItemGroups.init();
-        MoAnimalItems.init();
         MoAnimalBlocks.init();
+
+        //Needs to be behind Blocks, because it will generate itemmodels
+        MoAnimalItems.init();
+        MoAnimalsItemGroups.init();
         MoAnimalsEntityDataSerializers.init();
         MoAnimalsTags.init();
     }
 
     public static void registerSpawnPlacements() {
-//        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.DUCK.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Duck::checkDuckSpawnRules);
-
-//        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.CROCODILE.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Crocodile::checkSpawnRules);
-
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.SNAIL.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Snail::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.BUTTERFLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Butterfly::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);

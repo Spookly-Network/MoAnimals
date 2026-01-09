@@ -25,6 +25,7 @@ public class MoAnimalsBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         add(MoAnimalBlocks.DUCKWEED.get(), createShearsOnlyDrop(MoAnimalItems.DUCKWEED.get()));
+        add(MoAnimalBlocks.OSTRICH_EGG.get(), createSilkTouchOnlyTable(MoAnimalItems.OSTRICH_EGG.get()));
     }
 
     @Override

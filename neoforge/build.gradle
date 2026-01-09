@@ -75,6 +75,7 @@ loom {
                     '--all',
                     '--output', generatedResources.absolutePath,
                     '--existing', assets.getAbsolutePath(),
+                    '--existing', file("src/main/resources").getAbsolutePath(),
                     '--existing-mod', 'moanimals'
             )
 

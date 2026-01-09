@@ -2,6 +2,7 @@ package net.spookly.moanimals.entity.ai.goal;
 
 import net.spookly.moanimals.entity.struc.AbstractEggLayingAnimal;
 import net.spookly.moanimals.entity.struc.EggLayingAnimal;
+import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -18,8 +19,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 public class LayEggGoal extends MoveToBlockGoal {
     private final EggLayingAnimal<? extends Animal> owner;
 
-    public LayEggGoal(EggLayingAnimal<? extends Animal> owner, double searchDistance) {
-        super(owner.getOwner(), searchDistance, 16);
+    public LayEggGoal(EggLayingAnimal<? extends Animal> owner, int searchDistance) {
+        super(owner.getOwner(), 1.0, searchDistance);
         this.owner = owner;
     }
 
@@ -71,6 +72,6 @@ public class LayEggGoal extends MoveToBlockGoal {
 
     @Override
     protected boolean isValidTarget(LevelReader levelReader, BlockPos blockPos) {
-        return !levelReader.isEmptyBlock(blockPos.above()) ? false : TurtleEggBlock.isSand(levelReader, blockPos);
+        return !levelReader.isEmptyBlock(blockPos.above()) ? false : levelReader.getBlockState(blockPos).is(MoAnimalsTags.BlockTags.EGG_LAYABLE_ON);
     }
 }

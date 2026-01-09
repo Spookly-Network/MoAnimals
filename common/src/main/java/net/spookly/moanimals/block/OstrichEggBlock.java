@@ -6,6 +6,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.animal.camel.Camel;
+import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +17,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.entity.Ostrich;
 import net.spookly.moanimals.util.MoAnimalsTags;
@@ -22,7 +28,10 @@ public class OstrichEggBlock extends Block {
     public static final MapCodec<OstrichEggBlock> CODEC = simpleCodec(OstrichEggBlock::new);
     public static final IntegerProperty HATCH = BlockStateProperties.HATCH;
 
+    private static final VoxelShape ONE_EGG_AABB = Block.box(5.0, 0.0, 5.0, 11.0, 8.0, 11.0);
+
     public OstrichEggBlock(Properties properties) {
+        Camel
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HATCH, 0));
     }
@@ -47,6 +56,11 @@ public class OstrichEggBlock extends Block {
                 spawnHatchedEntity(blockState, serverLevel, blockPos);
             }
         }
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        return ONE_EGG_AABB;
     }
 
     private void spawnHatchedEntity(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos) {

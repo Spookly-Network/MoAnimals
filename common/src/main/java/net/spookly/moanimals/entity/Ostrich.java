@@ -1,6 +1,7 @@
 package net.spookly.moanimals.entity;
 
-import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.item.Items;
 import net.spookly.moanimals.block.MoAnimalBlocks;
 import net.spookly.moanimals.entity.ai.goal.EggLayingBreedGoal;
@@ -26,8 +27,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
+//OwnableEntity, PlayerRideableJumping, Saddleable
 public class Ostrich extends AbstractEggLayingAnimal {
 
     protected Ostrich(EntityType<? extends Animal> entityType, Level level) {
@@ -58,13 +59,19 @@ public class Ostrich extends AbstractEggLayingAnimal {
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.5));
 
         this.goalSelector.addGoal(2, new EggLayingBreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new LayEggGoal(this, 1.0));
+        this.goalSelector.addGoal(3, new LayEggGoal(this, 32));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.25, this::isFood, true));
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
 
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+    }
+
+    @Override
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        this.setHomePos(this.blockPosition());
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

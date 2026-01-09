@@ -38,6 +38,8 @@ public class MoAnimalsTags {
         TagKey<Block> PENGUIN_SPAWNABLE_ON = tag("penguin_spawnable_on");
         TagKey<Block> OSTRICH_SPAWNABLE_ON = tag("ostrich_spawnable_on");
 
+        TagKey<Block> EGG_LAYABLE_ON = tag("egg_layable_on");
+
         TagKey<Block> IS_WARM = tag("is_warm");
 
         private static TagKey<Block> tag(@NotNull String name) {
