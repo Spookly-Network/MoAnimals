@@ -8,13 +8,13 @@ import java.util.function.Supplier;
 
 import dev.architectury.registry.registries.RegistrySupplier;
 
-import net.minecraft.world.level.material.MapColor;
 import net.spookly.moanimals.item.MoAnimalItems;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.WaterlilyBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 
 public class MoAnimalBlocks {
 

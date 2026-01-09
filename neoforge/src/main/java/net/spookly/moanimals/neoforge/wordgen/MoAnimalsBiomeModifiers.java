@@ -4,9 +4,6 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import java.util.List;
 
-import net.minecraft.client.animation.definitions.CamelAnimation;
-import net.minecraft.client.model.CamelModel;
-import net.minecraft.client.model.SnifferModel;
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.util.MoAnimalsTags;
 import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
