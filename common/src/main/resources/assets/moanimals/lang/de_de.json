@@ -12,5 +12,7 @@
   "item.moanimals.penguin_spawn_egg": "Pinguin-Spawn-Ei",
   "item.moanimals.ostrich_spawn_egg": "Strauß-Spawn-Ei",
 
+  "block.moanimals.ostrich_egg": "Straußen-Ei",
+
   "itemGroup.moanimals": "MoAnimals"
 }

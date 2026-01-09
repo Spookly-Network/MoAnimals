@@ -27,15 +27,19 @@ public class MoAnimalBlocks {
                     .mapColor(MapColor.TERRACOTTA_GRAY)));
 
     public static void init() {
-        BLOCKS.register();
         LOGGER.info("Registering blocks");
+        BLOCKS.register();
+        LOGGER.info("✓ Registering blocks");
+
+        LOGGER.info("Registering block items");
         BLOCKS.forEach(blockRegistrySupplier -> {
             if (blockRegistrySupplier.getId() == DUCKWEED.getId() || blockRegistrySupplier.getId() == OSTRICH_EGG.getId()) {
                 return;
             }
             Block block = blockRegistrySupplier.get();
-            MoAnimalItems.registerBlockItem(blockRegistrySupplier.getRegisteredName().split(":")[1], block);
+            MoAnimalItems.registerBlockItem(blockRegistrySupplier.getRegisteredName().split(":")[1], () -> block);
         });
+        LOGGER.info("✓ Registering block items");
     }
 
     public static RegistrySupplier<Block> registerBlock(String path, Supplier<Block> block) {
