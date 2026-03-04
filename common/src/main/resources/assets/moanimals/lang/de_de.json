@@ -23,5 +23,7 @@
   "entity.moanimals.penguin": "Pinguin",
   "entity.moanimals.raccoon": "Waschbär",
   "entity.moanimals.snail": "schnecke",
-  "entity.moanimals.duck": "Ente"
+  "entity.moanimals.duck": "Ente",
+
+  "sounds.moanimals.duck_quack": "Ente quakt"
 }

@@ -1,6 +1,7 @@
 package net.spookly.moanimals.sounds;
 
 import static net.spookly.moanimals.Moanimals.LOGGER;
+import static net.spookly.moanimals.Moanimals.MOD_ID;
 import static net.spookly.moanimals.registry.MoAnimalsRegistries.SOUND_EVENTS;
 
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -19,14 +20,10 @@ public class MoAnimalsSoundEvents {
     }
 
     private static RegistrySupplier<SoundEvent> register(String string) {
-        return register(ResourceLocation.withDefaultNamespace(string));
+        return register(ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
     }
 
     private static RegistrySupplier<SoundEvent> register(ResourceLocation resourceLocation) {
-        return register(resourceLocation, resourceLocation);
-    }
-
-    private static RegistrySupplier<SoundEvent> register(ResourceLocation resourceLocation, ResourceLocation resourceLocation2) {
-        return SOUND_EVENTS.register(resourceLocation, () -> SoundEvent.createVariableRangeEvent(resourceLocation2));
+        return SOUND_EVENTS.register(resourceLocation, () -> SoundEvent.createVariableRangeEvent(resourceLocation));
     }
 }
