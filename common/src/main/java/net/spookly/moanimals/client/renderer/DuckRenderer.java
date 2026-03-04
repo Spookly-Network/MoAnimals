@@ -26,7 +26,10 @@ public class DuckRenderer extends MobRenderer<Duck, DuckRenderState, DuckModel> 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(DuckRenderState livingEntityRenderState) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck.png");
+        if (livingEntityRenderState.isBaby) {
+            return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duckling.png");
+        }
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck_mallard.png");
     }
 
     @Override

@@ -1,11 +1,20 @@
 {
   "entity.duck.quack": {
     "category": "ambient",
-    "subtitle": "Duck sounds",
+    "subtitle": "sounds.moanimals.duck_quack",
     "sounds": [
-      "moanimals:entity/duck/quack_1",
-      "moanimals:entity/duck/quack_2",
-      "moanimals:entity/duck/quack_3"
+      {
+        "name": "moanimals:entity/duck/quack_1",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/duck/quack_2",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/duck/quack_3",
+        "volume": 0.25
+      }
     ]
   }
 }

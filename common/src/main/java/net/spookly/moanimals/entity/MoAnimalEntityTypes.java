@@ -15,7 +15,7 @@ import net.minecraft.world.entity.MobCategory;
 public class MoAnimalEntityTypes {
 
     public static final RegistrySupplier<EntityType<Duck>> DUCK = register("duck", EntityType.Builder.of(Duck::new, MobCategory.CREATURE)
-            .sized(0.5f, 0.5f)
+            .sized(0.5f, 0.55f)
     );
 
     public static final RegistrySupplier<EntityType<Crocodile>> CROCODILE = register("crocodile", EntityType.Builder.of(Crocodile::new, MobCategory.CREATURE)
