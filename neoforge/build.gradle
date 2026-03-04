@@ -2,8 +2,8 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-def generatedResources = file("src/generated")
-def assets = rootProject.file('common/src/main/resources')
+def generatedResources = file("src/generated/")
+def commonAssets = rootProject.file('common/src/main/resources/')
 
 architectury {
     platformSetupLoomIde()
@@ -15,6 +15,7 @@ configurations {
         canBeResolved = true
         canBeConsumed = false
     }
+
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
@@ -69,14 +70,15 @@ remapJar {
 loom {
     runs {
         data {
-            data()
-            programArgs(
+            clientData()
+            programArgs.addAll(
                     '--mod', 'moanimals',
                     '--all',
                     '--output', generatedResources.absolutePath,
-                    '--existing', assets.getAbsolutePath(),
-                    '--existing', file("src/main/resources").getAbsolutePath(),
-                    '--existing-mod', 'moanimals'
+                    '--existing', generatedResources.absolutePath,
+                    '--existing', commonAssets.getAbsolutePath(),
+                    '--existing', file("src/main/resources/").getAbsolutePath(),
+//                    '--existing-mod', 'moanimals'
             )
 
         }

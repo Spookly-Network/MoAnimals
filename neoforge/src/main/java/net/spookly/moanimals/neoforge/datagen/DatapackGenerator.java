@@ -2,44 +2,35 @@ package net.spookly.moanimals.neoforge.datagen;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Set;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
+import net.spookly.moanimals.neoforge.wordgen.MoAnimalsBiomeModifiers;
+
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 @EventBusSubscriber(modid = MOD_ID)
 public class DatapackGenerator {
 
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+    public static void gatherData(GatherDataEvent.Client event) {
+        event.createDatapackRegistryObjects(
+            new RegistrySetBuilder()
+                .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MoAnimalsBiomeModifiers::bootstrap)
+        );
 
-        generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(MoAnimalsBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
-
-//        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
-//
-//        BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
-//        generator.addProvider(event.includeServer(), blockTagsProvider);
-//        generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
-//
-//        generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
-//
-        generator.addProvider(event.includeServer(), new MoAnimalsDatapackProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeClient(), new MoAnimalsItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeClient(), new MoAnimalsBlockStateProvider(packOutput, existingFileHelper));
+        event.createProvider(MoAnimalsModelProvider::new);
+        event.createProvider((output, lookupProvider) -> new LootTableProvider(
+            output,
+            Set.of(),
+            List.of(),
+            lookupProvider
+        ));
     }
 }

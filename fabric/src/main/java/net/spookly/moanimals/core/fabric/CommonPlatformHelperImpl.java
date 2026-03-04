@@ -37,7 +37,7 @@ import net.minecraft.world.level.material.Fluid;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 
 public class CommonPlatformHelperImpl {
     public static <T extends Block> Supplier<T> registerBlock(@NotNull String name, Supplier<T> block) {
@@ -56,10 +56,10 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggItem(@NotNull String name, Supplier<EntityType<T>> entityType, int backgroundColor, int highlightColor, Item.Properties properties) {
-        return registerItem(name, () -> new SpawnEggItem(entityType.get(), backgroundColor, highlightColor, properties));
+        return registerItem(name, () -> new SpawnEggItem(entityType.get(), properties));
     }
 
-    public static @NotNull Supplier<Item> registerMobBucketItem(@NotNull String name, Supplier<? extends EntityType<?>> entitySupplier, @NotNull Supplier<? extends Fluid> fluidSupplier, Supplier<? extends SoundEvent> soundSupplier) {
+    public static @NotNull Supplier<Item> registerMobBucketItem(@NotNull String name, Supplier<? extends EntityType<? extends Mob>> entitySupplier, @NotNull Supplier<? extends Fluid> fluidSupplier, Supplier<? extends SoundEvent> soundSupplier) {
         return registerItem(name, () -> new MobBucketItem(entitySupplier.get(), fluidSupplier.get(), soundSupplier.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     }
 
@@ -113,7 +113,7 @@ public class CommonPlatformHelperImpl {
     }
 
     public static TagKey<Item> getShearsTag() {
-        return ConventionalItemTags.SHEARS;
+        return ConventionalItemTags.SHEAR_TOOLS;
     }
 
     public static <T> Supplier<EntityDataSerializer<T>> registerEntityDataSerializers(String name, Supplier<EntityDataSerializer<T>> serializer) {

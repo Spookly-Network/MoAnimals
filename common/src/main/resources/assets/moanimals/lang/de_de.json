@@ -1,6 +1,11 @@
 {
-  "block.moanimals.duckweed": "Entengrütze",
+  "itemGroup.moanimals": "MoAnimals",
 
+  "block.moanimals.duckweed": "Entengrütze",
+  "block.moanimals.ostrich_egg": "Straußen-Ei",
+
+  "item.moanimals.duckweed": "Entengrütze",
+  "item.moanimals.ostrich_egg": "Straußen-Ei",
   "item.moanimals.breadcrumb": "Brotkrümel",
   "item.moanimals.duck_egg": "Entenei",
   "item.moanimals.snail_bucket": "Schneckeneimer",
@@ -12,7 +17,11 @@
   "item.moanimals.penguin_spawn_egg": "Pinguin-Spawn-Ei",
   "item.moanimals.ostrich_spawn_egg": "Strauß-Spawn-Ei",
 
-  "block.moanimals.ostrich_egg": "Straußen-Ei",
-
-  "itemGroup.moanimals": "MoAnimals"
+  "entity.moanimals.butterfly": "Schmetterling",
+  "entity.moanimals.crocodile": "Krokodil",
+  "entity.moanimals.ostrich": "Strauß",
+  "entity.moanimals.penguin": "Pinguin",
+  "entity.moanimals.raccoon": "Waschbär",
+  "entity.moanimals.snail": "schnecke",
+  "entity.moanimals.duck": "Ente"
 }

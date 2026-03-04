@@ -63,7 +63,7 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggItem(@NotNull String name, Supplier<EntityType<T>> entityType, int backgroundColor, int highlightColor, Item.Properties properties) {
-        return registerItem(name, () -> new SpawnEggItem(entityType.get(), backgroundColor, highlightColor, properties));
+        return registerItem(name, () -> new SpawnEggItem(entityType.get(), properties));
     }
 
     public static <T extends SoundEvent> Supplier<T> registerSoundEvent(String name, Supplier<T> soundEvent) {

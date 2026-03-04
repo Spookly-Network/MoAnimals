@@ -52,7 +52,7 @@ public final class MoAnimalsClient {
     public static void registerBlockColorHandlers(BiConsumer<BlockColor, Block[]> registerer) {
         BlockColor duckweedColor = (state, level, pos, tintIndex) -> level != null && pos != null
                 ? BiomeColors.getAverageFoliageColor(level, pos)
-                : FoliageColor.getDefaultColor();
+                : FoliageColor.FOLIAGE_DEFAULT;
         registerer.accept(duckweedColor, new Block[]{MoAnimalBlocks.DUCKWEED.get()});
     }
 

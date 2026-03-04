@@ -11,6 +11,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -24,7 +25,7 @@ import net.minecraft.world.phys.HitResult;
 
 public class SnailMobBucketItem extends MobBucketItem {
 
-    public SnailMobBucketItem(EntityType<?> entityType, Fluid fluid, SoundEvent soundEvent, Properties properties) {
+    public SnailMobBucketItem(EntityType<? extends Mob> entityType, Fluid fluid, SoundEvent soundEvent, Properties properties) {
         super(entityType, fluid, soundEvent, properties);
     }
 
