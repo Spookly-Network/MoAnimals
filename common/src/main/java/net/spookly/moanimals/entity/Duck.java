@@ -7,6 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.spookly.moanimals.entity.ai.goal.DropItemAtRandomGoal;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +41,12 @@ import net.minecraft.world.phys.Vec3;
 //AbstractSchoolingFish
 public class Duck extends Animal {
 
+    private static final double BUOYANCY_STRENGTH = 0.008D;  // correction force
+    private static final double WATER_DAMPING_Y = 0.72D;     // vertical damping in water
+    private static final double MAX_UPWARD_SPEED = 0.012D;
+    private static final double WATER_HEIGHT_OFFSET = 0.03D;
+    private static final double MIN_BUOYANCY_PUSH = 0.0015D;
+
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
@@ -53,32 +61,26 @@ public class Duck extends Animal {
     public float flapping = 1.0F;
     private float nextFlap = 1.0F;
 
-
     public Duck(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
-        this.setPathfindingMalus(PathType.WATER, 5.0F);
-        this.setPathfindingMalus(PathType.WATER_BORDER, 1.0F);
+        this.setPathfindingMalus(PathType.WATER, 4.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 1F);
 //        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 8d)
-                .add(Attributes.MOVEMENT_SPEED, 0.20)
-                .add(Attributes.FLYING_SPEED, 0.35)
-                .add(Attributes.FOLLOW_RANGE, 24d);
+            .add(Attributes.MAX_HEALTH, 8d)
+            .add(Attributes.MOVEMENT_SPEED, 0.20)
+            .add(Attributes.FLYING_SPEED, 0.35)
+            .add(Attributes.FOLLOW_RANGE, 24d);
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
-        return super.createNavigation(level);
-
-//        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
-//        nav.setCanOpenDoors(false);
-//        nav.setCanFloat(false); // darf schweben
-//        return nav;
+    protected @NotNull PathNavigation createNavigation(Level level) {
+        return new AmphibiousPathNavigation(this, level);
     }
 
 
@@ -93,38 +95,10 @@ public class Duck extends Animal {
         // Nicht-Anführer folgen dem nächsten Anführer in der Nähe
         this.goalSelector.addGoal(5, new FollowLeaderGoal(this, 1.15, 5.0F, 15.0F));
 
-        // Bodenbewegung (nur wenn am Boden)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0));
 
-        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && Duck.this.onGround();
-            }
+        this.goalSelector.addGoal(7, new DropItemAtRandomGoal(this, MoAnimalItems.DUCK_EGG.get()));
 
-            @Override
-            public boolean canContinueToUse() {
-                return super.canContinueToUse() && Duck.this.onGround();
-            }
-        });
-
-
-        // Schwimmen (nur wenn im Wasser)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 40) {
-            @Override
-            public boolean canUse() {
-                return Duck.this.isInWaterOrBubble();
-            }
-
-            @Override
-            public boolean canContinueToUse() {
-                return Duck.this.isInWaterOrBubble();
-            }
-        });
-
-
-//        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         super.registerGoals();
@@ -135,9 +109,14 @@ public class Duck extends Animal {
         return MoAnimalsSoundEvents.DUCK_QUACK.get();
     }
 
+    @Override
+    protected @NotNull EntityDimensions getDefaultDimensions(Pose pose) {
+        EntityDimensions base = super.getDefaultDimensions(pose);
+        return this.isBaby() ? base.scale(1.75F) : base;
+    }
+
     //#region AI
     // AI
-
     protected boolean isFlapping() {
         return this.flyDist > this.nextFlap;
     }
@@ -175,17 +154,10 @@ public class Duck extends Animal {
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround() && vec3.y < 0.0) {
-            this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
+            this.setDeltaMovement(vec3.multiply(1.0, 0.5, 1.0));
         }
 
         this.flap += this.flapping * 2.0F;
-//        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
-//            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-//            this.spawnAtLocation(NaturalistRegistry.DUCK_EGG.get());
-//            this.gameEvent(GameEvent.ENTITY_PLACE);
-//            this.eggTime = this.random.nextInt(6000) + 6000;
-//        }
-
     }
 
 
@@ -228,8 +200,6 @@ public class Duck extends Animal {
 
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
-
-
         } else {
             // Ab und zu die Leader-Verteilung neu bewerten, um natürlichere Gruppen zu erhalten
             if (--leaderReevalCooldown <= 0) {
@@ -238,16 +208,17 @@ public class Duck extends Animal {
             }
 
             if (this.isInWater()) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+                if (this.getDeltaMovement().y < .025) {
+                    this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+                }
             }
         }
-
     }
 
     private void reassignLeaderIfNeeded() {
         // Wenn in 12 Blöcken kein anderer Leader da ist, kleine Chance, selbst Leader zu werden
         List<Duck> nearby = this.level().getEntitiesOfClass(Duck.class, this.getBoundingBox().inflate(12.0),
-                d -> d != this && d.isAlive());
+            d -> d != this && d.isAlive());
         boolean hasLeaderNearby = nearby.stream().anyMatch(Duck::isGroupLeader);
 
         if (!hasLeaderNearby && this.getRandom().nextFloat() < 0.25f) {
@@ -257,9 +228,9 @@ public class Duck extends Animal {
             // Bei zu vielen Leadern in Nähe: nur der mit kleinster UUID bleibt Leader
             nearby.add(this);
             Duck primary = nearby.stream()
-                    .filter(Duck::isGroupLeader)
-                    .min(Comparator.comparing(Entity::getUUID))
-                    .orElse(this);
+                .filter(Duck::isGroupLeader)
+                .min(Comparator.comparing(Entity::getUUID))
+                .orElse(this);
             this.groupLeader = this == primary;
         }
     }
@@ -337,12 +308,10 @@ public class Duck extends Animal {
         @Nullable private Duck findNearestLeader() {
             AABB box = duck.getBoundingBox().inflate(areaSize);
             List<Duck> leaders = duck.level().getEntitiesOfClass(Duck.class, box,
-                    d -> d != duck && d.isAlive() && d.isGroupLeader());
+                d -> d != duck && d.isAlive() && d.isGroupLeader());
             return leaders.stream()
-                    .min(Comparator.comparingDouble(duck::distanceToSqr))
-                    .orElse(null);
+                .min(Comparator.comparingDouble(duck::distanceToSqr))
+                .orElse(null);
         }
     }
-
-
 }

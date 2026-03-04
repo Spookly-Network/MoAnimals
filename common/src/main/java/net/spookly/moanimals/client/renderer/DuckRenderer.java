@@ -3,6 +3,7 @@ package net.spookly.moanimals.client.renderer;
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.client.model.DuckModel;
 import net.spookly.moanimals.entity.Duck;
@@ -18,8 +19,11 @@ public class DuckRenderer extends MobRenderer<Duck, DuckModel<Duck>> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Duck entity) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck.png");
+    public @NotNull ResourceLocation getTextureLocation(Duck entity) {
+        if (entity.isBaby()) {
+            return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duckling.png");
+        }
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck_mallard.png");
     }
 
     @Override

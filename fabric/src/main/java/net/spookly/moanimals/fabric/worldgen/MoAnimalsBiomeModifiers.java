@@ -1,5 +1,6 @@
 package net.spookly.moanimals.fabric.worldgen;
 
+
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.util.MoAnimalsTags;
 import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
@@ -31,7 +32,7 @@ public class MoAnimalsBiomeModifiers {
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
                 MobCategory.CREATURE, MoAnimalEntityTypes.CROCODILE.get(), 3, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
-                MobCategory.AMBIENT, MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7);
+                MobCategory.AMBIENT, MoAnimalEntityTypes.BUTTERFLY.get(), 26, 3, 7);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
                 MobCategory.AMBIENT, MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),

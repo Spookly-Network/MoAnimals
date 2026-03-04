@@ -50,7 +50,7 @@ public class MoAnimalsBiomeModifiers {
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
         context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 21, 2, 7))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 26, 3, 7))));
         context.register(SPAWN_SNAIL, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3))));

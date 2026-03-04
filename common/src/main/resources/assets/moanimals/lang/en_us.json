@@ -1,6 +1,11 @@
 {
-  "block.moanimals.duckweed": "Duckweed",
+  "itemGroup.moanimals": "MoAnimals",
 
+  "block.moanimals.duckweed": "Duckweed",
+  "block.moanimals.ostrich_egg": "Ostrich Egg",
+
+  "item.moanimals.duckweed": "Duckweed",
+  "item.moanimals.ostrich_egg": "Ostrich Egg",
   "item.moanimals.breadcrumb": "Breadcrumbs",
   "item.moanimals.duck_egg": "Duck Egg",
   "item.moanimals.snail_bucket": "Bucket of Snail",
@@ -12,7 +17,13 @@
   "item.moanimals.penguin_spawn_egg": "Penguin Spawn Egg",
   "item.moanimals.ostrich_spawn_egg": "Ostrich Spawn Egg",
 
-  "block.moanimals.ostrich_egg": "Ostrich Egg",
+  "entity.moanimals.butterfly": "Butterfly",
+  "entity.moanimals.crocodile": "Crocodile",
+  "entity.moanimals.ostrich": "Ostrich",
+  "entity.moanimals.penguin": "Penguin",
+  "entity.moanimals.raccoon": "Raccoon",
+  "entity.moanimals.snail": "Snail",
+  "entity.moanimals.duck": "Duck",
 
-  "itemGroup.moanimals": "MoAnimals"
+  "sounds.moanimals.duck_quack": "Duck quacking"
 }
