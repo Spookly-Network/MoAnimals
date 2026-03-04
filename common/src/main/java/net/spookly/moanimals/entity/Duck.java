@@ -7,6 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.spookly.moanimals.entity.ai.goal.DropItemAtRandomGoal;
 import net.spookly.moanimals.item.MoAnimalItems;
 import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -58,8 +60,8 @@ public class Duck extends Animal {
         super(entityType, level);
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
-        this.setPathfindingMalus(PathType.WATER, 5.0F);
-        this.setPathfindingMalus(PathType.WATER_BORDER, 1.0F);
+        this.setPathfindingMalus(PathType.WATER, 4.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 1F);
 //        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
     }
 
@@ -72,13 +74,8 @@ public class Duck extends Animal {
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
-        return super.createNavigation(level);
-
-//        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
-//        nav.setCanOpenDoors(false);
-//        nav.setCanFloat(false); // darf schweben
-//        return nav;
+    protected @NotNull PathNavigation createNavigation(Level level) {
+        return new AmphibiousPathNavigation(this, level);
     }
 
 
@@ -94,34 +91,8 @@ public class Duck extends Animal {
         this.goalSelector.addGoal(5, new FollowLeaderGoal(this, 1.15, 5.0F, 15.0F));
 
         // Bodenbewegung (nur wenn am Boden)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
-
-        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && Duck.this.onGround();
-            }
-
-            @Override
-            public boolean canContinueToUse() {
-                return super.canContinueToUse() && Duck.this.onGround();
-            }
-        });
-
-
-        // Schwimmen (nur wenn im Wasser)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 40) {
-            @Override
-            public boolean canUse() {
-                return Duck.this.isInWaterOrBubble();
-            }
-
-            @Override
-            public boolean canContinueToUse() {
-                return Duck.this.isInWaterOrBubble();
-            }
-        });
+        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(7, new DropItemAtRandomGoal(this, MoAnimalItems.DUCK_EGG.get()));
 
 
 //        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
@@ -133,6 +104,12 @@ public class Duck extends Animal {
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
         return MoAnimalsSoundEvents.DUCK_QUACK.get();
+    }
+
+    @Override
+    protected @NotNull EntityDimensions getDefaultDimensions(Pose pose) {
+        EntityDimensions base = super.getDefaultDimensions(pose);
+        return this.isBaby() ? base.scale(1.75F) : base;
     }
 
     //#region AI
@@ -175,17 +152,10 @@ public class Duck extends Animal {
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround() && vec3.y < 0.0) {
-            this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
+            this.setDeltaMovement(vec3.multiply(1.0, 0.5, 1.0));
         }
 
         this.flap += this.flapping * 2.0F;
-//        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
-//            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-//            this.spawnAtLocation(NaturalistRegistry.DUCK_EGG.get());
-//            this.gameEvent(GameEvent.ENTITY_PLACE);
-//            this.eggTime = this.random.nextInt(6000) + 6000;
-//        }
-
     }
 
 
