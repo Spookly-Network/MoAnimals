@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.spookly.moanimals.core.components.MoAnimalsDataComponents;
 import net.spookly.moanimals.entity.animal.ButterflyVariants;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
@@ -14,12 +15,11 @@ import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -38,14 +38,15 @@ import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.variant.SpawnContext;
+import net.minecraft.world.entity.variant.VariantUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
-public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyVariant>>, FlyingAnimal {
+public class Butterfly extends Animal implements FlyingAnimal {
     private static final EntityDataAccessor<Holder<ButterflyVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Butterfly.class, MoAnimalsEntityDataSerializers.BUTTERFLY_VARIANT);
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     public final AnimationState idleAnimationState = new AnimationState();
@@ -68,9 +69,30 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        RegistryAccess registryAccess = this.registryAccess();
-        Registry<ButterflyVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT);
-        builder.define(DATA_VARIANT_ID, (Holder<ButterflyVariant>)registry.get(ButterflyVariants.DEFAULT).or(registry::getAny).orElseThrow());
+        builder.define(DATA_VARIANT_ID, VariantUtils.getDefaultOrAny(this.registryAccess(), ButterflyVariants.DEFAULT));
+    }
+
+    @Override
+    public @Nullable <T> T get(DataComponentType<? extends T> dataComponentType) {
+        if (dataComponentType == MoAnimalsDataComponents.BUTTERFLY_VARIANT) {
+            return castComponentValue((DataComponentType<T>)dataComponentType, this.getVariant());
+        }
+        return super.get(dataComponentType);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter dataComponentGetter) {
+        this.applyImplicitComponentIfPresent(dataComponentGetter, MoAnimalsDataComponents.BUTTERFLY_VARIANT.get());
+        super.applyImplicitComponents(dataComponentGetter);
+    }
+
+    @Override
+    protected <T> boolean applyImplicitComponent(DataComponentType<T> dataComponentType, T object) {
+        if (dataComponentType == MoAnimalsDataComponents.BUTTERFLY_VARIANT) {
+            this.setVariant(castComponentValue(MoAnimalsDataComponents.BUTTERFLY_VARIANT.get(), object));
+            return true;
+        }
+        return super.applyImplicitComponent(dataComponentType, object);
     }
 
     @Override
@@ -83,7 +105,7 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(double distance, float damageMultiplier, DamageSource source) {
         return false;
     }
 
@@ -114,16 +136,13 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     public ResourceLocation getTexture() {
-        ButterflyVariant butterflyVariant = (ButterflyVariant) this.getVariant().value();
-        return butterflyVariant.texture();
+        ButterflyVariant butterflyVariant = this.getVariant().value();
+        return butterflyVariant.assetInfo().texturePath();
     }
 
-    @Override
     public void setVariant(Holder<ButterflyVariant> holder) {
         this.entityData.set(DATA_VARIANT_ID, holder);
     }
-
-    @Override
     public @NotNull Holder<ButterflyVariant> getVariant() {
         return this.entityData.get(DATA_VARIANT_ID);
     }
@@ -150,23 +169,24 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
-        this.getVariant().unwrapKey().ifPresent((resourceKey) -> compoundTag.putString("variant", resourceKey.location().toString()));
+        VariantUtils.writeVariant(compoundTag, this.getVariant());
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().lookupOrThrow(MoAnimalsRegistries.BUTTERFLY_VARIANT).get(resourceKey)).ifPresent(this::setVariant);
+        VariantUtils.readVariant(compoundTag, this.registryAccess(), MoAnimalsRegistries.BUTTERFLY_VARIANT).ifPresent(this::setVariant);
     }
 
     @Override
     @NotNull public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
-        Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
-        Holder<ButterflyVariant> holder2;
+        Optional<? extends Holder<ButterflyVariant>> optional = ButterflyVariants.selectVariantToSpawn(
+            this.random, this.registryAccess(), SpawnContext.create(serverLevelAccessor, this.blockPosition())
+        );
 
-        holder2 = ButterflyVariants.getSpawnVariant(this.registryAccess(), holder);
-        spawnGroupData = new ButterflyGroupData(holder2);
-
-        this.setVariant(holder2);
+        if (optional.isPresent()) {
+            this.setVariant(optional.get());
+            spawnGroupData = new ButterflyGroupData(optional.get());
+        }
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
@@ -271,4 +291,14 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
             return vec33 != null ? vec33 : AirAndWaterRandomPos.getPos(Butterfly.this, 8, 4, -2, vec32.x, vec32.z, (float) (Math.PI / 2));
         }
     }
+
+    public static class ButterflyPackData extends AgeableMob.AgeableMobGroupData {
+        public final Holder<ButterflyVariant> type;
+
+        public ButterflyPackData(Holder<ButterflyVariant> holder) {
+            super(false);
+            this.type = holder;
+        }
+    }
+
 }

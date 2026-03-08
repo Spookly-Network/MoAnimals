@@ -1,12 +1,20 @@
 {
-  "texture": "moanimals:entity/butterfly/butterfly_agrias",
-  "biomes": [
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:sunflower_plains",
-    "minecraft:dark_forest",
-    "minecraft:mangrove_swamp",
-    "minecraft:lush_caves"
+  "asset_id": "moanimals:entity/butterfly/butterfly_agrias",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:bamboo_jungle",
+          "minecraft:jungle",
+          "minecraft:sparse_jungle",
+          "minecraft:sunflower_plains",
+          "minecraft:dark_forest",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

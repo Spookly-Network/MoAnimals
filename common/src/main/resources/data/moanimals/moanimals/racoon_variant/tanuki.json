@@ -1,9 +1,19 @@
 {
-  "wild_texture": "moanimals:entity/racoon/racoon_tanuki",
-  "sleep_texture": "moanimals:entity/racoon/racoon_tanuki_sleeping",
-  "biomes": [
-    "minecraft:windswept_forest",
-    "minecraft:cherry_grove",
-    "minecraft:grove"
+  "assets": {
+    "wild": "moanimals:entity/racoon/racoon_tanuki",
+    "sleep": "moanimals:entity/racoon/racoon_tanuki_sleeping"
+  },
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:windswept_forest",
+          "minecraft:cherry_grove",
+          "minecraft:grove"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

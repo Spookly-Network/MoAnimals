@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.spookly.moanimals.core.components.MoAnimalsDataComponents;
 import net.spookly.moanimals.entity.animal.RacoonVariants;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
 import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
@@ -13,13 +14,12 @@ import net.spookly.moanimals.registry.MoAnimalsRegistries;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -31,15 +31,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.variant.SpawnContext;
+import net.minecraft.world.entity.variant.VariantUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant>> {
+public class Racoon extends Animal {
 
     private static final EntityDataAccessor<Holder<RacoonVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Racoon.class, MoAnimalsEntityDataSerializers.RACOON_VARIANT);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID;
@@ -58,9 +60,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        RegistryAccess registryAccess = this.registryAccess();
-        Registry<RacoonVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.RACOON_VARIANT);
-        builder.define(DATA_VARIANT_ID, (Holder<RacoonVariant>) registry.get(RacoonVariants.DEFAULT).or(registry::getAny).orElseThrow());
+        builder.define(DATA_VARIANT_ID, VariantUtils.getDefaultOrAny(this.registryAccess(), RacoonVariants.DEFAULT));
         builder.define(DATA_FLAGS_ID, (byte) 0);
     }
 
@@ -92,20 +92,40 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
     public ResourceLocation getTexture() {
         RacoonVariant raccoonVariant = (RacoonVariant) this.getVariant().value();
         if (this.isSleeping()) {
-            return raccoonVariant.sleepTexture();
+            return raccoonVariant.assetInfo().sleep().texturePath();
         } else {
-            return raccoonVariant.wildTexture();
+            return raccoonVariant.assetInfo().wild().texturePath();
         }
     }
 
-    @Override
     public void setVariant(Holder<RacoonVariant> holder) {
         this.entityData.set(DATA_VARIANT_ID, holder);
     }
-
-    @Override
     public @NotNull Holder<RacoonVariant> getVariant() {
         return this.entityData.get(DATA_VARIANT_ID);
+    }
+
+    @Override
+    public @Nullable <T> T get(DataComponentType<? extends T> dataComponentType) {
+        if (dataComponentType == MoAnimalsDataComponents.RACCOON_VARIANT) {
+            return castComponentValue((DataComponentType<T>)dataComponentType, this.getVariant());
+        }
+        return super.get(dataComponentType);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter dataComponentGetter) {
+        this.applyImplicitComponentIfPresent(dataComponentGetter, MoAnimalsDataComponents.RACCOON_VARIANT.get());
+        super.applyImplicitComponents(dataComponentGetter);
+    }
+
+    @Override
+    protected <T> boolean applyImplicitComponent(DataComponentType<T> dataComponentType, T object) {
+        if (dataComponentType == MoAnimalsDataComponents.RACCOON_VARIANT) {
+            this.setVariant(castComponentValue(MoAnimalsDataComponents.RACCOON_VARIANT.get(), object));
+            return true;
+        }
+        return super.applyImplicitComponent(dataComponentType, object);
     }
 
     @Override
@@ -138,24 +158,24 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
-        this.getVariant().unwrapKey().ifPresent((resourceKey) -> compoundTag.putString("variant", resourceKey.location().toString()));
+        VariantUtils.writeVariant(compoundTag, this.getVariant());
         compoundTag.putBoolean("Sleeping", this.isSleeping());
         compoundTag.putBoolean("Sitting", this.isSitting());
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.RACOON_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().lookupOrThrow(MoAnimalsRegistries.RACOON_VARIANT).get(resourceKey)).ifPresent(this::setVariant);
+        VariantUtils.readVariant(compoundTag, this.registryAccess(), MoAnimalsRegistries.RACOON_VARIANT).ifPresent(this::setVariant);
     }
 
     @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
-        Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
-        Holder<RacoonVariant> holder2;
-
-        holder2 = RacoonVariants.getSpawnVariant(this.registryAccess(), holder);
-        spawnGroupData = new RaccoonGroupData(holder2);
-
-        this.setVariant(holder2);
+        Optional<? extends Holder<RacoonVariant>> optional = RacoonVariants.selectVariantToSpawn(
+            this.random, this.registryAccess(), SpawnContext.create(serverLevelAccessor, this.blockPosition())
+        );
+        if (optional.isPresent()) {
+            this.setVariant(optional.get());
+            spawnGroupData = new RaccoonGroupData(optional.get());
+        }
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
     }
 
@@ -284,7 +304,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
                 --this.countdown;
                 return false;
             } else {
-                return Racoon.this.level().isDay() && this.hasShelter() && !Racoon.this.isInPowderSnow;
+                return !Racoon.this.level().isDarkOutside() && this.hasShelter() && !Racoon.this.isInPowderSnow;
             }
         }
 

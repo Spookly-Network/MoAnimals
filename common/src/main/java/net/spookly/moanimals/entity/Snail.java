@@ -84,10 +84,11 @@ public class Snail extends PathfinderMob implements Bucketable {
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        if (compoundTag.contains("slime_time")) {
-            this.slimeTime = compoundTag.getInt("slime_time");
-        }
-        this.setFromBucket(compoundTag.getBoolean("FromBucket"));
+        var slimeTime = compoundTag.getInt("slime_time");
+        var fromBucket = compoundTag.getBoolean("FromBucket");
+
+        slimeTime.ifPresent(integer -> this.slimeTime = integer);
+        fromBucket.ifPresent(this::setFromBucket);
     }
 
     @Override

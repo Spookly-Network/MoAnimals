@@ -1,10 +1,18 @@
 {
-  "texture": "moanimals:entity/butterfly/butterfly_rose",
-  "biomes": [
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:savanna",
-    "minecraft:mangrove_swamp",
-    "minecraft:flower_forest"
+  "asset_id": "moanimals:entity/butterfly/butterfly_rose",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:bamboo_jungle",
+          "minecraft:jungle",
+          "minecraft:savanna",
+          "minecraft:mangrove_swamp",
+          "minecraft:flower_forest"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

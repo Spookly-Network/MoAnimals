@@ -1,5 +1,15 @@
 {
-  "wild_texture": "moanimals:entity/racoon/racoon_golden",
-  "sleep_texture": "moanimals:entity/racoon/racoon_golden_sleep",
-  "biomes": "minecraft:forest"
+  "assets": {
+    "wild": "moanimals:entity/racoon/racoon_golden",
+    "sleep": "moanimals:entity/racoon/racoon_golden_sleep"
+  },
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "minecraft:forest"
+      },
+      "priority": 1
+    }
+  ]
 }

@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -67,7 +68,7 @@ public class OstrichEggBlock extends Block {
         if (ostrich != null) {
             ostrich.setAge(-24000);
             ostrich.setHomePos(blockPos);
-            ostrich.moveTo(blockPos.getX(), blockPos.getY(), blockPos.getZ() + 0.3, 0.0F, 0.0F);
+            ostrich.moveOrInterpolateTo(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ() + 0.3), 0.0F, 0.0F);
             serverLevel.addFreshEntity(ostrich);
         }
     }

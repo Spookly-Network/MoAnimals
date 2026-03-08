@@ -1,10 +1,20 @@
 {
-  "wild_texture": "moanimals:entity/racoon/racoon_rusty",
-  "sleep_texture": "moanimals:entity/racoon/racoon_rusty_sleeping",
-  "biomes": [
-    "minecraft:forest",
-    "minecraft:plains",
-    "minecraft:swamp",
-    "minecraft:mangrove_swamp"
+  "assets": {
+    "wild": "moanimals:entity/racoon/racoon_rusty",
+    "sleep": "moanimals:entity/racoon/racoon_rusty_sleeping"
+  },
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:plains",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

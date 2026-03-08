@@ -8,6 +8,7 @@ import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -26,10 +27,13 @@ public class MoAnimalsRegistries {
         return ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
     }
 
+    public final static DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(MOD_ID, Registries.DATA_COMPONENT_TYPE);
     public final static DeferredRegister<Item> ITEMS = DeferredRegister.create(MOD_ID, Registries.ITEM);
     public final static DeferredRegister<Block> BLOCKS = DeferredRegister.create(MOD_ID, Registries.BLOCK);
     public final static DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(MOD_ID, Registries.SOUND_EVENT);
     public final static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITYS = DeferredRegister.create(MOD_ID, Registries.BLOCK_ENTITY_TYPE);
     public final static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(MOD_ID, Registries.ENTITY_TYPE);
     public static DeferredRegister<RacoonVariant> RACOON_VARIANTS = DeferredRegister.create(MOD_ID, RACOON_VARIANT);
+
+
 }

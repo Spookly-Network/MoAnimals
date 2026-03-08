@@ -1,8 +1,16 @@
 {
-  "texture": "moanimals:entity/butterfly/butterfly_emperor",
-  "biomes": [
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle"
+  "asset_id": "moanimals:entity/butterfly/butterfly_emperor",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:bamboo_jungle",
+          "minecraft:jungle",
+          "minecraft:sparse_jungle"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

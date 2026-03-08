@@ -20,6 +20,7 @@ import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
@@ -32,7 +33,7 @@ import net.minecraft.world.level.block.Block;
 
 public class MoAnimalsModelProvider extends ModelProvider {
 
-    private static final ModelTemplate SPAWN_EGG = new ModelTemplate(Optional.of(ResourceLocation.parse("item/template_spawn_egg")), Optional.empty());
+    private static final ModelTemplate SPAWN_EGG = new ModelTemplate(Optional.of(ResourceLocation.parse("item/egg")), Optional.empty());
 
     public MoAnimalsModelProvider(PackOutput arg) {
         super(arg, MOD_ID);
@@ -61,20 +62,21 @@ public class MoAnimalsModelProvider extends ModelProvider {
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
         blockItem(MoAnimalBlocks.OSTRICH_EGG, blockModels);
-        this.createLilyPad(blockModels);
+        this.createDuckweed(blockModels);
     }
 
     private void blockItem(RegistrySupplier<Block> block, BlockModelGenerators blockModels) {
         blockModels.registerSimpleItemModel(block.get(), block.getId());
     }
 
-    private void createLilyPad(BlockModelGenerators blockModels) {
+    public void createDuckweed(BlockModelGenerators blockModels) {
         Item DUCKWEED_ITEM = MoAnimalItems.DUCKWEED.get();
         Block DUCKWEED_BLOCK = MoAnimalBlocks.DUCKWEED.get();
         
         ResourceLocation resourcelocation = blockModels.createFlatItemModelWithBlockTexture(DUCKWEED_ITEM, DUCKWEED_BLOCK);
         blockModels.registerSimpleTintedItemModel(DUCKWEED_BLOCK, resourcelocation, ItemModelUtils.constantTint(-9321636));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createRotatedVariant(DUCKWEED_BLOCK, ModelLocationUtils.getModelLocation(DUCKWEED_BLOCK)));
+        net.minecraft.client.renderer.block.model.Variant variant = BlockModelGenerators.plainModel(ModelLocationUtils.getModelLocation(DUCKWEED_BLOCK));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(DUCKWEED_BLOCK, BlockModelGenerators.createRotatedVariants(variant)));
     }
 
     @Override

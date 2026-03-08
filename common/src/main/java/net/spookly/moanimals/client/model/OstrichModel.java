@@ -39,8 +39,9 @@ public class OstrichModel extends EntityModel<OstrichRenderState> {
 
         PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition torso = root.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -26.0F, -6.0F, 12.0F, 12.0F, 18.0F, new CubeDeformation(0.0F))
-        .texOffs(0, 30).addBox(-6.0F, -14.0F, -6.0F, 12.0F, 2.0F, 18.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition torso = root.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -12.0F, -8.0F, 12.0F, 12.0F, 18.0F, new CubeDeformation(0.0F))
+            .texOffs(0, 30).addBox(-6.0F, 0.0F, -8.0F, 12.0F, 2.0F, 18.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -14.0F, 2.0F));
+
         torso.addOrReplaceChild("wing_left", CubeListBuilder.create().texOffs(16, 50).addBox(0.0F, -4.0F, 0.0F, 1.0F, 8.0F, 10.0F, new CubeDeformation(0.0F))
                 .texOffs(60, 45).addBox(1.0F, -4.0F, 10.0F, 0.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0F, -20.0F, -1.0F));
         torso.addOrReplaceChild("wing_right", CubeListBuilder.create().texOffs(38, 50).addBox(-1.0F, -4.0F, 0.0F, 1.0F, 8.0F, 10.0F, new CubeDeformation(0.0F))

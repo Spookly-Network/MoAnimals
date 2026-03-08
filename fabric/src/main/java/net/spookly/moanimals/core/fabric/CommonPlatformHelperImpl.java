@@ -12,7 +12,6 @@ import net.spookly.moanimals.mixin.SpawnPlacementsInvoker;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -36,6 +35,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Fluid;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricTrackedDataRegistry;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 
@@ -117,7 +117,7 @@ public class CommonPlatformHelperImpl {
     }
 
     public static <T> Supplier<EntityDataSerializer<T>> registerEntityDataSerializers(String name, Supplier<EntityDataSerializer<T>> serializer) {
-        EntityDataSerializers.registerSerializer(serializer.get());
+        FabricTrackedDataRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, name), serializer.get());
         return serializer;
     }
 }

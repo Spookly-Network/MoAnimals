@@ -1,8 +1,18 @@
 {
-  "wild_texture": "moanimals:entity/racoon/racoon_golden",
-  "sleep_texture": "moanimals:entity/racoon/racoon_golden_sleeping",
-  "biomes": [
-    "minecraft:savanna",
-    "minecraft:wooded_badlands"
+  "assets": {
+    "wild": "moanimals:entity/racoon/racoon_golden",
+    "sleep": "moanimals:entity/racoon/racoon_golden_sleeping"
+  },
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": [
+          "minecraft:wooded_badlands",
+          "minecraft:savanna"
+        ]
+      },
+      "priority": 1
+    }
   ]
 }

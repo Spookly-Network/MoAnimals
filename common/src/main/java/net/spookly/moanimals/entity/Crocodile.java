@@ -22,6 +22,8 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -30,7 +32,6 @@ import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.PathType;
 
 public class Crocodile extends WaterAnimal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
@@ -47,7 +48,6 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 10, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
-        this.setPathfindingMalus(PathType.WATER, 0.0F);
         this.setAggressive(true);
 //        Dolphin
     }
@@ -65,7 +65,7 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
         this.goalSelector.addGoal(5, new RestrictSunGoal(this));
 
         this.goalSelector.addGoal(5, new RandomSwimmingGoal(this, 1.0, 1));
-        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0));
+//        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
@@ -88,7 +88,13 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
         builder.define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
-//    @Override
+    @Override
+    protected @NotNull PathNavigation createNavigation(Level level) {
+        //TODO: Make croco amphibi
+        return new WaterBoundPathNavigation(this, level);
+    }
+
+    //    @Override
 //    public boolean isFood(ItemStack itemStack) {
 //        return itemStack.is(Items.CHICKEN);
 //    }
@@ -140,13 +146,8 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Crocodile> pType, @NotNull ServerLevelAccessor pLevel, EntitySpawnReason pReason, BlockPos pPos, RandomSource pRandom) {
-        var check1 = !pLevel.getLevel().isRaining();
-        var biomes = MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON;
-        var blockBelow = pLevel.getBlockState(pPos.below());
-        var check = blockBelow.is(biomes);
-        var checkFinal = check && check1;
-        return checkFinal;
-        //        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON);
+        var is = pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON);
+        return is;
     }
 
     @Override

@@ -42,7 +42,7 @@ public abstract class ThrownEggMixin extends ThrowableItemProjectile {
                 Duck duck = MoAnimalEntityTypes.DUCK.get().create(this.level(), EntitySpawnReason.TRIGGERED);
                 if (duck != null) {
                     duck.setAge(-24000);
-                    duck.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+                    duck.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
                     
                     // If fudgePositionAfterSizeChange succeeds, add the entity
                     if (duck.fudgePositionAfterSizeChange(EntityDimensions.fixed(0.0F, 0.0F))) {

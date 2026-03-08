@@ -178,7 +178,7 @@ public class Duck extends Animal {
             --this.idleAnimationTimeout;
         }
 
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             // spiele Schwimm-Animation
         } else if (!this.onGround()) {
             // spiele Flatter-Animation

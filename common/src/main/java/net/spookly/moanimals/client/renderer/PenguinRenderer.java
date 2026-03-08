@@ -26,10 +26,10 @@ public class PenguinRenderer extends MobRenderer<Penguin, PenguinRenderState, Pe
 
     @Override
     public void render(PenguinRenderState livingEntityRenderState, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
-        super.render(livingEntityRenderState, poseStack, multiBufferSource, i);
         if (livingEntityRenderState.isBaby) {
-            poseStack.scale(0.55f, 0.55f, 0.55f);
+            poseStack.scale(0.75f, 0.75f, 0.75f);
         }
+        super.render(livingEntityRenderState, poseStack, multiBufferSource, i);
     }
 
     @Override

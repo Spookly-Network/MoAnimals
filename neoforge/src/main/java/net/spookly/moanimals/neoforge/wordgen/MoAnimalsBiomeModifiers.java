@@ -2,8 +2,6 @@ package net.spookly.moanimals.neoforge.wordgen;
 
 import static net.spookly.moanimals.Moanimals.MOD_ID;
 
-import java.util.List;
-
 import net.spookly.moanimals.entity.MoAnimalEntityTypes;
 import net.spookly.moanimals.util.MoAnimalsTags;
 import net.spookly.moanimals.worldgen.MoAnimalsPlacedFeatures;
@@ -13,6 +11,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
@@ -39,27 +38,30 @@ public class MoAnimalsBiomeModifiers {
         //k = max
 
         //Spawns
+
         context.register(SPAWN_DUCK, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.DUCK_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.DUCK.get(), 30, 2, 5))));
+                WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.DUCK.get(),2, 5))));
+
         context.register(SPAWN_CROCODILE, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 6, 1, 2))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 1, 2))));
+
         context.register(SPAWN_RACCOON, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.RACCOON_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 1, 3))));
         context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 26, 3, 7))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 3, 7))));
         context.register(SPAWN_SNAIL, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 1, 3))));
         context.register(SPAWN_PENGUIN, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 15, 2, 5))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 2, 5))));
         context.register(SPAWN_OSTRICH, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.OSTRICH_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.OSTRICH.get(), 5, 2, 10))));
+            WeightedList.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.OSTRICH.get(), 2, 10))));
 
 
         //Features

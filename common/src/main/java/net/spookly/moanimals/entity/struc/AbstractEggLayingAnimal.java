@@ -47,10 +47,11 @@ public abstract class AbstractEggLayingAnimal extends MoAnimal implements EggLay
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        this.setHasEgg(compoundTag.getBoolean("HasEgg"));
-        if (compoundTag.contains("HomePos")) {
-            this.setHomePos(BlockPos.of(compoundTag.getLong("HomePos")));
-        }
+        var hasEgg = compoundTag.getBoolean("HasEgg");
+        var homePos = compoundTag.getLong("HomePos");
+
+        hasEgg.ifPresent(this::setHasEgg);
+        homePos.ifPresent(pos -> this.setHomePos(BlockPos.of(pos)));
     }
 
     @Override

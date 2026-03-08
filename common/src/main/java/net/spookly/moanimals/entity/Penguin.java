@@ -42,7 +42,7 @@ public class Penguin extends Animal {
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new AmphibiousPathNavigation(this, level);
-//        if (this.isInWaterOrBubble()) {
+//        if (this.isInWater()) {
 //            return new WaterBoundPathNavigation(this, level) {
 //               @Override
 //                protected PathFinder createPathFinder(int i) {
@@ -87,18 +87,18 @@ public class Penguin extends Animal {
         this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.0) {
             @Override
             public boolean canUse() {
-                return super.canUse() && !mob.isInWaterOrBubble();
+                return super.canUse() && !mob.isInWater();
             }
 
             @Override
             public boolean canContinueToUse() {
-                return super.canContinueToUse() && !mob.isInWaterOrBubble();
+                return super.canContinueToUse() && !mob.isInWater();
             }
 
             @Override
             public void tick() {
                 super.tick();
-                if (mob.isInWaterOrBubble()) return;
+                if (mob.isInWater()) return;
                 ((Penguin)mob).addParticlesAroundSelf(ParticleTypes.HEART);
             }
         });
@@ -107,12 +107,12 @@ public class Penguin extends Animal {
         this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1) {
             @Override
             public boolean canUse() {
-                return super.canUse() && mob.isInWaterOrBubble();
+                return super.canUse() && mob.isInWater();
             }
 
             @Override
             public boolean canContinueToUse() {
-                return mob.isInWaterOrBubble();
+                return mob.isInWater();
             }
         });
 
@@ -147,7 +147,7 @@ public class Penguin extends Animal {
     public void aiStep() {
         float rotateSpeed = 1.0F;
 
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             Vec3 vec3 = this.getDeltaMovement();
             double d = vec3.horizontalDistance();
             this.yBodyRot += (-((float) Mth.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI) - this.yBodyRot) * 0.1F;
@@ -159,7 +159,7 @@ public class Penguin extends Animal {
     }
 
     protected void handleAirSupply(int i) {
-        if (this.isAlive() && !this.isInWaterOrBubble()) {
+        if (this.isAlive() && !this.isInWater()) {
             this.setAirSupply(i - 1);
             if (this.getAirSupply() == -20) {
                 this.setAirSupply(0);
@@ -199,7 +199,7 @@ public class Penguin extends Animal {
     }
 
     private void setupAnimationStates() {
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             // spiele Schwimm-Animation
         } else if (!this.onGround()) {
             // spiele Flatter-Animation
