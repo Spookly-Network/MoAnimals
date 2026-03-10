@@ -21,7 +21,7 @@ public class ButterflyVariants {
 
     public static final ResourceKey<ButterflyVariant> MONARCH = createKey("monarch");
     public static final ResourceKey<ButterflyVariant> EMPEROR = createKey("emperor");
-    public static final ResourceKey<ButterflyVariant> DEFAULT;
+    public static final ResourceKey<ButterflyVariant> DEFAULT = EMPEROR;
 
     private static ResourceKey<ButterflyVariant> createKey(String string) {
         return ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
@@ -32,7 +32,7 @@ public class ButterflyVariants {
     }
 
     static void register(BootstrapContext<ButterflyVariant> bootstrapContext, ResourceKey<ButterflyVariant> resourceKey, String string, HolderSet<Biome> holderSet) {
-        ResourceLocation resourceLocation = ResourceLocation.withDefaultNamespace("entity/butterfly/" + string);
+        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, "entity/butterfly/" + string);
         bootstrapContext.register(resourceKey, new ButterflyVariant(resourceLocation, holderSet));
     }
 
@@ -62,9 +62,5 @@ public class ButterflyVariants {
 
         int i = ThreadLocalRandom.current().nextInt(matches.size());
         return matches.get(i);
-    }
-
-    static {
-        DEFAULT = MONARCH;
     }
 }

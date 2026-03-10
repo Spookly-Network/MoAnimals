@@ -41,7 +41,7 @@ public class MoAnimalsBiomeModifiers {
         //Spawns
         context.register(SPAWN_DUCK, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.DUCK_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.DUCK.get(), 30, 2, 5))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.DUCK.get(), 25, 2, 5))));
         context.register(SPAWN_CROCODILE, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.CROCODILE_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.CROCODILE.get(), 6, 1, 2))));
@@ -50,13 +50,13 @@ public class MoAnimalsBiomeModifiers {
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.RACOON.get(), 8, 1, 3))));
         context.register(SPAWN_BUTTERFLY, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BUTTERFLY_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 26, 3, 7))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BUTTERFLY.get(), 20, 3, 7))));
         context.register(SPAWN_SNAIL, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.SNAIL_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SNAIL.get(), 10, 1, 3))));
         context.register(SPAWN_PENGUIN, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.PENGUIN_SPAWNABLE_IN),
-                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 15, 2, 5))));
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.PENGUIN.get(), 16, 2, 5))));
         context.register(SPAWN_OSTRICH, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.OSTRICH_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.OSTRICH.get(), 5, 2, 10))));

@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class DuckRenderer extends MobRenderer<Duck, DuckRenderState, DuckModel> {
+
     public DuckRenderer(EntityRendererProvider.Context context) {
         super(context, new DuckModel(context.bakeLayer(DuckModel.LAYER_LOCATION)), 0.25f);
     }
@@ -29,13 +30,20 @@ public class DuckRenderer extends MobRenderer<Duck, DuckRenderState, DuckModel> 
         if (livingEntityRenderState.isBaby) {
             return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duckling.png");
         }
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck_mallard.png");
+        return livingEntityRenderState.texture;
+    }
+
+    @Override
+    public void extractRenderState(Duck livingEntity, DuckRenderState livingEntityRenderState, float f) {
+        super.extractRenderState(livingEntity, livingEntityRenderState, f);
+        livingEntityRenderState.texture = livingEntity.getTexture();
+
     }
 
     @Override
     public void render(DuckRenderState livingEntityRenderState, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         if (livingEntityRenderState.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            poseStack.scale(0.6f, 0.6f, 0.6f);
         }
         super.render(livingEntityRenderState, poseStack, multiBufferSource, i);
     }

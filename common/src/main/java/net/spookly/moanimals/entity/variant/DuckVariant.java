@@ -1,5 +1,6 @@
 package net.spookly.moanimals.entity.variant;
 
+
 import java.util.Objects;
 
 import com.mojang.serialization.Codec;
@@ -18,26 +19,25 @@ import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 
-//todo: add size modifier
-public class ButterflyVariant {
-    public static final Codec<ButterflyVariant> DIRECT_CODEC = RecordCodecBuilder.create(
+public class DuckVariant {
+    public static final Codec<DuckVariant> DIRECT_CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("texture").forGetter((arg) -> arg.texture),
-            RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(ButterflyVariant::biomes)
-    ).apply(instance, ButterflyVariant::new));
+            RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(DuckVariant::biomes)
+        ).apply(instance, DuckVariant::new));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ButterflyVariant> DIRECT_STREAM_CODEC;
-    public static final Codec<Holder<ButterflyVariant>> CODEC;
-    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<ButterflyVariant>> STREAM_CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, DuckVariant> DIRECT_STREAM_CODEC;
+    public static final Codec<Holder<DuckVariant>> CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<DuckVariant>> STREAM_CODEC;
     private final ResourceLocation texture;
     private final HolderSet<Biome> biomes;
 
-    public ButterflyVariant(ResourceLocation texture, HolderSet<Biome> biomes) {
+    public DuckVariant(ResourceLocation texture, HolderSet<Biome> biomes) {
         this.texture = texture;
         this.biomes = biomes;
     }
 
-    private static ResourceLocation fullTextureId(ResourceLocation arg) {
+    private ResourceLocation fullTextureId(ResourceLocation arg) {
         return arg.withPath((string) -> "textures/" + string + ".png");
     }
 
@@ -53,10 +53,10 @@ public class ButterflyVariant {
     public boolean equals(Object object) {
         if (object == this) {
             return true;
-        } else if (!(object instanceof ButterflyVariant ButterflyVariant)) {
+        } else if (!(object instanceof DuckVariant DuckVariant)) {
             return false;
         } else {
-            return Objects.equals(this.texture, ButterflyVariant.texture) && Objects.equals(this.biomes, ButterflyVariant.biomes);
+            return Objects.equals(this.texture, DuckVariant.texture) && Objects.equals(this.biomes, DuckVariant.biomes);
         }
     }
 
@@ -70,11 +70,12 @@ public class ButterflyVariant {
     static {
         DIRECT_STREAM_CODEC = StreamCodec.composite(
             ResourceLocation.STREAM_CODEC,
-            ButterflyVariant::texture,
+            DuckVariant::texture,
             ByteBufCodecs.holderSet(Registries.BIOME),
-            ButterflyVariant::biomes,
-            ButterflyVariant::new);
-        CODEC = RegistryFileCodec.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, DIRECT_CODEC);
-        STREAM_CODEC = ByteBufCodecs.holder(MoAnimalsRegistries.BUTTERFLY_VARIANT, DIRECT_STREAM_CODEC);
+            DuckVariant::biomes,
+            DuckVariant::new);
+
+        CODEC = RegistryFileCodec.create(MoAnimalsRegistries.DUCK_VARIANT, DIRECT_CODEC);
+        STREAM_CODEC = ByteBufCodecs.holder(MoAnimalsRegistries.DUCK_VARIANT, DIRECT_STREAM_CODEC);
     }
 }

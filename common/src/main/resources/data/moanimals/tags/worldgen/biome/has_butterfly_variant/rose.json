@@ -1,0 +1,21 @@
+{
+  "values": [
+    "minecraft:bamboo_jungle",
+    "minecraft:jungle",
+    "minecraft:savanna",
+    "minecraft:mangrove_swamp",
+    "minecraft:flower_forest",
+    {
+      "id": "regions_unexplored:rainforest",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:sparse_rainforest",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tropics",
+      "required": false
+    }
+  ]
+}

@@ -5,6 +5,18 @@
     {
       "id": "natures_spirit:marsh",
       "required": false
+    },
+    {
+      "id": "regions_unexplored:old_growth_bayou",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:rainforest",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:sparse_rainforest",
+      "required": false
     }
   ]
 }

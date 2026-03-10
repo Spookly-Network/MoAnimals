@@ -1,0 +1,4 @@
+{
+  "texture": "moanimals:entity/duck/duck_call",
+  "biomes": "#moanimals:has_duck_variant/call"
+}

@@ -3,20 +3,34 @@ package net.spookly.moanimals.entity;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.entity.ai.goal.DropItemAtRandomGoal;
+import net.spookly.moanimals.entity.animal.DuckVariants;
+import net.spookly.moanimals.entity.variant.DuckVariant;
 import net.spookly.moanimals.item.MoAnimalItems;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -29,6 +43,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -39,13 +54,14 @@ import net.minecraft.world.phys.Vec3;
 //FIXME: Duck baby speed
 
 //AbstractSchoolingFish
-public class Duck extends Animal {
+public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
+    private static final EntityDataAccessor<Holder<DuckVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Duck.class, MoAnimalsEntityDataSerializers.DUCK_VARIANT);
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
     // Einfaches Herden-Flag
-    private boolean groupLeader = false;
+    private boolean groupLeader;
     private int leaderReevalCooldown = 0;
 
     public float flap;
@@ -78,6 +94,47 @@ public class Duck extends Animal {
         return new AmphibiousPathNavigation(this, level);
     }
 
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        RegistryAccess registryAccess = this.registryAccess();
+        Registry<DuckVariant> registry = registryAccess.lookupOrThrow(MoAnimalsRegistries.DUCK_VARIANT);
+        builder.define(DATA_VARIANT_ID, registry.get(DuckVariants.DEFAULT).or(registry::getAny).orElseThrow());
+    }
+
+    @Override
+    public void setVariant(Holder<DuckVariant> holder) {
+        this.entityData.set(DATA_VARIANT_ID, holder);
+    }
+
+    @Override
+    public @NotNull Holder<DuckVariant> getVariant() {
+        return this.entityData.get(DATA_VARIANT_ID);
+    }
+
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        this.getVariant().unwrapKey().ifPresent((resourceKey) -> compoundTag.putString("variant", resourceKey.location().toString()));
+    }
+
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.DUCK_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().lookupOrThrow(MoAnimalsRegistries.DUCK_VARIANT).get(resourceKey)).ifPresent(this::setVariant);
+    }
+
+    public ResourceLocation getTexture() {
+        DuckVariant duckVariant = (DuckVariant) this.getVariant().value();
+        return duckVariant.texture();
+    }
+
+    @Override
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
+        Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
+        Holder<DuckVariant> holder2 = DuckVariants.getSpawnVariant(this.registryAccess(), holder);
+        spawnGroupData = new Duck.DuckGroupData(holder2);
+        this.setVariant(holder2);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, entitySpawnReason, spawnGroupData);
+    }
 
     @Override
     protected void registerGoals() {
@@ -153,13 +210,6 @@ public class Duck extends Animal {
         }
 
         this.flap += this.flapping * 2.0F;
-//        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
-//            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-//            this.spawnAtLocation(NaturalistRegistry.DUCK_EGG.get());
-//            this.gameEvent(GameEvent.ENTITY_PLACE);
-//            this.eggTime = this.random.nextInt(6000) + 6000;
-//        }
-
     }
 
 
@@ -240,6 +290,15 @@ public class Duck extends Animal {
 
     public boolean isGroupLeader() {
         return groupLeader;
+    }
+
+    public static class DuckGroupData extends AgeableMob.AgeableMobGroupData {
+        public final Holder<DuckVariant> type;
+
+        public DuckGroupData(Holder<DuckVariant> holder) {
+            super(false);
+            this.type = holder;
+        }
     }
 
     private static class FollowLeaderGoal extends Goal {

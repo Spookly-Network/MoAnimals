@@ -17,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +40,8 @@ public class Penguin extends Animal {
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new AmphibiousPathNavigation(this, level);
+        return super.createNavigation(level);
+//        return new AmphibiousPathNavigation(this, level);
 //        if (this.isInWaterOrBubble()) {
 //            return new WaterBoundPathNavigation(this, level) {
 //               @Override
@@ -74,7 +74,12 @@ public class Penguin extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(0, new BreathAirGoal(this));
+        this.goalSelector.addGoal(0, new BreathAirGoal(this) {
+            @Override
+            public boolean canUse() {
+                return Penguin.this.isInWater() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.5));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, PolarBear.class, 10.0f, 0.8f, 1.3f));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1));
@@ -104,7 +109,7 @@ public class Penguin extends Animal {
         });
 
         // Schwimmen (nur wenn im Wasser)
-        this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1.0, 1) {
+        this.goalSelector.addGoal(7, new RandomSwimmingGoal(this, 1.0, 1) {
             @Override
             public boolean canUse() {
                 return super.canUse() && mob.isInWaterOrBubble();
@@ -116,9 +121,9 @@ public class Penguin extends Animal {
             }
         });
 
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(8, new FlapHappyGoal(this));
-        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(9, new FlapHappyGoal(this));
+        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(
                 this, AbstractFish.class, 20, false, false, (livingEntity, serverLevel) -> livingEntity instanceof AbstractSchoolingFish
@@ -189,7 +194,7 @@ public class Penguin extends Animal {
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 10d)
-                .add(Attributes.MOVEMENT_SPEED, 0.12)
+                .add(Attributes.MOVEMENT_SPEED, 0.1f)
                 .add(Attributes.FOLLOW_RANGE, 24d)
                 .add(Attributes.ATTACK_DAMAGE, 1.5);
     }
@@ -204,7 +209,7 @@ public class Penguin extends Animal {
         } else if (!this.onGround()) {
             // spiele Flatter-Animation
         } else {
-            this.idleAnimationState.animateWhen(!this.walkAnimation.isMoving(), this.tickCount);
+            this.idleAnimationState.startIfStopped(this.tickCount);
         }
 
     }
@@ -220,7 +225,7 @@ public class Penguin extends Animal {
 
     }
 
-    private static class FlapHappyGoal extends Goal {
+    class FlapHappyGoal extends Goal {
         private final Penguin penguin;
 
         private FlapHappyGoal(Penguin penguin) {
@@ -235,7 +240,11 @@ public class Penguin extends Animal {
         @Override
         public void start() {
             penguin.flapAnimationState.start(penguin.tickCount);
-            penguin.addParticlesAroundSelf(ParticleTypes.EXPLOSION);
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
         }
     }
 }

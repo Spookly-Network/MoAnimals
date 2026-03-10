@@ -1,12 +1,4 @@
 {
   "texture": "moanimals:entity/butterfly/butterfly_agrias_claudia",
-  "biomes": [
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:sunflower_plains",
-    "minecraft:dark_forest",
-    "minecraft:mangrove_swamp",
-    "minecraft:lush_caves"
-  ]
+  "biomes": "#moanimals:has_butterfly_variant/agrias_claudia"
 }

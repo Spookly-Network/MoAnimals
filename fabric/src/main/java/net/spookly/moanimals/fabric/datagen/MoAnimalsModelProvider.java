@@ -41,6 +41,4 @@ public class MoAnimalsModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(MoAnimalItems.PENGUIN_SPAWN_EGG.get(), SPAWN_EGG);
         itemModelGenerators.generateFlatItem(MoAnimalItems.OSTRICH_SPAWN_EGG.get(), SPAWN_EGG);
     }
-
-
 }

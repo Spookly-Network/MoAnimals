@@ -62,3 +62,49 @@ sourceSets {
 remapJar {
     input.set shadowJar.archiveFile
 }
+
+modrinth {
+    token = env.MODRINTH_TOKEN.value // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+    projectId = rootProject.mod_id
+    versionNumber = rootProject.mod_version
+    versionType = rootProject.mod_version_type
+    changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
+    uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    gameVersions = [rootProject.minecraft_version] // Must be an array, even with only one version
+    loaders = ["fabric"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
+    dependencies { // A special DSL for creating dependencies
+        // scope.type
+        // The scope can be `required`, `optional`, `incompatible`, or `embedded`
+        // The type can either be `project` or `version`
+        required.project "fabric-api" // Creates a new required dependency on Fabric API
+        required.project "architectury-api"
+    }
+}
+
+curseforge {
+    apiKey = env.CURSEFORGE_TOKEN.value
+    project {
+        id = rootProject.mod_curseforge_id
+        changelogType = 'markdown'
+        changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
+        releaseType = 'release'
+
+        addGameVersion rootProject.minecraft_version
+        addGameVersion 'Fabric'
+
+        relations {
+            requiredDependency 'architectury-api'
+            requiredDependency 'fabric-api'
+        }
+
+        afterEvaluate {
+            mainArtifact(remapJar) {
+                displayName = "$rootProject.archives_name-$project.name-$project.minecraft_version"
+            }
+            uploadTask.dependsOn(remapJar)
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
+}

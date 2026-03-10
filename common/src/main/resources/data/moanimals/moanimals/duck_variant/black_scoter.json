@@ -1,0 +1,4 @@
+{
+  "texture": "moanimals:entity/duck/duck_black_scoter",
+  "biomes": "#moanimals:has_duck_variant/black_scoter"
+}

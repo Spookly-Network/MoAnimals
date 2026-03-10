@@ -5,21 +5,9 @@
     "minecraft:flower_forest",
     "minecraft:forest",
     "minecraft:grove",
-    "minecraft:cherry_grove",
     "minecraft:old_growth_birch_forest",
     "minecraft:plains",
     "minecraft:sunflower_plains",
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:beach",
-    "minecraft:savanna",
-    "minecraft:mangrove_swamp",
-    "minecraft:lush_caves",
-    {
-      "id": "minecraft:pale_garden",
-      "required": false
-    },
     {
       "id": "regions_unexplored:clover_plains",
       "required": false
@@ -30,10 +18,6 @@
     },
     {
       "id": "regions_unexplored:autumnal_maple_forest",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:rainforest",
       "required": false
     },
     {
@@ -53,19 +37,7 @@
       "required": false
     },
     {
-      "id": "regions_unexplored:mauve_hills",
-      "required": false
-    },
-    {
       "id": "regions_unexplored:poppy_fields",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:sparse_rainforest",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:tropics",
       "required": false
     },
     {

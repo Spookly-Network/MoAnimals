@@ -33,19 +33,20 @@ public class PenguinModel extends EntityModel<PenguinRenderState> {
 
         PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
 
-        PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -11.0F, -4.0F, 7.0F, 11.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-        body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 18).addBox(-3.5F, -6.0F, -3.0F, 7.0F, 6.0F, 7.0F, new CubeDeformation(0.0F))
-                .texOffs(29, 27).addBox(-1.5F, -1.0F, -5.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -11.0F, -1.0F));
-        body.addOrReplaceChild("wing_right", CubeListBuilder.create().texOffs(28, 13).addBox(-1.0F, 0.0F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, -10.0F, -0.5F));
-        body.addOrReplaceChild("wing_left", CubeListBuilder.create().texOffs(28, 0).addBox(0.0F, 0.0F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -10.0F, -0.5F));
+        PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -11.65F, -4.0F, 7.0F, 11.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 18).addBox(-3.5F, -6.65F, -3.0F, 7.0F, 6.0F, 7.0F, new CubeDeformation(0.0F))
+            .texOffs(29, 27).addBox(-1.5F, -1.65F, -5.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -11.0F, -1.0F));
+        body.addOrReplaceChild("wing_right", CubeListBuilder.create().texOffs(28, 13).addBox(-1.0F, -0.65F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, -10.0F, -0.5F));
+        body.addOrReplaceChild("wing_left", CubeListBuilder.create().texOffs(28, 0).addBox(0.0F, -0.65F, -2.0F, 1.0F, 9.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -10.0F, -0.5F));
 
         PartDefinition hip = root.addOrReplaceChild("hip", CubeListBuilder.create(), PartPose.offset(1.5F, 1.0F, -1.0F));
-        PartDefinition leg_left = hip.addOrReplaceChild("leg_left", CubeListBuilder.create().texOffs(28, 30).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
-        leg_left.addOrReplaceChild("leg_left_r1", CubeListBuilder.create().texOffs(1, 31).addBox(0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
+        PartDefinition leg_left = hip.addOrReplaceChild("leg_left", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        leg_left.addOrReplaceChild("leg_left_r1", CubeListBuilder.create().texOffs(1, 31).addBox(0.5F, -2.65F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
+        leg_left.addOrReplaceChild("foot_left", CubeListBuilder.create().texOffs(28, 30).addBox(-1.5F, -0.6334F, -2.8485F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition leg_right = hip.addOrReplaceChild("leg_right", CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, 0.0F, -3.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
-        leg_right.addOrReplaceChild("leg_right_r1", CubeListBuilder.create().texOffs(1, 31).addBox(0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
-
+        PartDefinition leg_right = hip.addOrReplaceChild("leg_right", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        leg_right.addOrReplaceChild("leg_right_r1", CubeListBuilder.create().texOffs(1, 31).addBox(0.5F, -2.65F, 1.0F, 1.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -0.2167F, -0.9773F, -0.2182F, 0.0F, 0.0F));
+        leg_right.addOrReplaceChild("foot_right", CubeListBuilder.create().texOffs(0, 31).addBox(-1.5F, -0.6334F, -2.8485F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
@@ -53,7 +54,8 @@ public class PenguinModel extends EntityModel<PenguinRenderState> {
     public void setupAnim(PenguinRenderState entityRenderState) {
         super.setupAnim(entityRenderState);
         this.applyHeadRotation(entityRenderState.xRot, entityRenderState.yRot);
-        this.animateWalk(PenguinAnimations.walk, entityRenderState.walkAnimationPos, entityRenderState.walkAnimationSpeed, 2f, 1f);
+        //Args: MaxAnimationSpeed, AnimationScaleFactor
+        this.animateWalk(PenguinAnimations.walk, entityRenderState.walkAnimationPos, entityRenderState.walkAnimationSpeed, 9f, 9f);
         this.animate(entityRenderState.idleAnimationState, PenguinAnimations.idle, entityRenderState.ageInTicks);
         this.animate(entityRenderState.flapAnimationState, PenguinAnimations.flap, entityRenderState.ageInTicks);
     }

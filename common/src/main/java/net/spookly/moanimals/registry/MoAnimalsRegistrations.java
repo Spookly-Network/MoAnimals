@@ -4,8 +4,10 @@ import java.util.function.BiConsumer;
 
 import com.mojang.serialization.Codec;
 
+import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
+import net.spookly.moanimals.entity.variant.DuckVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
 
 import net.minecraft.core.Registry;
@@ -29,8 +31,10 @@ public final class MoAnimalsRegistrations {
     }
 
     public static void registerDataPackRegistries(DataPackRegistryRegisterer registerer) {
+        Moanimals.LOGGER.atInfo().log("Registering data pack registries");
         registerer.register(MoAnimalsRegistries.RACOON_VARIANT, RacoonVariant.DIRECT_CODEC);
         registerer.register(MoAnimalsRegistries.BUTTERFLY_VARIANT, ButterflyVariant.DIRECT_CODEC);
+        registerer.register(MoAnimalsRegistries.DUCK_VARIANT, DuckVariant.DIRECT_CODEC);
     }
 
     @FunctionalInterface

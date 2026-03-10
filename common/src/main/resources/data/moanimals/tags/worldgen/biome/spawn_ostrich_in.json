@@ -1,6 +1,18 @@
 {
   "values": [
     "minecraft:savanna",
-    "minecraft:savanna_plateau"
+    "minecraft:savanna_plateau",
+    {
+      "id": "regions_unexplored:baobab_savanna",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dry_bushlands",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:steppe",
+      "required": false
+    }
   ]
 }
