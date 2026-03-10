@@ -83,3 +83,43 @@ loom {
     }
 }
 
+modrinth {
+    token = env.MODRINTH_TOKEN.value // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+    projectId = rootProject.mod_id
+    versionNumber = rootProject.mod_version
+    versionType = rootProject.mod_version_type
+    changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
+    uploadFile = remapJar
+    gameVersions = [rootProject.minecraft_version]
+    loaders = ["neoforge"]
+    dependencies {
+        required.project "architectury-api"
+    }
+}
+
+curseforge {
+    apiKey = env.CURSEFORGE_TOKEN.value
+    project {
+        id = rootProject.mod_curseforge_id
+        changelogType = 'markdown'
+        changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
+        releaseType = 'release'
+        addGameVersion rootProject.minecraft_version
+        addGameVersion 'NeoForge'
+
+
+        relations {
+            requiredDependency 'architectury-api'
+        }
+
+        afterEvaluate {
+            mainArtifact(remapJar) {
+                displayName = "$rootProject.archives_name-$project.name-$project.minecraft_version"
+            }
+            uploadTask.dependsOn(remapJar)
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
+}
