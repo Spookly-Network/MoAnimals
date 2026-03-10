@@ -3,7 +3,12 @@ package net.spookly.moanimals.entity;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
+import net.spookly.moanimals.entity.animal.DuckVariants;
+import net.spookly.moanimals.entity.variant.DuckVariant;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,10 +18,19 @@ import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -29,6 +43,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -36,22 +51,15 @@ import net.minecraft.world.phys.Vec3;
 //https://www.ducks.org/hunting/waterfowl-id
 //https://info.pangovet.com/pet-breeds/birds/duck-breeds/
 //https://birdwatchinghq.com/ducks-of-germany/
-//FIXME: Duck baby speed
-
 //AbstractSchoolingFish
-public class Duck extends Animal {
-
-    private static final double BUOYANCY_STRENGTH = 0.008D;  // correction force
-    private static final double WATER_DAMPING_Y = 0.72D;     // vertical damping in water
-    private static final double MAX_UPWARD_SPEED = 0.012D;
-    private static final double WATER_HEIGHT_OFFSET = 0.03D;
-    private static final double MIN_BUOYANCY_PUSH = 0.0015D;
+public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
+    private static final EntityDataAccessor<Holder<DuckVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Duck.class, MoAnimalsEntityDataSerializers.DUCK_VARIANT);
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
     // Einfaches Herden-Flag
-    private boolean groupLeader = false;
+    private boolean groupLeader;
     private int leaderReevalCooldown = 0;
 
     public float flap;
@@ -68,6 +76,39 @@ public class Duck extends Animal {
         this.setPathfindingMalus(PathType.WATER, 4.0F);
         this.setPathfindingMalus(PathType.WATER_BORDER, 1F);
 //        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        RegistryAccess registryAccess = this.registryAccess();
+        Registry<DuckVariant> registry = registryAccess.registryOrThrow(MoAnimalsRegistries.DUCK_VARIANT);
+        builder.define(DATA_VARIANT_ID, registry.getHolder(DuckVariants.DEFAULT).or(registry::getAny).orElseThrow());
+    }
+
+    @Override
+    public void setVariant(Holder<DuckVariant> holder) {
+        this.entityData.set(DATA_VARIANT_ID, holder);
+    }
+
+    @Override
+    public @NotNull Holder<DuckVariant> getVariant() {
+        return this.entityData.get(DATA_VARIANT_ID);
+    }
+
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        this.getVariant().unwrapKey().ifPresent((resourceKey) -> compoundTag.putString("variant", resourceKey.location().toString()));
+    }
+
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        Optional.ofNullable(ResourceLocation.tryParse(compoundTag.getString("variant"))).map((resourceLocation) -> ResourceKey.create(MoAnimalsRegistries.DUCK_VARIANT, resourceLocation)).flatMap((resourceKey) -> this.registryAccess().registryOrThrow(MoAnimalsRegistries.DUCK_VARIANT).getHolder(resourceKey)).ifPresent(this::setVariant);
+    }
+
+    public ResourceLocation getTexture() {
+        DuckVariant duckVariant = (DuckVariant) this.getVariant().value();
+        return duckVariant.texture();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -160,13 +201,20 @@ public class Duck extends Animal {
         this.flap += this.flapping * 2.0F;
     }
 
+    @Override
+    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
+        Holder<DuckVariant> holder2 = DuckVariants.getSpawnVariant(this.registryAccess(), holder);
+        spawnGroupData = new Duck.DuckGroupData(holder2);
+        this.setVariant(holder2);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
+    }
 
     @Override
     public boolean isFood(ItemStack itemStack) {
         return itemStack.is(MoAnimalItems.BREADCRUMBS.get());
     }
 
-    //TODO: make
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return MoAnimalEntityTypes.DUCK.get().create(serverLevel);
@@ -187,7 +235,6 @@ public class Duck extends Animal {
         } else {
             // spiele Geh-/Idle-Animation abhängig von Bewegung
         }
-
     }
 
     public static boolean checkDuckSpawnRules(EntityType<? extends Duck> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
@@ -237,6 +284,15 @@ public class Duck extends Animal {
 
     public boolean isGroupLeader() {
         return groupLeader;
+    }
+
+    public static class DuckGroupData extends AgeableMob.AgeableMobGroupData {
+        public final Holder<DuckVariant> type;
+
+        public DuckGroupData(Holder<DuckVariant> holder) {
+            super(false);
+            this.type = holder;
+        }
     }
 
     private static class FollowLeaderGoal extends Goal {

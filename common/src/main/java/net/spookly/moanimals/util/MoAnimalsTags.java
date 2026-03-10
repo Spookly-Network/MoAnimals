@@ -24,6 +24,17 @@ public class MoAnimalsTags {
 
         TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
 
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_WHITE = createTag("has_butterfly_variant/white");
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_ROSE = createTag("has_butterfly_variant/rose");
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_MONARCH = createTag("has_butterfly_variant/monarch");
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_EMPOROR = createTag("has_butterfly_variant/emporor");
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_AGRIAS_CLAUDIA = createTag("has_butterfly_variant/agrias_claudia");
+        TagKey<Biome> HAS_BUTTERFLY_VARIANT_AGRIAS = createTag("has_butterfly_variant/agrias");
+
+        TagKey<Biome> HAS_DUCK_VARIANT_MALLARD = createTag("has_duck_variant/mallard");
+        TagKey<Biome> HAS_DUCK_VARIANT_CALL = createTag("has_duck_variant/call");
+        TagKey<Biome> HAS_DUCK_VARIANT_BLACK_SCOTER = createTag("has_duck_variant/black_scoter");
+
         private static TagKey<Biome> createTag(@NotNull String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
         }

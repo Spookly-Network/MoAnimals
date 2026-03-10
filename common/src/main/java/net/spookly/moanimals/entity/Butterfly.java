@@ -33,7 +33,7 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.AirRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -63,7 +63,7 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         this.setPathfindingMalus(PathType.WATER, -1.0F);
         this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(PathType.COCOA, -1.0F);
-//        this.setPathfindingMalus(PathType.LEAVES, 0F);
+        this.setPathfindingMalus(PathType.FENCE, -1.0F);
     }
 
     @Override
@@ -78,10 +78,10 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.4));
 //        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new SeekShelterIfRainingGoal(1.2));
-        this.goalSelector
-                .addGoal(1, new AvoidEntityGoal<>(this, Player.class, 12.0F, 1.4, 1.4));
-        this.goalSelector.addGoal(2, new ButterflyWanderGoal());
+        this.goalSelector.addGoal(2, new SeekShelterIfRainingGoal(1.2));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 12.0F, 1.4, 1.4));
+        this.goalSelector.addGoal(4, new ButterflyWanderGoal());
+        this.goalSelector.addGoal(5, new FloatGoal(this));
         super.registerGoals();
     }
 
@@ -102,10 +102,17 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     @Override
     protected @NotNull PathNavigation createNavigation(Level level) {
-        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
-        nav.setCanOpenDoors(false);
-        nav.setCanFloat(true); // darf schweben
-        return nav;
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
+            @Override
+            public boolean isStableDestination(BlockPos blockPos) {
+                return !this.level.getBlockState(blockPos.below()).isAir();
+            }
+        };
+
+        navigation.setCanOpenDoors(false);
+        navigation.setCanPassDoors(true);
+        navigation.setCanFloat(true); // darf schweben
+        return navigation;
     }
 
     @Override
@@ -114,8 +121,6 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
-
-
         }
     }
 
@@ -144,13 +149,6 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
             this.flyAnimationState.startIfStopped(this.tickCount);
             this.sitAnimationState.stop();
         }
-
-//        if (this.flapsAnimationState.animateWhen(); <= 0) {
-//            this.idleAnimationTimeout = 80; //Animation leanght
-//            this.idleAnimationState.start(this.tickCount);
-//        } else {
-//            --this.idleAnimationTimeout;
-//        }
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
@@ -186,9 +184,9 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.FLYING_SPEED, 0.6F)
-                .add(Attributes.FOLLOW_RANGE, 24d);
+                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.FLYING_SPEED, 0.4F)
+                .add(Attributes.FOLLOW_RANGE, 12d);
     }
 
     @Override
@@ -287,8 +285,8 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
             Vec3 vec32;
             vec32 = Butterfly.this.getViewVector(0.0F);
             int i = 8;
-            Vec3 vec33 = HoverRandomPos.getPos(Butterfly.this, 8, 7, vec32.x, vec32.z, (float) (Math.PI / 2), 3, 1);
-            return vec33 != null ? vec33 : AirAndWaterRandomPos.getPos(Butterfly.this, 8, 4, -2, vec32.x, vec32.z, (float) (Math.PI / 2));
+            Vec3 vec33 = HoverRandomPos.getPos(Butterfly.this, 3, 7, vec32.x, vec32.z, (float) (Math.PI / 2), 3, 1);
+            return vec33 != null ? vec33 : AirRandomPos.getPosTowards(Butterfly.this, 5, 4, 2, vec32, (float) (Math.PI / 10));
         }
     }
 }

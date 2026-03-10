@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:taiga",
+    {
+      "id": "regions_unexplored:cold_river",
+      "required": false
+    }
+  ]
+}

@@ -8,6 +8,26 @@
     "minecraft:birch_forest",
     "minecraft:flower_forest",
     "minecraft:swamp",
-    "minecraft:dark_forest"
+    "minecraft:dark_forest",
+    {
+      "id": "regions_unexplored:autumnal_maple_forest",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:bayou",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cold_river",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:muddy_river",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:sparse_redwoods",
+      "required": false
+    }
   ]
 }

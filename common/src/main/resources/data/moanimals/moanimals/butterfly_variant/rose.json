@@ -1,10 +1,4 @@
 {
   "texture": "moanimals:entity/butterfly/butterfly_rose",
-  "biomes": [
-    "minecraft:bamboo_jungle",
-    "minecraft:jungle",
-    "minecraft:savanna",
-    "minecraft:mangrove_swamp",
-    "minecraft:flower_forest"
-  ]
+  "biomes": "#moanimals:has_butterfly_variant/rose"
 }

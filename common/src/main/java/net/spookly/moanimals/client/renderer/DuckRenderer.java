@@ -23,13 +23,13 @@ public class DuckRenderer extends MobRenderer<Duck, DuckModel<Duck>> {
         if (entity.isBaby()) {
             return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duckling.png");
         }
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/entity/duck/duck_mallard.png");
+        return entity.getTexture();
     }
 
     @Override
     public void render(Duck livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         if (livingEntity.isBaby()) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+            poseStack.scale(0.6f, 0.6f, 0.6f);
         }
         super.render(livingEntity, f, g, poseStack, multiBufferSource, i);
     }

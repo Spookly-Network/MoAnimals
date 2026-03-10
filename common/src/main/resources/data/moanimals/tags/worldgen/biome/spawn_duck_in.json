@@ -1,7 +1,21 @@
 {
   "values": [
+    "#minecraft:is_river",
     "minecraft:river",
+    "minecraft:taiga",
     "minecraft:beach",
-    "minecraft:swamp"
+    "minecraft:swamp",
+    {
+      "id": "regions_unexplored:tropical_river",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cold_river",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:muddy_river",
+      "required": false
+    }
   ]
 }

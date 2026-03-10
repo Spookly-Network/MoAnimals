@@ -3,6 +3,23 @@
     "minecraft:grass_block",
     "minecraft:moss_block",
     "minecraft:dirt",
-    "minecraft:clay"
+    "minecraft:clay",
+    "minecraft:stone",
+    {
+      "id": "regions_unexplored:slit_grass_block",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:stone_grass_block",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:peat_grass_block",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:slit_podzol",
+      "required": false
+    }
   ]
 }

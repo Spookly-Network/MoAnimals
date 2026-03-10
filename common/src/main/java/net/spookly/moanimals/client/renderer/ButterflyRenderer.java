@@ -1,6 +1,7 @@
 package net.spookly.moanimals.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.jetbrains.annotations.NotNull;
 
 import net.spookly.moanimals.client.model.ButterflyModel;
 import net.spookly.moanimals.entity.Butterfly;
@@ -13,11 +14,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel<Butterfly>> {
     public ButterflyRenderer(EntityRendererProvider.Context context) {
-        super(context, new ButterflyModel<>(context.bakeLayer(ButterflyModel.LAYER_LOCATION)), 0.5f);
+        super(context, new ButterflyModel<>(context.bakeLayer(ButterflyModel.LAYER_LOCATION)), 0.3f);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Butterfly entity) {
+    public @NotNull ResourceLocation getTextureLocation(Butterfly entity) {
         return entity.getTexture();
     }
 
