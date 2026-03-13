@@ -21,7 +21,7 @@ public class ButterflyVariants {
 
     public static final ResourceKey<ButterflyVariant> MONARCH = createKey("monarch");
     public static final ResourceKey<ButterflyVariant> EMPEROR = createKey("emperor");
-    public static final ResourceKey<ButterflyVariant> DEFAULT = EMPEROR;
+    public static final ResourceKey<ButterflyVariant> DEFAULT = MONARCH;
 
     private static ResourceKey<ButterflyVariant> createKey(String string) {
         return ResourceKey.create(MoAnimalsRegistries.BUTTERFLY_VARIANT, ResourceLocation.fromNamespaceAndPath(MOD_ID, string));
