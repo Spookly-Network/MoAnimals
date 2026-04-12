@@ -90,12 +90,8 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
     }
 
     public ResourceLocation getTexture() {
-        RacoonVariant raccoonVariant = (RacoonVariant) this.getVariant().value();
-        if (this.isSleeping()) {
-            return raccoonVariant.sleepTexture();
-        } else {
-            return raccoonVariant.wildTexture();
-        }
+        RacoonVariant variant = this.getVariant().value();
+        return this.isSleeping() ? variant.sleepTexture() : variant.wildTexture();
     }
 
     @Override
@@ -105,7 +101,7 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     @Override
     public Holder<RacoonVariant> getVariant() {
-        return (Holder) this.entityData.get(DATA_VARIANT_ID);
+        return this.entityData.get(DATA_VARIANT_ID);
     }
 
     @Override
@@ -150,12 +146,9 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
-        Holder<RacoonVariant> holder2;
-
-        holder2 = RacoonVariants.getSpawnVariant(this.registryAccess(), holder);
-        spawnGroupData = new RaccoonGroupData(holder2);
-
-        this.setVariant(holder2);
+        Holder<RacoonVariant> variant = RacoonVariants.getSpawnVariant(this.registryAccess(), holder);
+        spawnGroupData = new RaccoonGroupData(variant);
+        this.setVariant(variant);
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
     }
 
@@ -211,16 +204,13 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
     }
 
     private void setFlag(int i, boolean bl) {
-        if (bl) {
-            this.entityData.set(DATA_FLAGS_ID, (byte) ((Byte) this.entityData.get(DATA_FLAGS_ID) | i));
-        } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte) ((Byte) this.entityData.get(DATA_FLAGS_ID) & ~i));
-        }
-
+        byte flags = this.entityData.get(DATA_FLAGS_ID);
+        byte updatedFlags = bl ? (byte) (flags | i) : (byte) (flags & ~i);
+        this.entityData.set(DATA_FLAGS_ID, updatedFlags);
     }
 
     private boolean getFlag(int i) {
-        return ((Byte) this.entityData.get(DATA_FLAGS_ID) & i) != 0;
+        return (this.entityData.get(DATA_FLAGS_ID) & i) != 0;
     }
 
     public boolean isSitting() {
@@ -233,11 +223,11 @@ public class Racoon extends Animal implements VariantHolder<Holder<RacoonVariant
 
     @Override
     public boolean isSleeping() {
-        return this.getFlag(32);
+        return this.getFlag(FLAG_SLEEPING);
     }
 
     public void setSitting(boolean bl) {
-        this.setFlag(1, bl);
+        this.setFlag(FLAG_SITTING, bl);
     }
 
     void clearStates() {

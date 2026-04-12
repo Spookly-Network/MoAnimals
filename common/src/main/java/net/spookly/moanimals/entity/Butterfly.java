@@ -125,8 +125,7 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     public ResourceLocation getTexture() {
-        ButterflyVariant butterflyVariant = (ButterflyVariant) this.getVariant().value();
-        return butterflyVariant.texture();
+        return this.getVariant().value().texture();
     }
 
     @Override
@@ -152,12 +151,8 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Butterfly> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        var check1 = !pLevel.getLevel().isRaining();
-        var biomes = MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON;
-        var blockBelow = pLevel.getBlockState(pPos.below());
-        var check = blockBelow.is(biomes);
-        var checkFinal = check && check1;
-        return checkFinal;
+        return !pLevel.getLevel().isRaining()
+            && pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.BUTTERFLY_SPAWNABLE_ON);
     }
 
     public void addAdditionalSaveData(CompoundTag compoundTag) {
@@ -172,12 +167,9 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
 
     @Nullable public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
-        Holder<ButterflyVariant> holder2;
-
-        holder2 = ButterflyVariants.getSpawnVariant(this.registryAccess(), holder);
-        spawnGroupData = new ButterflyGroupData(holder2);
-
-        this.setVariant(holder2);
+        Holder<ButterflyVariant> variant = ButterflyVariants.getSpawnVariant(this.registryAccess(), holder);
+        spawnGroupData = new ButterflyGroupData(variant);
+        this.setVariant(variant);
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);
     }
 

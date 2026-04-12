@@ -108,8 +108,7 @@ public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>
     }
 
     public ResourceLocation getTexture() {
-        BirdVariant duckVariant = (BirdVariant) this.getVariant().value();
-        return duckVariant.texture();
+        return this.getVariant().value().texture();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

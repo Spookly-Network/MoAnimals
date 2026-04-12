@@ -139,12 +139,8 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Crocodile> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        var check1 = !pLevel.getLevel().isRaining();
-        var biomes = MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON;
-        var blockBelow = pLevel.getBlockState(pPos.below());
-        var check = blockBelow.is(biomes);
-        var checkFinal = check && check1;
-        return checkFinal;
+        return !pLevel.getLevel().isRaining()
+            && pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON);
         //        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.CROCODILE_SPAWNABLE_ON);
     }
 

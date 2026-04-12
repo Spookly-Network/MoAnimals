@@ -108,8 +108,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
     }
 
     public ResourceLocation getTexture() {
-        DuckVariant duckVariant = (DuckVariant) this.getVariant().value();
-        return duckVariant.texture();
+        return this.getVariant().value().texture();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
