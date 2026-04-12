@@ -201,16 +201,13 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
     }
 
     class SeekShelterIfRainingGoal extends FleeSunGoal {
-        private int interval = reducedTickDelay(100);
-
         public SeekShelterIfRainingGoal(final double d) {
             super(Butterfly.this, d);
         }
 
         @Override
         public boolean canUse() {
-            if (Butterfly.this.level().isRaining()) return this.setWantedPos();
-            return false;
+            return Butterfly.this.level().isRaining() && this.setWantedPos();
 
 //            if (!Butterfly.this.isSleeping() && this.mob.getTarget() == null) {
 //                if (Butterfly.this.level().isThundering() && Butterfly.this.level().canSeeSky(this.mob.blockPosition())) {
@@ -274,11 +271,9 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         }
 
         @Nullable private Vec3 findPos() {
-            Vec3 vec32;
-            vec32 = Butterfly.this.getViewVector(0.0F);
-            int i = 8;
-            Vec3 vec33 = HoverRandomPos.getPos(Butterfly.this, 3, 7, vec32.x, vec32.z, (float) (Math.PI / 2), 3, 1);
-            return vec33 != null ? vec33 : AirRandomPos.getPosTowards(Butterfly.this, 5, 4, 2, vec32, (float) (Math.PI / 10));
+            Vec3 viewVector = Butterfly.this.getViewVector(0.0F);
+            Vec3 hoverPos = HoverRandomPos.getPos(Butterfly.this, 3, 7, viewVector.x, viewVector.z, (float) (Math.PI / 2), 3, 1);
+            return hoverPos != null ? hoverPos : AirRandomPos.getPosTowards(Butterfly.this, 5, 4, 2, viewVector, (float) (Math.PI / 10));
         }
     }
 }

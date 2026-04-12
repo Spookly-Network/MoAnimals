@@ -26,12 +26,12 @@ public class LayEggGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        return this.owner.hasEgg() && this.owner.getHomePos().closerToCenterThan(this.owner.getOwner().position(), 9.0) && super.canUse();
+        return this.owner.hasEgg() && this.isNearHome() && super.canUse();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() && this.owner.hasEgg() && this.owner.getHomePos().closerToCenterThan(this.owner.getOwner().position(), 9.0);
+        return super.canContinueToUse() && this.owner.hasEgg() && this.isNearHome();
     }
 
     @Override
@@ -72,6 +72,11 @@ public class LayEggGoal extends MoveToBlockGoal {
 
     @Override
     protected boolean isValidTarget(LevelReader levelReader, BlockPos blockPos) {
-        return !levelReader.isEmptyBlock(blockPos.above()) ? false : levelReader.getBlockState(blockPos).is(MoAnimalsTags.BlockTags.EGG_LAYABLE_ON);
+        return levelReader.isEmptyBlock(blockPos.above())
+            && levelReader.getBlockState(blockPos).is(MoAnimalsTags.BlockTags.EGG_LAYABLE_ON);
+    }
+
+    private boolean isNearHome() {
+        return this.owner.getHomePos().closerToCenterThan(this.owner.getOwner().position(), 9.0);
     }
 }

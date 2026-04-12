@@ -164,30 +164,19 @@ public class Crocodile extends WaterAnimal implements NeutralMob {
     }
 
     public boolean wantsToAttack(LivingEntity livingEntity) {
-        var isInAttackablePosition = false;
-
-        //Both are in Water
-        if (this.isInWater() && livingEntity.isInWater()) {
-            isInAttackablePosition = true;
-        }
-        //Both not in water
-        if (!(this.isInWater()) && !(livingEntity.isInWater())) {
-            isInAttackablePosition = true;
+        boolean sharesWaterState = this.isInWater() == livingEntity.isInWater();
+        if (!sharesWaterState) {
+            return false;
         }
 
-
-        //When attackable check entitys
-        if (isInAttackablePosition) {
-            if (!(livingEntity instanceof Creeper) && !(livingEntity instanceof Ghast) && !(livingEntity instanceof ArmorStand)) {
-                return true;
-            }
-        }
-        return false;
+        return !(livingEntity instanceof Creeper)
+            && !(livingEntity instanceof Ghast)
+            && !(livingEntity instanceof ArmorStand);
     }
 
 
     public int getRemainingPersistentAngerTime() {
-        return (Integer) this.entityData.get(DATA_REMAINING_ANGER_TIME);
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
     }
 
     public void setRemainingPersistentAngerTime(int i) {

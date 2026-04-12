@@ -41,8 +41,8 @@ public class BirdVariant implements BiomeVariant {
         this.sounds = sounds;
     }
 
-    private ResourceLocation fullTextureId(ResourceLocation arg) {
-        return arg.withPath((string) -> "textures/" + string + ".png");
+    private static ResourceLocation fullTextureId(ResourceLocation textureId) {
+        return textureId.withPath((path) -> "textures/" + path + ".png");
     }
 
     public ResourceLocation texture() {
@@ -58,22 +58,23 @@ public class BirdVariant implements BiomeVariant {
         return this.sounds;
     }
 
+    @Override
     public boolean equals(Object object) {
-        if (object == this) {
+        if (this == object) {
             return true;
-        } else if (!(object instanceof BirdVariant DuckVariant)) {
-            return false;
-        } else {
-            return Objects.equals(this.texture, DuckVariant.texture) && Objects.equals(this.biomes, DuckVariant.biomes) && Objects.equals(this.sounds, DuckVariant.sounds);
         }
+        if (!(object instanceof BirdVariant birdVariant)) {
+            return false;
+        }
+
+        return Objects.equals(this.texture, birdVariant.texture)
+            && Objects.equals(this.biomes, birdVariant.biomes)
+            && Objects.equals(this.sounds, birdVariant.sounds);
     }
 
+    @Override
     public int hashCode() {
-        int i = 1;
-        i = 31 * i + this.texture.hashCode();
-        i = 31 * i + this.biomes.hashCode();
-        i = 31 * i + this.sounds.hashCode();
-        return i;
+        return Objects.hash(this.texture, this.biomes, this.sounds);
     }
 
     static {

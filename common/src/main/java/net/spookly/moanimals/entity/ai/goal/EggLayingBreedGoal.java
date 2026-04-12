@@ -27,14 +27,14 @@ public class EggLayingBreedGoal extends BreedGoal {
     @Override
     protected void breed() {
         Animal animal = this.animal;
-        ServerPlayer serverPlayer = animal.getLoveCause();
-        if (serverPlayer == null && this.partner.getLoveCause() != null) {
-            serverPlayer = this.partner.getLoveCause();
+        ServerPlayer breedingPlayer = animal.getLoveCause();
+        if (breedingPlayer == null) {
+            breedingPlayer = this.partner.getLoveCause();
         }
 
-        if (serverPlayer != null) {
-            serverPlayer.awardStat(Stats.ANIMALS_BRED);
-            CriteriaTriggers.BRED_ANIMALS.trigger(serverPlayer, animal, this.partner, null);
+        if (breedingPlayer != null) {
+            breedingPlayer.awardStat(Stats.ANIMALS_BRED);
+            CriteriaTriggers.BRED_ANIMALS.trigger(breedingPlayer, animal, this.partner, null);
         }
 
         // Set the egg-laying animal to have an egg
@@ -44,9 +44,9 @@ public class EggLayingBreedGoal extends BreedGoal {
         animal.resetLove();
         this.partner.resetLove();
         
-        RandomSource randomSource = animal.getRandom();
         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-            this.level.addFreshEntity(new ExperienceOrb(this.level, animal.getX(), animal.getY(), animal.getZ(), randomSource.nextInt(7) + 1));
+            int experience = animal.getRandom().nextInt(7) + 1;
+            this.level.addFreshEntity(new ExperienceOrb(this.level, animal.getX(), animal.getY(), animal.getZ(), experience));
         }
     }
 }

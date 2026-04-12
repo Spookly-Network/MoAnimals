@@ -58,22 +58,23 @@ public class RacoonVariant {
         return this.biomes;
     }
 
+    @Override
     public boolean equals(Object object) {
-        if (object == this) {
+        if (this == object) {
             return true;
-        } else if (!(object instanceof RacoonVariant raccoonVariant)) {
-            return false;
-        } else {
-            return Objects.equals(this.wildTexture, raccoonVariant.wildTexture) && Objects.equals(this.sleepTexture, raccoonVariant.sleepTexture) && Objects.equals(this.biomes, raccoonVariant.biomes);
         }
+        if (!(object instanceof RacoonVariant raccoonVariant)) {
+            return false;
+        }
+
+        return Objects.equals(this.wildTexture, raccoonVariant.wildTexture)
+            && Objects.equals(this.sleepTexture, raccoonVariant.sleepTexture)
+            && Objects.equals(this.biomes, raccoonVariant.biomes);
     }
 
+    @Override
     public int hashCode() {
-        int i = 1;
-        i = 31 * i + this.wildTexture.hashCode();
-        i = 31 * i + this.sleepTexture.hashCode();
-        i = 31 * i + this.biomes.hashCode();
-        return i;
+        return Objects.hash(this.wildTexture, this.sleepTexture, this.biomes);
     }
 
     static {

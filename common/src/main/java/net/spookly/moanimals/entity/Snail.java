@@ -103,7 +103,7 @@ public class Snail extends PathfinderMob implements Bucketable {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
-        return (InteractionResult) bucketMobPickup(player, interactionHand, this).orElse(super.mobInteract(player, interactionHand));
+        return bucketMobPickup(player, interactionHand, this).orElse(super.mobInteract(player, interactionHand));
     }
 
     @Override
@@ -144,22 +144,22 @@ public class Snail extends PathfinderMob implements Bucketable {
 
     static <T extends LivingEntity & Bucketable> Optional<InteractionResult> bucketMobPickup(Player player, InteractionHand interactionHand, T livingEntity) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (itemStack.getItem() == Items.BUCKET && livingEntity.isAlive()) {
-            livingEntity.playSound(livingEntity.getPickupSound(), 1.0F, 1.0F);
-            ItemStack itemStack2 = livingEntity.getBucketItemStack();
-            livingEntity.saveToBucketTag(itemStack2);
-            ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, player, itemStack2, false);
-            player.setItemInHand(interactionHand, itemStack3);
-            Level level = livingEntity.level();
-            if (!level.isClientSide) {
-                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemStack2);
-            }
-
-            livingEntity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
-        } else {
+        if (itemStack.getItem() != Items.BUCKET || !livingEntity.isAlive()) {
             return Optional.empty();
         }
+
+        livingEntity.playSound(livingEntity.getPickupSound(), 1.0F, 1.0F);
+        ItemStack bucketItemStack = livingEntity.getBucketItemStack();
+        livingEntity.saveToBucketTag(bucketItemStack);
+        ItemStack filledBucket = ItemUtils.createFilledResult(itemStack, player, bucketItemStack, false);
+        player.setItemInHand(interactionHand, filledBucket);
+        Level level = livingEntity.level();
+        if (!level.isClientSide) {
+            CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, bucketItemStack);
+        }
+
+        livingEntity.discard();
+        return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
     }
 
     private int pickNextSlimeDropTime() {
@@ -167,9 +167,6 @@ public class Snail extends PathfinderMob implements Bucketable {
     }
 
     public static boolean checkSpawnRules(EntityType<? extends Snail> pType, @NotNull ServerLevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, RandomSource pRandom) {
-        var biomes = MoAnimalsTags.BlockTags.SNAIL_SPAWNABLE_ON;
-        var blockBelow = pLevel.getBlockState(pPos.below());
-        var check = blockBelow.is(biomes);
-        return check;
+        return pLevel.getBlockState(pPos.below()).is(MoAnimalsTags.BlockTags.SNAIL_SPAWNABLE_ON);
     }
 }
