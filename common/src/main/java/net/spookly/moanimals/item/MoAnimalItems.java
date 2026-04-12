@@ -33,6 +33,7 @@ public class MoAnimalItems {
     public static final Supplier<SpawnEggItem> SNAIL_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("snail_spawn_egg", MoAnimalEntityTypes.SNAIL, 7301692, 7027994, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> PENGUIN_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("penguin_spawn_egg", MoAnimalEntityTypes.PENGUIN, 874364, 128543, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> OSTRICH_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("ostrich_spawn_egg", MoAnimalEntityTypes.OSTRICH, 16777215, 16222215, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
+    public static final Supplier<SpawnEggItem> BIRD_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("bird_spawn_egg", MoAnimalEntityTypes.BIRD, 16777654, 16243415, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
 
     public static final Supplier<Item> SNAIL_BUCKET = CommonPlatformHelper.registerItem("snail_bucket",
             () -> new SnailMobBucketItem(
@@ -46,6 +47,7 @@ public class MoAnimalItems {
     // Block Items
     public static final RegistrySupplier<Item> DUCKWEED = registerItem("duckweed", () -> new PlaceOnWaterBlockItem(MoAnimalBlocks.DUCKWEED.get(), new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
     public static final RegistrySupplier<Item> OSTRICH_EGG = registerBlockItem("ostrich_egg", MoAnimalBlocks.OSTRICH_EGG);
+    public static final RegistrySupplier<Item> JAR = registerBlockItem("jar", MoAnimalBlocks.JAR);
 
 
     public static RegistrySupplier<Item> registerBlockItem(final String path, Supplier<Block> block) {

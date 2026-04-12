@@ -26,6 +26,10 @@ public class MoAnimalBlocks {
             () -> new OstrichEggBlock(copyPropertiesOf(Blocks.TURTLE_EGG)
                     .mapColor(MapColor.TERRACOTTA_GRAY)));
 
+    public static final RegistrySupplier<Block> JAR = BLOCKS.register(
+        ResourceLocation.fromNamespaceAndPath(MOD_ID, "jar"),
+        () -> new JarBlock(copyPropertiesOf(Blocks.GLASS)));
+
     public static void init() {
         LOGGER.info("Registering blocks");
         BLOCKS.register();
@@ -33,7 +37,10 @@ public class MoAnimalBlocks {
 
         LOGGER.info("Registering block items");
         BLOCKS.forEach(blockRegistrySupplier -> {
-            if (blockRegistrySupplier.getId() == DUCKWEED.getId() || blockRegistrySupplier.getId() == OSTRICH_EGG.getId()) {
+            if (blockRegistrySupplier.getId() == DUCKWEED.getId()
+                || blockRegistrySupplier.getId() == OSTRICH_EGG.getId()
+                || blockRegistrySupplier.getId() == JAR.getId()
+            ) {
                 return;
             }
             Block block = blockRegistrySupplier.get();

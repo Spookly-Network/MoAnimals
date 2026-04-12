@@ -17,24 +17,28 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.biome.Biome;
 
-public class DuckVariant implements BiomeVariant {
-    public static final Codec<DuckVariant> DIRECT_CODEC = RecordCodecBuilder.create(
+public class BirdVariant implements BiomeVariant {
+    public static final Codec<BirdVariant> DIRECT_CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("texture").forGetter((arg) -> arg.texture),
-            RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(DuckVariant::biomes)
-    ).apply(instance, DuckVariant::new));
+            RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(BirdVariant::biomes),
+            RegistryCodecs.homogeneousList(Registries.SOUND_EVENT).fieldOf("sounds").forGetter(BirdVariant::sounds)
+    ).apply(instance, BirdVariant::new));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, DuckVariant> DIRECT_STREAM_CODEC;
-    public static final Codec<Holder<DuckVariant>> CODEC;
-    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<DuckVariant>> STREAM_CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, BirdVariant> DIRECT_STREAM_CODEC;
+    public static final Codec<Holder<BirdVariant>> CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<BirdVariant>> STREAM_CODEC;
     private final ResourceLocation texture;
     private final HolderSet<Biome> biomes;
+    private final HolderSet<SoundEvent> sounds;
 
-    public DuckVariant(ResourceLocation texture, HolderSet<Biome> biomes) {
+    public BirdVariant(ResourceLocation texture, HolderSet<Biome> biomes, HolderSet<SoundEvent> sounds) {
         this.texture = texture;
         this.biomes = biomes;
+        this.sounds = sounds;
     }
 
     private ResourceLocation fullTextureId(ResourceLocation arg) {
@@ -50,13 +54,17 @@ public class DuckVariant implements BiomeVariant {
         return this.biomes;
     }
 
+    public HolderSet<SoundEvent> sounds() {
+        return this.sounds;
+    }
+
     public boolean equals(Object object) {
         if (object == this) {
             return true;
-        } else if (!(object instanceof DuckVariant DuckVariant)) {
+        } else if (!(object instanceof BirdVariant DuckVariant)) {
             return false;
         } else {
-            return Objects.equals(this.texture, DuckVariant.texture) && Objects.equals(this.biomes, DuckVariant.biomes);
+            return Objects.equals(this.texture, DuckVariant.texture) && Objects.equals(this.biomes, DuckVariant.biomes) && Objects.equals(this.sounds, DuckVariant.sounds);
         }
     }
 
@@ -64,18 +72,21 @@ public class DuckVariant implements BiomeVariant {
         int i = 1;
         i = 31 * i + this.texture.hashCode();
         i = 31 * i + this.biomes.hashCode();
+        i = 31 * i + this.sounds.hashCode();
         return i;
     }
 
     static {
         DIRECT_STREAM_CODEC = StreamCodec.composite(
             ResourceLocation.STREAM_CODEC,
-            DuckVariant::texture,
+            BirdVariant::texture,
             ByteBufCodecs.holderSet(Registries.BIOME),
-            DuckVariant::biomes,
-            DuckVariant::new);
+            BirdVariant::biomes,
+            ByteBufCodecs.holderSet(Registries.SOUND_EVENT),
+            BirdVariant::sounds,
+            BirdVariant::new);
 
-        CODEC = RegistryFileCodec.create(MoAnimalsRegistries.DUCK_VARIANT, DIRECT_CODEC);
-        STREAM_CODEC = ByteBufCodecs.holder(MoAnimalsRegistries.DUCK_VARIANT, DIRECT_STREAM_CODEC);
+        CODEC = RegistryFileCodec.create(MoAnimalsRegistries.BIRD_VARIANT, DIRECT_CODEC);
+        STREAM_CODEC = ByteBufCodecs.holder(MoAnimalsRegistries.BIRD_VARIANT, DIRECT_STREAM_CODEC);
     }
 }

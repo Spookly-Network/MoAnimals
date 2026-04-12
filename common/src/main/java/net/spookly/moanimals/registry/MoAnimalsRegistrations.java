@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 
 import net.spookly.moanimals.Moanimals;
 import net.spookly.moanimals.entity.*;
+import net.spookly.moanimals.entity.variant.BirdVariant;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.entity.variant.DuckVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
@@ -28,6 +29,7 @@ public final class MoAnimalsRegistrations {
         registerer.accept(MoAnimalEntityTypes.SNAIL.get(), Snail.createAttributes());
         registerer.accept(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes());
         registerer.accept(MoAnimalEntityTypes.OSTRICH.get(), Ostrich.createAttributes());
+        registerer.accept(MoAnimalEntityTypes.BIRD.get(), Bird.createAttributes());
     }
 
     public static void registerDataPackRegistries(DataPackRegistryRegisterer registerer) {
@@ -36,6 +38,7 @@ public final class MoAnimalsRegistrations {
         registerer.register(MoAnimalsRegistries.RACOON_VARIANT, RacoonVariant.DIRECT_CODEC);
         registerer.register(MoAnimalsRegistries.BUTTERFLY_VARIANT, ButterflyVariant.DIRECT_CODEC);
         registerer.register(MoAnimalsRegistries.DUCK_VARIANT, DuckVariant.DIRECT_CODEC);
+        registerer.register(MoAnimalsRegistries.BIRD_VARIANT, BirdVariant.DIRECT_CODEC);
     }
 
     @FunctionalInterface

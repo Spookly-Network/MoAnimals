@@ -39,6 +39,10 @@ public class MoAnimalEntityTypes {
             .eyeHeight(2.5f)
             .build("ostrich")
     );
+    public static final RegistrySupplier<EntityType<Bird>> BIRD = ENTITY_TYPES.register("bird", () -> EntityType.Builder.of(Bird::new, MobCategory.AMBIENT)
+        .sized(.75f, .55f)
+        .build("bird")
+    );
 
     public static void init() {
         ENTITY_TYPES.register();

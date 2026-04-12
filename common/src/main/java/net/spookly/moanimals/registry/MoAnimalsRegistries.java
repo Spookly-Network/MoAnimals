@@ -5,6 +5,7 @@ import static net.spookly.moanimals.Moanimals.MOD_ID;
 import dev.architectury.registry.registries.DeferredRegister;
 
 import net.spookly.moanimals.Moanimals;
+import net.spookly.moanimals.entity.variant.BirdVariant;
 import net.spookly.moanimals.entity.variant.ButterflyVariant;
 import net.spookly.moanimals.entity.variant.DuckVariant;
 import net.spookly.moanimals.entity.variant.RacoonVariant;
@@ -24,6 +25,7 @@ public class MoAnimalsRegistries {
     public static ResourceKey<Registry<RacoonVariant>> RACOON_VARIANT = createRegistryKey("racoon_variant");
     public static ResourceKey<Registry<ButterflyVariant>> BUTTERFLY_VARIANT = createRegistryKey("butterfly_variant");
     public static ResourceKey<Registry<DuckVariant>> DUCK_VARIANT = createRegistryKey("duck_variant");
+    public static ResourceKey<Registry<BirdVariant>> BIRD_VARIANT = createRegistryKey("bird_variant");
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String string) {
         Moanimals.LOGGER.atInfo().log("Creating registry key for: " + string);

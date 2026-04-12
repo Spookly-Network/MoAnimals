@@ -22,6 +22,7 @@ public class MoAnimalsBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         blockItem(MoAnimalBlocks.DUCKWEED);
         blockItem(MoAnimalBlocks.OSTRICH_EGG);
+        blockItem(MoAnimalBlocks.JAR);
 
 //        blockWithItem(ModBlocks.BISMUTH_ORE);
 //        blockWithItem(ModBlocks.BISMUTH_DEEPSLATE_ORE);

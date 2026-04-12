@@ -16,5 +16,55 @@
         "volume": 0.25
       }
     ]
+  },
+  "entity.bird.chirp": {
+    "category": "ambient",
+    "subtitle": "sounds.moanimals.bird_chirp",
+    "sounds": [
+      {
+        "name": "moanimals:entity/bird/birds0",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds1",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds2",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds3",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds4",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds5",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds6",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds7",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds8",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds9",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/bird/birds10",
+        "volume": 0.25
+      }
+    ]
   }
 }

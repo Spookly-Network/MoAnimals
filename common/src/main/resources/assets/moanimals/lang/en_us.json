@@ -25,5 +25,6 @@
   "entity.moanimals.snail": "Snail",
   "entity.moanimals.duck": "Duck",
 
-  "sounds.moanimals.duck_quack": "Duck quacking"
+  "sounds.moanimals.duck_quack": "Duck quacking",
+  "sounds.moanimals.bird_chirp": "Birds chirp"
 }

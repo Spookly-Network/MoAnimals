@@ -5,17 +5,18 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
-import net.spookly.moanimals.entity.animal.DuckVariants;
-import net.spookly.moanimals.entity.variant.DuckVariant;
-import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
-import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.spookly.moanimals.entity.ai.goal.DropItemAtRandomGoal;
+import net.spookly.moanimals.entity.animal.DuckVariants;
+import net.spookly.moanimals.entity.variant.DuckVariant;
 import net.spookly.moanimals.item.MoAnimalItems;
+import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
+import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
+import net.spookly.moanimals.util.MoAnimalsVariantUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -153,6 +154,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
     @Override
     protected @NotNull EntityDimensions getDefaultDimensions(Pose pose) {
         EntityDimensions base = super.getDefaultDimensions(pose);
+
         return this.isBaby() ? base.scale(1.75F) : base;
     }
 
@@ -203,8 +205,11 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
 
     @Override
     public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+        Registry<DuckVariant> registry = this.registryAccess().registryOrThrow(MoAnimalsRegistries.DUCK_VARIANT);
+        ResourceKey<DuckVariant> defaultVariantKey = DuckVariants.DEFAULT;
+
         Holder<Biome> holder = serverLevelAccessor.getBiome(this.blockPosition());
-        Holder<DuckVariant> holder2 = DuckVariants.getSpawnVariant(this.registryAccess(), holder);
+        Holder<DuckVariant> holder2 = MoAnimalsVariantUtils.getSpawnVariantForBiome(registry, holder, defaultVariantKey);
         spawnGroupData = new Duck.DuckGroupData(holder2);
         this.setVariant(holder2);
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData);

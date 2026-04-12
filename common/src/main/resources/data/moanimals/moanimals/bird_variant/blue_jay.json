@@ -1,0 +1,5 @@
+{
+  "texture": "moanimals:entity/bird/bird_blue_jay",
+  "biomes": "#moanimals:has_bird_variant/blue_jay",
+  "sounds": []
+}

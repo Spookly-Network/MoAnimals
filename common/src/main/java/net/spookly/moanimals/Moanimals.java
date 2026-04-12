@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.spookly.moanimals.block.MoAnimalBlocks;
+import net.spookly.moanimals.block.MoAnimalsBlockEntityTypes;
 import net.spookly.moanimals.core.CommonPlatformHelper;
 import net.spookly.moanimals.entity.*;
 import net.spookly.moanimals.item.MoAnimalItems;
@@ -24,6 +25,7 @@ public final class Moanimals {
     public static void init() {
         // Write common init code here.
         MoAnimalEntityTypes.init();
+        MoAnimalsBlockEntityTypes.init();
         MoAnimalBlocks.init();
 
         //Needs to be behind Blocks, because it will generate itemmodels
@@ -42,7 +44,7 @@ public final class Moanimals {
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.RACOON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Racoon::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.PENGUIN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Penguin::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.OSTRICH.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Ostrich::checkSpawnRules);
-
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.BIRD.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Bird::checkSpawnRules);
     }
 
 }

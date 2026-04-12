@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvent;
 public class MoAnimalsSoundEvents {
 
     public static final RegistrySupplier<SoundEvent> DUCK_QUACK = register("entity.duck.quack");
+    public static final RegistrySupplier<SoundEvent> BIRD_CHIRP = register("entity.bird.chirp");
 
     public static void init() {
         LOGGER.info("Registering Sound Events");
