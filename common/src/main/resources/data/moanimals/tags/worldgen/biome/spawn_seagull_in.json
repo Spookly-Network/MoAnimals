@@ -11,6 +11,14 @@
     "minecraft:deep_lukewarm_ocean",
     "minecraft:warm_ocean",
     "minecraft:frozen_ocean",
-    "minecraft:deep_frozen_ocean"
+    "minecraft:deep_frozen_ocean",
+    {
+      "id": "natures_spirit:tropical_shores",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:white_cliffs",
+      "required": false
+    }
   ]
 }

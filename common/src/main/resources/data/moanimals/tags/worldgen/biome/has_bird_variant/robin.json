@@ -28,6 +28,10 @@
     {
       "id": "regions_unexplored:poppy_fields",
       "required": false
+    },
+    {
+      "id": "natures_spirit:aspen_forest",
+      "required": false
     }
   ]
 }

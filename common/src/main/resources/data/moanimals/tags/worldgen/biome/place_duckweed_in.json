@@ -28,6 +28,18 @@
     {
       "id": "regions_unexplored:sparse_redwoods",
       "required": false
+    },
+    {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:fir_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:redwood_forest",
+      "required": false
     }
   ]
 }

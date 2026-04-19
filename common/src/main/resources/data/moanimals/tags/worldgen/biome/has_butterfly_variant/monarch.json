@@ -28,6 +28,10 @@
     {
       "id": "regions_unexplored:poppy_fields",
       "required": false
+    },
+    {
+      "id": "natures_spirit:wisteria_forest",
+      "required": false
     }
   ]
 }

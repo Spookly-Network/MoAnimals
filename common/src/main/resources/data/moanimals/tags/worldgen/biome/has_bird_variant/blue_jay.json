@@ -12,6 +12,10 @@
     {
       "id": "regions_unexplored:frozen_tundra",
       "required": false
+    },
+    {
+      "id": "natures_spirit:fir_forest",
+      "required": false
     }
   ]
 }

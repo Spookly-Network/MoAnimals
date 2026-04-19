@@ -2,6 +2,10 @@
   "values": [
     "minecraft:taiga",
     {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:cold_river",
       "required": false
     }

@@ -17,6 +17,10 @@
     {
       "id": "regions_unexplored:sparse_rainforest",
       "required": false
+    },
+    {
+      "id": "natures_spirit:marsh",
+      "required": false
     }
   ]
 }

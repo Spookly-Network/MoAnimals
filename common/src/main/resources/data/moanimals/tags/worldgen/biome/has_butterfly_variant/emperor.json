@@ -34,6 +34,14 @@
     {
       "id": "regions_unexplored:rocky_meadow",
       "required": false
+    },
+    {
+      "id": "natures_spirit:wisteria_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:tropical_woods",
+      "required": false
     }
   ]
 }

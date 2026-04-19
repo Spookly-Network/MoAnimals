@@ -42,6 +42,30 @@
     {
       "id": "regions_unexplored:orchard",
       "required": false
+    },
+    {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:fir_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:prairie",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:maple_woodlands",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:redwood_forest",
+      "required": false
     }
   ]
 }

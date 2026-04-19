@@ -5,6 +5,7 @@
     "minecraft:grove",
     "minecraft:snowy_slopes",
     "minecraft:snowy_beach",
+    "minecraft:snowy_taiga",
     "minecraft:birch_forest",
     "minecraft:dark_forest",
     "minecraft:flower_forest",
@@ -40,6 +41,34 @@
     },
     {
       "id": "regions_unexplored:frozen_tundra",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:fir_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:wisteria_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:snowy_fir_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:maple_woodlands",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:redwood_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:aspen_forest",
       "required": false
     }
   ]

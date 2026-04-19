@@ -18,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -25,6 +26,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,11 +41,13 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.phys.Vec3;
 
 public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<BirdVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Bird.class, MoAnimalsEntityDataSerializers.BIRD_VARIANT);
@@ -56,6 +61,14 @@ public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>
 
     public final AnimationState chirpAnimationState = new AnimationState();
     public final AnimationState dyingAnimationState = new AnimationState();
+
+    //Flaping
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    private float flapping = 1.0F;
+    private float nextFlap = 1.0F;
 
     protected Bird(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -76,7 +89,6 @@ public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>
         this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-
     }
 
     @Override
@@ -132,6 +144,42 @@ public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>
         navigation.setCanPassDoors(true);
         navigation.setCanFloat(true);
         return navigation;
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.calculateFlapping();
+    }
+
+    private void calculateFlapping() {
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed = this.flapSpeed + (!this.onGround() && !this.isPassenger() ? 4 : -1) * 0.5F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+
+        this.flapping *= 0.9F;
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround() && vec3.y < 0.0) {
+            this.setDeltaMovement(vec3.multiply(1.0, 0.8, 1.0));
+        }
+
+        this.flap = this.flap + this.flapping * 2.0F;
+    }
+
+    @Override
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    @Override
+    protected void onFlap() {
+        this.playSound(SoundEvents.PARROT_FLY, 0.15F, 1.0F);
+        this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY() + 0.8, this.getZ(), 0.0D, 0.0D, 0.0D);
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
     @Override

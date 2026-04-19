@@ -23,6 +23,26 @@
     {
       "id": "regions_unexplored:muddy_river",
       "required": false
+    },
+    {
+      "id": "natures_spirit:alpine_clearings",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:prairie",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:maple_woodlands",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:redwood_forest",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:aspen_forest",
+      "required": false
     }
   ]
 }
