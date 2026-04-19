@@ -1,10 +1,6 @@
 package net.spookly.moanimals.block;
 
 
-import com.mojang.serialization.MapCodec;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,6 +32,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import com.mojang.serialization.MapCodec;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class JarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
     public static final MapCodec<JarBlock> CODEC = simpleCodec(JarBlock::new);
@@ -60,7 +60,7 @@ public class JarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     protected BlockState updateShape(
         BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2
     ) {
-        if ((Boolean)blockState.getValue(WATERLOGGED)) {
+        if ((Boolean) blockState.getValue(WATERLOGGED)) {
             levelAccessor.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
         }
 
@@ -93,15 +93,28 @@ public class JarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
                     float f;
                     if (jarBlockEntity.isEmpty()) {
                         jarBlockEntity.setTheItem(itemStack3);
-                        f = (float)itemStack3.getCount() / itemStack3.getMaxStackSize();
+                        f = (float) itemStack3.getCount() / itemStack3.getMaxStackSize();
                     } else {
                         itemStack2.grow(1);
-                        f = (float)itemStack2.getCount() / itemStack2.getMaxStackSize();
+                        f = (float) itemStack2.getCount() / itemStack2.getMaxStackSize();
                     }
 
                     level.playSound(null, blockPos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 1.0F, 0.7F + 0.5F * f);
                     if (level instanceof ServerLevel serverLevel) {
-                        serverLevel.sendParticles(ParticleTypes.DUST_PLUME, blockPos.getX() + 0.5, blockPos.getY() + 1.2, blockPos.getZ() + 0.5, 7, 0.0, 0.0, 0.0, 0.0);
+                        serverLevel.sendParticles(ParticleTypes.DUST_PLUME, blockPos.getX() + 0.5, blockPos.getY() + .7, blockPos.getZ() + 0.5, 7, 0.0, 0.0, 0.0, 0.0);
+                    }
+
+                    jarBlockEntity.setChanged();
+                    level.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
+                    return ItemInteractionResult.SUCCESS;
+                } else if (itemStack.isEmpty() && !jarBlockEntity.isEmpty()) {
+                    ItemStack jarItemStack = jarBlockEntity.getTheItem();
+                    player.getInventory().placeItemBackInInventory(jarItemStack);
+                    jarBlockEntity.setTheItem(ItemStack.EMPTY);
+
+                    level.playSound(null, blockPos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 1.0F, 0.7F + 0.5F);
+                    if (level instanceof ServerLevel serverLevel) {
+                        serverLevel.sendParticles(ParticleTypes.DUST_PLUME, blockPos.getX() + 0.5, blockPos.getY() + .7, blockPos.getZ() + 0.5, 2, 0.0, 0.0, 0.0, 0.0);
                     }
 
                     jarBlockEntity.setChanged();

@@ -3,6 +3,7 @@
 
   "block.moanimals.duckweed": "Entengrütze",
   "block.moanimals.ostrich_egg": "Straußen-Ei",
+  "block.moanimals.jar": "Glass",
 
   "item.moanimals.duckweed": "Entengrütze",
   "item.moanimals.ostrich_egg": "Straußen-Ei",
@@ -16,6 +17,8 @@
   "item.moanimals.raccoon_spawn_egg": "Waschbär-Spawn-Ei",
   "item.moanimals.penguin_spawn_egg": "Pinguin-Spawn-Ei",
   "item.moanimals.ostrich_spawn_egg": "Strauß-Spawn-Ei",
+  "item.moanimals.bird_spawn_egg": "Vogel-Spawn-Ei",
+  "item.moanimals.seagull_spawn_egg": "Möve-Spawn-EI",
 
   "entity.moanimals.butterfly": "Schmetterling",
   "entity.moanimals.crocodile": "Krokodil",
@@ -26,5 +29,6 @@
   "entity.moanimals.duck": "Ente",
 
   "sounds.moanimals.duck_quack": "Ente quakt",
-  "sounds.moanimals.bird_chirp": "Vogel singt"
+  "sounds.moanimals.bird_chirp": "Vogel singt",
+  "sounds.moanimals.seagull_squawking": "Möve kreischt"
 }

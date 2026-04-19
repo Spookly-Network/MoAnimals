@@ -37,7 +37,7 @@ public class DatapackGenerator {
 //        generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 //
 //        generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
-//
+        generator.addProvider(event.includeServer(), new MoAnimalsRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new MoAnimalsDatapackProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new MoAnimalsItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new MoAnimalsBlockStateProvider(packOutput, existingFileHelper));

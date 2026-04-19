@@ -29,6 +29,7 @@ public class MoAnimalsBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_PENGUIN = registerKey("spawn_penguin");
     public static final ResourceKey<BiomeModifier> SPAWN_OSTRICH = registerKey("spawn_ostrich");
     public static final ResourceKey<BiomeModifier> SPAWN_BIRD = registerKey("spawn_bird");
+    public static final ResourceKey<BiomeModifier> SPAWN_SEAGULL = registerKey("spawn_seagull");
 
     public static final ResourceKey<BiomeModifier> PLACE_DUCKWEED = registerKey("place_duckweed");
 
@@ -64,6 +65,9 @@ public class MoAnimalsBiomeModifiers {
         context.register(SPAWN_BIRD, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(MoAnimalsTags.BiomeTags.BIRD_SPAWNABLE_IN),
                 List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.BIRD.get(), 5, 2, 5))));
+        context.register(SPAWN_SEAGULL, new BiomeModifiers.AddSpawnsBiomeModifier(
+                biomes.getOrThrow(MoAnimalsTags.BiomeTags.SEAGULL_SPAWNABLE_IN),
+                List.of(new MobSpawnSettings.SpawnerData(MoAnimalEntityTypes.SEAGULL.get(), 8, 2, 4))));
 
 
         //Features

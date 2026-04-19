@@ -7,9 +7,11 @@
   ],
   "mixins": [
     "ComposterBlockMixin",
+    "FoxMixin",
     "PolarBearMixin",
     "SpawnPlacementsInvoker",
-    "ThrownEggMixin"
+    "ThrownEggMixin",
+    "WolfMixin"
   ],
   "injectors": {
     "defaultRequire": 1

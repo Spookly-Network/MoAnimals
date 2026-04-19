@@ -19,6 +19,6 @@ public class MoAnimalsLootTableProvider extends FabricBlockLootTableProvider {
     public void generate() {
         add(MoAnimalBlocks.DUCKWEED.get(), createShearsOnlyDrop(MoAnimalItems.DUCKWEED.get()));
         add(MoAnimalBlocks.OSTRICH_EGG.get(), createSilkTouchOnlyTable(MoAnimalItems.OSTRICH_EGG.get()));
-
+        add(MoAnimalBlocks.JAR.get(), createSingleItemTable(MoAnimalItems.JAR.get()));
     }
 }

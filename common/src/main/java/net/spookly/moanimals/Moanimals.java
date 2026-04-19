@@ -25,8 +25,8 @@ public final class Moanimals {
     public static void init() {
         // Write common init code here.
         MoAnimalEntityTypes.init();
-        MoAnimalsBlockEntityTypes.init();
         MoAnimalBlocks.init();
+        MoAnimalsBlockEntityTypes.init();
 
         //Needs to be behind Blocks, because it will generate itemmodels
         MoAnimalItems.init();
@@ -45,6 +45,7 @@ public final class Moanimals {
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.PENGUIN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Penguin::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.OSTRICH.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Ostrich::checkSpawnRules);
         CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.BIRD.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Bird::checkSpawnRules);
+        CommonPlatformHelper.registerSpawnPlacement(MoAnimalEntityTypes.SEAGULL.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Seagull::checkSpawnRules);
     }
 
 }

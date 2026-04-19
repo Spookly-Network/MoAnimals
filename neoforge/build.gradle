@@ -3,7 +3,7 @@ plugins {
 }
 
 def generatedResources = file("src/generated")
-def assets = rootProject.file('common/src/main/resources')
+def assets = rootProject.project('common').file('src/main/resources')
 
 architectury {
     platformSetupLoomIde()
@@ -83,6 +83,10 @@ loom {
     }
 }
 
+tasks.register("publish") {
+    dependsOn tasks.modrinth, tasks.curseforge
+}
+
 modrinth {
     token = env.MODRINTH_TOKEN.value // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
     projectId = rootProject.mod_id
@@ -103,7 +107,7 @@ curseforge {
         id = rootProject.mod_curseforge_id
         changelogType = 'markdown'
         changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
-        releaseType = 'release'
+        releaseType = rootProject.mod_version_type != 'alpha' ? 'release' : 'alpha'
         addGameVersion rootProject.minecraft_version
         addGameVersion 'NeoForge'
 

@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.Fluids;
 
 public class MoAnimalItems {
 
-    public static final Supplier<Item> BREADCRUMBS = CommonPlatformHelper.registerItem("breadcrumb", () -> new Item(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
+    public static final Supplier<Item> BREADCRUMBS = CommonPlatformHelper.registerItem("breadcrumbs", () -> new Item(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
     public static final Supplier<Item> DUCK_EGG = CommonPlatformHelper.registerItem("duck_egg", () -> new EggItem(new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB)));
     public static final Supplier<SpawnEggItem> RACCOON_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("raccoon_spawn_egg", MoAnimalEntityTypes.RACOON, 1, 256418, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> DUCK_SPAWNEGG = CommonPlatformHelper.registerSpawnEggItem("duck_spawn_egg", MoAnimalEntityTypes.DUCK, 11629312, 9026603, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
@@ -34,6 +34,7 @@ public class MoAnimalItems {
     public static final Supplier<SpawnEggItem> PENGUIN_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("penguin_spawn_egg", MoAnimalEntityTypes.PENGUIN, 874364, 128543, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> OSTRICH_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("ostrich_spawn_egg", MoAnimalEntityTypes.OSTRICH, 16777215, 16222215, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
     public static final Supplier<SpawnEggItem> BIRD_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("bird_spawn_egg", MoAnimalEntityTypes.BIRD, 16777654, 16243415, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
+    public static final Supplier<SpawnEggItem> SEAGULL_SPAWN_EGG = CommonPlatformHelper.registerSpawnEggItem("seagull_spawn_egg", MoAnimalEntityTypes.SEAGULL, 16746754, 16234985, new Item.Properties().arch$tab(MoAnimalsItemGroups.MOD_TAB));
 
     public static final Supplier<Item> SNAIL_BUCKET = CommonPlatformHelper.registerItem("snail_bucket",
             () -> new SnailMobBucketItem(

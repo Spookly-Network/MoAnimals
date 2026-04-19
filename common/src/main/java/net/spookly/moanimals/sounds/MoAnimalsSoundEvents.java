@@ -14,6 +14,7 @@ public class MoAnimalsSoundEvents {
 
     public static final RegistrySupplier<SoundEvent> DUCK_QUACK = register("entity.duck.quack");
     public static final RegistrySupplier<SoundEvent> BIRD_CHIRP = register("entity.bird.chirp");
+    public static final RegistrySupplier<SoundEvent> SEAGULL_CHIRP = register("entity.seagull.squawking");
 
     public static void init() {
         LOGGER.info("Registering Sound Events");

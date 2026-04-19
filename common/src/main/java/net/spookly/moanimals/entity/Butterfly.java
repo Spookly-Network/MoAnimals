@@ -191,6 +191,11 @@ public class Butterfly extends Animal implements VariantHolder<Holder<ButterflyV
         return this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
     }
 
+    @Override
+    public boolean removeWhenFarAway(double d) {
+        return true;
+    }
+
     public static class ButterflyGroupData extends AgeableMob.AgeableMobGroupData {
         public final Holder<ButterflyVariant> type;
 

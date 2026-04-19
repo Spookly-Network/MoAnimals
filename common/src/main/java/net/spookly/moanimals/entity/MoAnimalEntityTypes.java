@@ -43,6 +43,11 @@ public class MoAnimalEntityTypes {
         .sized(.75f, .55f)
         .build("bird")
     );
+    public static final RegistrySupplier<EntityType<Seagull>> SEAGULL = ENTITY_TYPES.register("seagull", () -> EntityType.Builder.of(Seagull::new, MobCategory.AMBIENT)
+        .sized(.7f, .75f)
+        .eyeHeight(0.5f)
+        .build("seagull")
+    );
 
     public static void init() {
         ENTITY_TYPES.register();

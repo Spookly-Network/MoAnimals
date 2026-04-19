@@ -41,5 +41,7 @@ public class MoAnimalsBiomeModifiers {
                 MobCategory.CREATURE, MoAnimalEntityTypes.OSTRICH.get(), 5, 2, 10);
         BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.BIRD_SPAWNABLE_IN),
                 MobCategory.AMBIENT, MoAnimalEntityTypes.BIRD.get(), 5, 2, 5);
+        BiomeModifications.addSpawn(BiomeSelectors.tag(MoAnimalsTags.BiomeTags.SEAGULL_SPAWNABLE_IN),
+                MobCategory.AMBIENT, MoAnimalEntityTypes.SEAGULL.get(), 8, 2, 4);
     }
 }

@@ -1,8 +1,8 @@
 package net.spookly.moanimals.entity;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
-import net.spookly.moanimals.util.MoAnimalsVariantUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,10 +12,8 @@ import net.spookly.moanimals.network.syncher.MoAnimalsEntityDataSerializers;
 import net.spookly.moanimals.registry.MoAnimalsRegistries;
 import net.spookly.moanimals.sounds.MoAnimalsSoundEvents;
 import net.spookly.moanimals.util.MoAnimalsTags;
+import net.spookly.moanimals.util.MoAnimalsVariantUtils;
 
-import net.minecraft.client.animation.definitions.ArmadilloAnimation;
-import net.minecraft.client.animation.definitions.CamelAnimation;
-import net.minecraft.client.animation.definitions.SnifferAnimation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -39,7 +37,7 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.animal.sniffer.Sniffer;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -48,6 +46,10 @@ import net.minecraft.world.level.biome.Biome;
 
 public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>, FlyingAnimal {
     private static final EntityDataAccessor<Holder<BirdVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Bird.class, MoAnimalsEntityDataSerializers.BIRD_VARIANT);
+    public static final Predicate<LivingEntity> PREDATOR_SELECTOR = livingEntity -> {
+        EntityType<?> entityType = livingEntity.getType();
+        return entityType.is(MoAnimalsTags.EntityTags.BIRD_PREDATORS);
+    };
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
@@ -65,12 +67,16 @@ public class Bird extends MoAnimal implements VariantHolder<Holder<BirdVariant>>
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.15));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.5));
+
+
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Animal.class, 8.0F, 2.3D, 2.2D, PREDATOR_SELECTOR));
+//        this.goalSelector.addGoal(2, new BreedGoal(this, 1));
+//        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.15));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+
     }
 
     @Override

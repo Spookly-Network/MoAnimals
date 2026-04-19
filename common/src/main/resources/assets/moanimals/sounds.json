@@ -66,5 +66,27 @@
         "volume": 0.25
       }
     ]
+  },
+  "entity.seagull.squawking": {
+    "category": "ambient",
+    "subtitle": "sounds.moanimals.seagull_squawking",
+    "sounds": [
+      {
+        "name": "moanimals:entity/seagull/seagull01",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/seagull/seagull02",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/seagull/seagull03",
+        "volume": 0.25
+      },
+      {
+        "name": "moanimals:entity/seagull/seagull04",
+        "volume": 0.25
+      }
+    ]
   }
 }

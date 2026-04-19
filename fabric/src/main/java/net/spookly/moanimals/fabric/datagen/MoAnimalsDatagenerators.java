@@ -10,5 +10,6 @@ public class MoAnimalsDatagenerators implements DataGeneratorEntrypoint {
 
         pack.addProvider(MoAnimalsLootTableProvider::new);
         pack.addProvider(MoAnimalsModelProvider::new);
+        pack.addProvider(MoAnimalsRecipeProvider::new);
     }
 }

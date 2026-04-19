@@ -3,6 +3,7 @@
 
   "block.moanimals.duckweed": "Duckweed",
   "block.moanimals.ostrich_egg": "Ostrich Egg",
+  "block.moanimals.jar": "Jar",
 
   "item.moanimals.duckweed": "Duckweed",
   "item.moanimals.ostrich_egg": "Ostrich Egg",
@@ -16,6 +17,8 @@
   "item.moanimals.raccoon_spawn_egg": "Raccoon Spawn Egg",
   "item.moanimals.penguin_spawn_egg": "Penguin Spawn Egg",
   "item.moanimals.ostrich_spawn_egg": "Ostrich Spawn Egg",
+  "item.moanimals.bird_spawn_egg": "Bird Spawn Egg",
+  "item.moanimals.seagull_spawn_egg": "Seagull Spawn Egg",
 
   "entity.moanimals.butterfly": "Butterfly",
   "entity.moanimals.crocodile": "Crocodile",
@@ -26,5 +29,6 @@
   "entity.moanimals.duck": "Duck",
 
   "sounds.moanimals.duck_quack": "Duck quacking",
-  "sounds.moanimals.bird_chirp": "Birds chirp"
+  "sounds.moanimals.bird_chirp": "Birds chirp",
+  "sounds.moanimals.seagull_squawking": "Seagull squawking"
 }

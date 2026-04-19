@@ -49,7 +49,7 @@
 	],
 	"display": {
 		"ground": {
-			"translation": [0, 4.25, 0]
+			"translation": [0, 3.25, 0]
 		},
 		"gui": {
 			"rotation": [20.5, -145, 0],

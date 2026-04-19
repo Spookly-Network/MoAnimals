@@ -40,6 +40,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -72,11 +73,11 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
 
     public Duck(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+
         // Kleine Chance, initial Anführer zu sein
         this.groupLeader = this.getRandom().nextFloat() < 0.2f;
         this.setPathfindingMalus(PathType.WATER, 4.0F);
         this.setPathfindingMalus(PathType.WATER_BORDER, 1F);
-//        this.moveControl = new FlyingMoveControl(this, /*maxTurn*/ 20, /*hoversInPlace*/ false);
     }
 
     @Override
@@ -130,6 +131,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Wolf.class, 8.0F, 1.3D, 1.2D, livingEntity -> !((Wolf) livingEntity).isTame()));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREADCRUMBS.get()), true));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.15));
 
@@ -142,6 +144,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
 
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+
         super.registerGoals();
     }
 

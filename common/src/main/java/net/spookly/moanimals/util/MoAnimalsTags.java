@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +23,7 @@ public class MoAnimalsTags {
         TagKey<Biome> PENGUIN_SPAWNABLE_IN = createTag("spawn_penguin_in");
         TagKey<Biome> OSTRICH_SPAWNABLE_IN = createTag("spawn_ostrich_in");
         TagKey<Biome> BIRD_SPAWNABLE_IN = createTag("spawn_bird_in");
+        TagKey<Biome> SEAGULL_SPAWNABLE_IN = createTag("spawn_seagull_in");
 
         TagKey<Biome> PLACE_DUCKWEED_IN = createTag("place_duckweed_in");
 
@@ -45,6 +47,14 @@ public class MoAnimalsTags {
         }
     }
 
+    public interface EntityTags {
+        TagKey<EntityType<?>> BIRD_PREDATORS = createTag("bird_predators");
+
+        private static TagKey<EntityType<?>> createTag(@NotNull String name) {
+            return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
+        }
+    }
+
     public interface BlockTags {
         TagKey<Block> DUCKS_SPAWNABLE_ON = tag("ducks_spawnable_on");
         TagKey<Block> CROCODILE_SPAWNABLE_ON = tag("crocodile_spawnable_on");
@@ -54,6 +64,7 @@ public class MoAnimalsTags {
         TagKey<Block> PENGUIN_SPAWNABLE_ON = tag("penguin_spawnable_on");
         TagKey<Block> OSTRICH_SPAWNABLE_ON = tag("ostrich_spawnable_on");
         TagKey<Block> BIRD_SPAWNABLE_ON = tag("bird_spawnable_on");
+        TagKey<Block> SEAGULL_SPAWNABLE_ON = tag("seagull_spawnable_on");
 
         TagKey<Block> EGG_LAYABLE_ON = tag("egg_layable_on");
 

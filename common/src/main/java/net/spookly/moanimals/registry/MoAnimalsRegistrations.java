@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 
 public final class MoAnimalsRegistrations {
     private MoAnimalsRegistrations() {
@@ -30,6 +31,7 @@ public final class MoAnimalsRegistrations {
         registerer.accept(MoAnimalEntityTypes.PENGUIN.get(), Penguin.createAttributes());
         registerer.accept(MoAnimalEntityTypes.OSTRICH.get(), Ostrich.createAttributes());
         registerer.accept(MoAnimalEntityTypes.BIRD.get(), Bird.createAttributes());
+        registerer.accept(MoAnimalEntityTypes.SEAGULL.get(), Seagull.createAttributes());
     }
 
     public static void registerDataPackRegistries(DataPackRegistryRegisterer registerer) {

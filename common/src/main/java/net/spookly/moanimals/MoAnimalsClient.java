@@ -38,6 +38,7 @@ public final class MoAnimalsClient {
         registerer.register(MoAnimalEntityTypes.PENGUIN.get(), PenguinRenderer::new);
         registerer.register(MoAnimalEntityTypes.OSTRICH.get(), OstrichRenderer::new);
         registerer.register(MoAnimalEntityTypes.BIRD.get(), BirdRenderer::new);
+        registerer.register(MoAnimalEntityTypes.SEAGULL.get(), SeagullRenderer::new);
     }
 
     public static void registerLayerDefinitions(BiConsumer<ModelLayerLocation, Supplier<LayerDefinition>> registerer) {
@@ -49,6 +50,7 @@ public final class MoAnimalsClient {
         registerer.accept(PenguinModel.LAYER_LOCATION, PenguinModel::createBodyLayer);
         registerer.accept(OstrichModel.LAYER_LOCATION, OstrichModel::createBodyLayer);
         registerer.accept(BirdModel.LAYER_LOCATION, BirdModel::createBodyLayer);
+        registerer.accept(SeagullModel.LAYER_LOCATION, SeagullModel::createBodyLayer);
     }
 
     public static void registerBlockColorHandlers(BiConsumer<BlockColor, Block[]> registerer) {

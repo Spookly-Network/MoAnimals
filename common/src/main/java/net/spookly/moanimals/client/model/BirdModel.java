@@ -9,16 +9,13 @@ import org.jetbrains.annotations.NotNull;
 import net.spookly.moanimals.client.animations.BirdAnimations;
 import net.spookly.moanimals.entity.Bird;
 
-import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.HierarchicalModel;
-import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.Cow;
 
 public class BirdModel<T extends Bird> extends HierarchicalModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
