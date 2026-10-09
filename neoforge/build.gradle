@@ -83,47 +83,36 @@ loom {
     }
 }
 
-tasks.register("publish") {
-    dependsOn tasks.modrinth, tasks.curseforge
-}
-
-modrinth {
-    token = env.MODRINTH_TOKEN.value // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
-    projectId = rootProject.mod_id
-    versionNumber = rootProject.mod_version
-    versionType = rootProject.mod_version_type
+publishMods {
+    file = remapJar.archiveFile
+    displayName = "$rootProject.archives_name-$project.name-$project.minecraft_version"
     changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
-    uploadFile = remapJar
-    gameVersions = [rootProject.minecraft_version]
-    loaders = ["neoforge"]
-    dependencies {
-        required.project "architectury-api"
+
+    type = STABLE
+    modLoaders.add("neoforge")
+
+    dryRun = false
+
+    curseforge {
+        projectId = rootProject.mod_curseforge_id
+        accessToken = env.CURSEFORGE_TOKEN.value
+
+        minecraftVersions.add(rootProject.minecraft_version)
+
+        client = true
+        server = true
+
+        requires("architectury-api")
     }
-}
 
-curseforge {
-    apiKey = env.CURSEFORGE_TOKEN.value
-    project {
-        id = rootProject.mod_curseforge_id
-        changelogType = 'markdown'
-        changelog = rootProject.file("changelogs/${rootProject.mod_version}.md").text
-        releaseType = rootProject.mod_version_type != 'alpha' ? 'release' : 'alpha'
-        addGameVersion rootProject.minecraft_version
-        addGameVersion 'NeoForge'
+    modrinth {
+        projectId = rootProject.mod_id
+        accessToken = env.MODRINTH_TOKEN.value
 
+        minecraftVersions.add(rootProject.minecraft_version)
 
-        relations {
-            requiredDependency 'architectury-api'
-        }
+        environment = CLIENT_AND_SERVER
 
-        afterEvaluate {
-            mainArtifact(remapJar) {
-                displayName = "$rootProject.archives_name-$project.name-$project.minecraft_version"
-            }
-            uploadTask.dependsOn(remapJar)
-        }
-    }
-    options {
-        forgeGradleIntegration = false
+        requires("architectury-api")
     }
 }

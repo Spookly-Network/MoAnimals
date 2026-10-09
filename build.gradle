@@ -3,9 +3,9 @@ plugins {
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.gradleup.shadow' version '9.3.0+' apply false
     id "com.diffplug.spotless" version "7.2.1"
-    id "com.matthewprenger.cursegradle" version "1.4.0"
-    id "com.modrinth.minotaur" version "2.+"
     id("co.uzzu.dotenv.gradle") version "4.0.0"
+
+    id "me.modmuss50.mod-publish-plugin" version "2.2.1" apply false
 }
 
 architectury {
@@ -33,8 +33,7 @@ allprojects {
 subprojects {
     apply plugin: 'dev.architectury.loom'
     apply plugin: 'architectury-plugin'
-    apply plugin: "com.matthewprenger.cursegradle"
-    apply plugin: "com.modrinth.minotaur"
+    apply plugin: "me.modmuss50.mod-publish-plugin"
 
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
