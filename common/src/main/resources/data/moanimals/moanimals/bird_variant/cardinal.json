@@ -1,0 +1,5 @@
+{
+  "texture": "moanimals:entity/bird/bird_cardinal",
+  "biomes": "#moanimals:has_bird_variant/cardinal",
+  "sounds": []
+}

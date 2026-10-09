@@ -55,7 +55,7 @@ public class Seagull extends BirdLikeAnimal {
     private int groundTime = 0;
 
     protected Seagull(EntityType<? extends Animal> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level, true);
         this.idleAnimationTimeout = this.random.nextInt(50) + 50;
     }
 
@@ -234,6 +234,20 @@ public class Seagull extends BirdLikeAnimal {
     static class SeagullWanderGoal extends WaterAvoidingRandomFlyingGoal {
         public SeagullWanderGoal(PathfinderMob pathfinderMob, double d) {
             super(pathfinderMob, d);
+        }
+
+        @Override
+        public boolean canUse() {
+            if (!this.mob.getNavigation().isDone()) {
+                return false;
+            }
+
+            // Keep moving between airborne destinations without the ground wander delay.
+            if (!this.mob.onGround()) {
+                this.trigger();
+            }
+
+            return super.canUse();
         }
 
         @Nullable @Override

@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#moanimals:climate/mixed/frozen",
+    "#moanimals:climate/mixed/cold",
+    "#moanimals:climate/mixed/moderate",
+    "#moanimals:climate/mixed/warm",
+    "#moanimals:climate/mixed/hot"
+  ]
+}

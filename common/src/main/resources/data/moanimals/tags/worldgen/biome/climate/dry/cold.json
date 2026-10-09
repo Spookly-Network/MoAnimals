@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:windswept_hills",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:stony_shore",
+    {
+      "id": "natures_spirit:red_peaks",
+      "required": false
+    }
+  ]
+}

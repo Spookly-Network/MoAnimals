@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#moanimals:climate/dry/frozen",
+    "#moanimals:climate/dry/cold",
+    "#moanimals:climate/dry/moderate",
+    "#moanimals:climate/dry/warm",
+    "#moanimals:climate/dry/hot"
+  ]
+}

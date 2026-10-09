@@ -1,10 +1,17 @@
 {
   "values": [
     "minecraft:grass_block",
+    "minecraft:podzol",
+    "minecraft:rooted_dirt",
+    "minecraft:coarse_dirt",
     "minecraft:moss_block",
     "minecraft:dirt",
     "minecraft:clay",
     "minecraft:stone",
+    {
+      "id": "natures_spirit:gray_polypore_block",
+      "required": false
+    },
     {
       "id": "regions_unexplored:slit_grass_block",
       "required": false

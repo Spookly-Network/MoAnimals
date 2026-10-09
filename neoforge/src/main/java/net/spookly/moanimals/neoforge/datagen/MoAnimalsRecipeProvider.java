@@ -2,6 +2,8 @@ package net.spookly.moanimals.neoforge.datagen;
 
 import java.util.concurrent.CompletableFuture;
 
+import net.spookly.moanimals.block.MoAnimalBlocks;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -12,7 +14,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-import net.spookly.moanimals.block.MoAnimalBlocks;
 
 public class MoAnimalsRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public MoAnimalsRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -132,7 +133,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Wolf.class, 8.0F, 1.3D, 1.2D, livingEntity -> !((Wolf) livingEntity).isTame()));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(MoAnimalItems.BREADCRUMBS.get()), true));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, stack -> stack.is(Items.BREAD), true));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.15));
 
         // Nicht-Anführer folgen dem nächsten Anführer in der Nähe
@@ -219,7 +220,7 @@ public class Duck extends Animal implements VariantHolder<Holder<DuckVariant>> {
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(MoAnimalItems.BREADCRUMBS.get());
+        return itemStack.is(Items.BREAD);
     }
 
     @Override

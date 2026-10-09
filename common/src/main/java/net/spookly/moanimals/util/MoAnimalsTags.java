@@ -34,6 +34,9 @@ public class MoAnimalsTags {
         TagKey<Biome> HAS_BUTTERFLY_VARIANT_AGRIAS_CLAUDIA = createTag("has_butterfly_variant/agrias_claudia");
         TagKey<Biome> HAS_BUTTERFLY_VARIANT_AGRIAS = createTag("has_butterfly_variant/agrias");
 
+
+        TagKey<Biome> CLIMATE_DRY_COLD = createTag("climate/dry/cold");
+
         TagKey<Biome> HAS_DUCK_VARIANT_MALLARD = createTag("has_duck_variant/mallard");
         TagKey<Biome> HAS_DUCK_VARIANT_CALL = createTag("has_duck_variant/call");
         TagKey<Biome> HAS_DUCK_VARIANT_BLACK_SCOTER = createTag("has_duck_variant/black_scoter");

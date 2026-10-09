@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:the_end",
+    "minecraft:end_highlands",
+    "minecraft:end_midlands",
+    "minecraft:end_barrens",
+    "minecraft:small_end_islands",
+    {
+      "id": "natures_spirit:snowcapped_red_peaks",
+      "required": false
+    }
+  ]
+}

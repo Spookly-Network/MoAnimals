@@ -1,9 +1,10 @@
 {
   "values": [
     "minecraft:grass_block",
+    "minecraft:podzol",
     "minecraft:dirt",
-    "minecraft:oak_leaves",
-    "minecraft:birch_leaves",
-    "minecraft:jungle_leaves"
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt",
+    "#minecraft:leaves"
   ]
 }
