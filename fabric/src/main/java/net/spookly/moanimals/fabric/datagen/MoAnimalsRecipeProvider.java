@@ -2,6 +2,8 @@ package net.spookly.moanimals.fabric.datagen;
 
 import java.util.concurrent.CompletableFuture;
 
+import net.spookly.moanimals.block.MoAnimalBlocks;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -10,8 +12,6 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-
-import net.spookly.moanimals.block.MoAnimalBlocks;
 
 public class MoAnimalsRecipeProvider extends RecipeProvider {
     public MoAnimalsRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
